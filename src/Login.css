@@ -1,0 +1,501 @@
+/* 🔐 **LOGIN.CSS** - ESTILOS DE LA PÁGINA DE INICIO DE SESIÓN */
+
+/* 📦 IMPORTACIÓN DE FUENTE GOOGLE */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* 🏠 CONTENEDOR PRINCIPAL - PANTALLA COMPLETA SIN SCROLL */
+.login-container {
+  height: 100vh;                    /* 📏 Altura exacta de la ventana */
+  width: 100vw;                     /* 📏 Ancho exacto de la ventana */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #09101A;              /* 🎨 Gris más claro */
+  font-family: 'Poppins', sans-serif;
+  padding: 20px;
+  position: fixed;                  /* 📌 Posición fija */
+  top: 0;                          /* 📌 Pegado arriba */
+  left: 0;                         /* 📌 Pegado a la izquierda */
+  overflow: hidden;                 /* ❌ Sin scroll */
+  z-index: 9999;                   /* 📚 Por encima de todo */
+}
+
+/* 🚫 BLOQUEAR SCROLL DEL BODY CUANDO ESTÁ EN LOGIN */
+body.login-active {
+  overflow: hidden;                 /* ❌ Sin scroll en el body */
+  height: 100vh;                   /* 📏 Altura fija */
+  position: fixed;                 /* 📌 Posición fija */
+  width: 100%;                     /* 📏 Ancho completo */
+}
+
+/* 📦 TARJETA CON ANIMACIÓN SUTIL */
+.login-card {
+  background: #ffffff;              /* Fondo blanco puro */
+  border: 1px solid #e0e0e0;       /* Borde gris claro */
+  border-radius: 20px;             /* Bordes menos redondeados */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);  /* Agregar sombra debajo del bloque */
+  padding: 40px;                   /* Ajuste de padding */
+  width: 100%;
+  max-width: 480px;
+  max-height: 90vh;                /* 📏 Altura máxima del 90% de la ventana */
+  overflow-y: auto;                /* 📜 Scroll interno solo si es necesario */
+  position: relative;
+  z-index: 10;
+  border: none;
+  animation: none;                 /* Sin animación */
+}
+
+/* Botón para volver al inicio */
+.back-home-button {
+  width: 15%; /* Botón de volver más pequeño */
+  padding: 10px; /* Ajustar padding para mantener diseño cuadrado */
+  text-align: center;
+  font-size: 18px; /* Solo mostrar el símbolo */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0; /* Eliminar margen superior */
+  background: #0D4CA3; /* Mismo color que el botón principal */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  height: auto; /* Ajustar altura para que coincida con el botón de inicio de sesión */
+  padding: 16px; /* Igualar padding al botón de inicio de sesión */
+}
+
+.back-home-button:hover {
+  background: #092c6e; /* Color más oscuro al pasar el mouse */
+}
+
+.back-home-button::before {
+  content: '\21A9'; /* Cambiar el símbolo a una flecha curva hacia la izquierda */
+  margin: 0; /* Eliminar margen lateral */
+  display: block; /* Asegurar que el icono esté centrado */
+  text-align: center; /* Centrar el contenido */
+}
+
+/* 📝 ENCABEZADO DEL FORMULARIO */
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #181818;
+  margin-bottom: 8px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.login-subtitle {
+  color: #666;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 📋 FORMULARIO PRINCIPAL */
+.login-form {
+  margin-bottom: 25px;
+}
+
+/* 📝 GRUPO DE CADA CAMPO */
+.form-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #333;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 📝 CAMPOS DE TEXTO */
+.form-group input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 2px solid #e1e5e9;
+  border-radius: 10px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgba(248, 249, 250, 0.9);
+}
+
+/* 🎯 ESTADO FOCUS */
+.form-group input:focus {
+  border-color: #1a1a1a;
+  outline: none;
+  background-color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(26, 26, 26, 0.15);
+}
+
+.form-group input::placeholder {
+  color: #aaa;
+}
+
+/* 🔗 ENLACE "¿OLVIDASTE TU CONTRASEÑA?" */
+.forgot-password {
+  text-align: right;
+  margin-bottom: 25px;
+}
+
+.forgot-password a {
+  color: #1a1a1a;
+  font-size: 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.forgot-password a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
+/* 🔘 BOTÓN PRINCIPAL */
+.login-button {
+  width: 80%; /* Aumentar el ancho del botón de inicio de sesión */
+  display: inline-block;
+  padding: 16px;
+  background: #0D4CA3; /* Cambiar color al solicitado */
+  color: rgb(255, 255, 255);
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: 0.5px;
+}
+
+/* 🎯 HOVER DEL BOTÓN */
+.login-button:hover:not(:disabled) {
+  background: #333333;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(26, 26, 26, 0.3);
+}
+
+/* 🚫 BOTÓN DESHABILITADO */
+.login-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ➖ SEPARADOR "O" */
+.login-divider {
+  text-align: center;
+  margin: 25px 0;
+  position: relative;
+}
+
+.login-divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #e1e5e9;
+}
+
+.login-divider span {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 0 15px;
+  color: #666;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* 🔄 SECCIÓN DE CAMBIO - SIN RECUADRO */
+.toggle-form {
+  text-align: center;
+  padding: 20px 0;  /* ❌ Solo padding vertical, sin horizontal */
+  background: none;  /* ❌ Sin fondo */
+  border-radius: 0;  /* ❌ Sin bordes redondeados */
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+/* 🔗 ENLACE CLICKEABLE */
+.toggle-link {
+  color: #1a1a1a;
+  font-weight: 500;  /* 📝 Menos peso (era 600) */
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.toggle-link:hover {
+  color: #333;
+  text-decoration: none;
+}
+
+/* 🏠 ENLACE "VOLVER AL INICIO" */
+.back-to-home {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.back-to-home a {
+  color: #1a1a1a;
+  text-decoration: none;
+  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+.back-to-home a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
+/* ⚠️ MENSAJE DE ERROR */
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #f5c6cb;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ✅ MENSAJE DE ÉXITO */
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #c3e6cb;
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ✅ EFECTO DE LOGIN EXITOSO */
+.login-card.success {
+  background: linear-gradient(145deg, #d4edda, #c3e6cb);  /* 🎨 Fondo verde */
+  box-shadow: 
+    25px 25px 50px #a8d4b0,
+    -25px -25px 50px #e8f5e8;
+  animation: successPulse 0.8s ease-in-out;  /* 🎬 Animación de éxito */
+}
+
+/* ✅ CONTENEDOR DEL MENSAJE DE ÉXITO */
+.success-container {
+  text-align: center;
+  padding: 40px 20px;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+/* ✅ ICONO DE ÉXITO */
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: #28a745;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  animation: successIcon 1.2s ease-out;
+}
+
+/* ✅ SÍMBOLO CHECK */
+.success-check {
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  animation: checkmark 0.8s ease-out 0.2s both;
+}
+
+/* ✅ TEXTO DE ÉXITO */
+.success-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #155724;
+  margin-bottom: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.success-subtitle {
+  font-size: 16px;
+  color: #155724;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  opacity: 0.8;
+}
+
+/* 🔄 SPINNER DE REDIRECCIÓN */
+.redirect-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #155724;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  margin-left: 10px;
+}
+
+/* ESTILOS DEL BOTÓN "VOLVER AL INICIO" */
+.back-home-button {
+  width: 15%; /* Botón de volver más pequeño */
+  padding: 10px; /* Ajustar padding para mantener diseño cuadrado */
+  text-align: center;
+  font-size: 18px; /* Solo mostrar el símbolo */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0; /* Eliminar margen superior */
+  background: #0D4CA3; /* Mismo color que el botón principal */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.3s ease;
+  height: auto; /* Ajustar altura para que coincida con el botón de inicio de sesión */
+  padding: 16px; /* Igualar padding al botón de inicio de sesión */
+}
+
+.back-home-button:hover {
+  background: #092c6e; /* Color más oscuro al pasar el mouse */
+}
+
+.back-home-button::before {
+  content: '\21A9'; /* Cambiar el símbolo a una flecha curva hacia la izquierda */
+  margin: 0; /* Eliminar margen lateral */
+  display: block; /* Asegurar que el icono esté centrado */
+  text-align: center; /* Centrar el contenido */
+}
+
+/* ANIMACIONES */
+@keyframes successPulse {
+  0% { transform: translateY(-10px) scale(1); }
+  50% { transform: translateY(-10px) scale(1.05); }
+  100% { transform: translateY(-10px) scale(1); }
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes successIcon {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+@keyframes checkmark {
+  0% { opacity: 0; transform: scale(0) rotate(45deg); }
+  50% { opacity: 1; transform: scale(1.2) rotate(45deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  .login-container { padding:20px 10px; height:100vh; width:100vw; align-items:center; justify-content:center; }
+  .login-card { padding:24px 22px 28px; max-height:50vh; overflow-y:auto; width:90%; max-width:420px; border-radius:20px; animation:none; margin:auto; }
+  /* Estética móvil: sombra más suave */
+  .login-card { box-shadow: 0 10px 30px -10px rgba(0,0,0,.18), 0 2px 8px -2px rgba(0,0,0,.12); position:relative; }
+  .login-title { font-size:24px; letter-spacing:.5px; line-height:1.2; text-align:center; margin-bottom:20px; }
+  .form-group { margin-bottom:16px; }
+  .form-group label { font-size:13px; letter-spacing:.3px; margin-bottom:6px; }
+  .form-group input { padding:12px 14px; font-size:14px; border-radius:10px; }
+  .login-button { padding:14px 16px; font-size:14px; border-radius:12px; letter-spacing:.5px; }
+  .toggle-form { padding:16px 0 6px; margin-top:12px; }
+  .toggle-link { font-size:13px; }
+  .error-message, .success-message { font-size:13px; padding:10px 12px; }
+  .success-title { font-size:22px; }
+  .success-subtitle { font-size:14px; }
+  
+  .login-title {
+    font-size: 24px;
+  }
+  
+  .form-group input {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  
+  .login-button {
+    padding: 14px;
+    font-size: 14px;
+  }
+  
+  .success-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .success-check {
+    font-size: 30px;
+  }
+  
+  .success-title {
+    font-size: 20px;
+  }
+  
+  .success-subtitle {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-container { padding:20px 10px; }
+  .login-card { padding:20px 18px 24px; max-width:350px; width:92%; border-radius:18px; max-height:55vh; margin:auto; }
+  .login-title { font-size:21px; }
+  .form-group { margin-bottom:12px; }
+  .form-group input { padding:10px 13px; font-size:13px; }
+  .login-button { padding:11px 13px; font-size:13px; }
+  .toggle-link { font-size:12.5px; }
+  
+  .form-group input {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+@media (max-width:380px){
+  .login-container { padding:100px 10px 12px; }
+  .login-card { padding:18px 14px 22px; max-width:300px; width:100%; border-radius:22px; max-height:70vh; }
+  .login-title { font-size:20px; }
+  .form-group { margin-bottom:10px; }
+  .form-group label { font-size:12px; }
+  .form-group input { padding:9px 12px; font-size:12.5px; }
+  .login-button { padding:10px 12px; font-size:12.5px; }
+  .toggle-link { font-size:12px; }
+}
+  
+  .login-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}

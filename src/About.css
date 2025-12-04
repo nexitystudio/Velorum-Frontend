@@ -1,0 +1,350 @@
+/* 🏢 **ABOUT.CSS** - ESTILOS PARA LA PÁGINA DE INFORMACIÓN */
+
+/* 🎯 HERO SECTION */
+.about-hero {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+  padding: 120px 20px 80px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+}
+
+/* Palette overrides for About page (dark theme requested) */
+.about-page {
+  --bg-primary: #09101A; /* fondo principal */
+  --bg-secondary: #09101A; /* secciones alternas */
+  --bg-tertiary: #0b1116; /* degradados / tarjetas oscuras */
+  --card-bg: #0f1720; /* tarjetas */
+  --text-accent: #d3d3ce; /* tipografías principales */
+  --text-primary: #d3d3ce;
+  --text-secondary: rgba(211,211,206,0.85);
+  --border-color: rgba(211,211,206,0.06);
+  --button-primary: #0d4ca3; /* botones */
+  --shadow-color: 0,0,0; /* sombras (rgb) */
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--text-accent);
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: 20px;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+/* 📖 SECCIONES GENERALES */
+.about-section {
+  padding: 80px 20px;
+  background-color: var(--bg-primary);
+}
+
+.about-section:nth-child(even) {
+  background-color: var(--bg-secondary);
+}
+
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.section-header h2 {
+  font-size: 36px;
+  font-weight: 600;
+  color: var(--text-accent);
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+
+/* 📖 CONTENIDO EN GRID */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.content-text p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-primary);
+  margin-bottom: 20px;
+}
+
+.content-image {
+  display: flex;
+  justify-content: center;
+}
+
+.image-placeholder {
+  width: 400px;
+  height: 300px;
+  background-color: var(--bg-tertiary);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 18px;
+  font-weight: 500;
+  border: 2px dashed var(--border-color);
+}
+
+/* 📅 TIMELINE DE HISTORIA */
+.history-timeline {
+  width: 400px;
+  background: linear-gradient(135deg, var(--card-bg) 0%, var(--bg-tertiary) 100%);
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 12px 40px rgba(var(--shadow-color), 0.6);
+  border: 1px solid var(--border-color);
+}
+
+.timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.timeline-item:last-child {
+  border-bottom: none;
+}
+
+.timeline-item .year {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-accent);
+  min-width: 60px;
+  background: transparent;
+}
+
+.timeline-item .milestone {
+  font-size: 14px;
+  color: var(--text-primary);
+  font-weight: 500;
+  line-height: 1.4;
+  /* text styling retained simple; removed unnecessary background-clip */
+}
+
+/* ---- END TIMELINE ---- */
+ 
+/* 🎯 MISIÓN CARDS */
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 40px;
+}
+
+.mission-card { background: linear-gradient(145deg, rgba(15,21,28,0.6) 0%, rgba(11,16,22,0.6) 100%); padding:34px 28px 38px; border-radius:18px; text-align:left; box-shadow:0 10px 32px -10px rgba(0,0,0,0.6),0 2px 6px -2px rgba(0,0,0,0.45); transition:transform .35s cubic-bezier(.16,.8,.3,1), box-shadow .35s; border:1px solid rgba(211,211,206,0.04); color:var(--text-primary); position:relative; }
+.mission-card:hover { transform:translateY(-6px) scale(1.015); box-shadow:0 25px 60px -22px rgba(0,0,0,0.6),0 4px 14px -4px rgba(0,0,0,0.45); }
+
+.mission-icon {
+  font-size: 36px;
+  margin-bottom: 18px;
+  color: var(--text-accent);
+}
+
+.mission-card h3 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text-accent);
+  margin-bottom: 12px;
+}
+
+.mission-card p {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* 👥 ESTADÍSTICAS DEL EQUIPO */
+.team-intro {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  text-align: center;
+  margin-bottom: 50px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:28px; margin-top:48px; }
+
+.stat-item { text-align:center; padding:26px 16px 30px; background:linear-gradient(160deg, rgba(15,21,28,0.6), rgba(11,16,22,0.6)); border-radius:20px; box-shadow:0 8px 26px -10px rgba(0,0,0,0.6); border:1px solid rgba(211,211,206,0.04); position:relative; overflow:hidden; transition:transform .3s; }
+.stat-item:before { content:""; position:absolute; inset:0; background:radial-gradient(circle at 30% 20%, rgba(13,76,163,0.06), transparent 60%); opacity:.28; pointer-events:none; }
+
+ .stat-item:hover { transform:translateY(-5px); }
+
+ .stat-number { font-size:34px; font-weight:600; letter-spacing:-1px; background:linear-gradient(90deg,#c9a646,#e5d08f); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; color:transparent; margin-bottom:6px; }
+
+.stat-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* 🌍 VALORES */
+.values-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:26px; }
+
+ .value-item { background: linear-gradient(160deg, rgba(15,21,28,0.6), rgba(11,16,22,0.6)); padding:26px 24px 30px; border-radius:18px; border:1px solid rgba(211,211,206,0.04); transition:transform .3s, box-shadow .3s; position:relative; color:var(--text-primary); }
+ .value-item:hover { transform:translateY(-5px); box-shadow:0 18px 48px -18px rgba(0,0,0,0.6),0 4px 14px -4px rgba(0,0,0,0.45); }
+ .value-item h3 { font-size:17px; font-weight:600; letter-spacing:.3px; margin-bottom:10px; color:var(--text-accent); }
+ .value-item p { font-size:13.5px; line-height:1.55; color:var(--text-primary); }
+
+/* 📞 SECCIÓN DE CONTACTO */
+.contact-section { background: var(--bg-secondary); text-align:center; }
+
+/* Diseño mejorado */
+.enhanced-contact { position:relative; }
+.contact-inner { background: linear-gradient(140deg, rgba(15,21,28,0.6) 0%, rgba(11,16,22,0.6) 100%); border:1px solid var(--border-color); border-radius:40px; padding:70px 60px 80px; max-width:1080px; margin:0 auto; box-shadow:0 40px 80px -30px rgba(var(--shadow-color),0.6), 0 4px 18px -4px rgba(var(--shadow-color),0.45); position:relative; }
+.contact-head h2 { font-size:48px; font-weight:600; letter-spacing:-1px; color:var(--text-accent); margin-bottom:26px; }
+/* Decorative .section-line removed — replaced by heading spacing and accent underlines if needed */
+.contact-text { font-size:20px; line-height:1.6; }
+.contact-text .muted { font-size:14px; letter-spacing:.5px; text-transform:uppercase; display:inline-block; margin-top:10px; color:var(--text-secondary); }
+.contact-buttons { margin-top:8px; }
+.contact-main-btn { font-weight:700; letter-spacing:.7px; padding:14px 40px; border-radius:12px; font-size:15px; position:relative; box-shadow:0 14px 40px -14px rgba(var(--shadow-color),0.6); background: var(--button-primary); color: #fff; border: none; }
+.contact-main-btn:hover { transform:translateY(-2px); box-shadow:0 22px 60px -30px rgba(var(--shadow-color),0.7); }
+.contact-secondary-btn { padding:16px 36px; border-radius:12px; font-size:15px; background: transparent; border:1px solid rgba(211,211,206,0.06); color:var(--text-primary); }
+
+@media (max-width:860px){
+  .contact-inner { padding:60px 38px 70px; }
+  .contact-head h2 { font-size:40px; }
+  .contact-main-btn, .contact-secondary-btn { width:100%; }
+  .contact-buttons { flex-direction:column; }
+}
+
+.contact-text {
+  font-size: 18px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  margin-bottom: 40px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* 🎨 NAVBAR ESTILOS */
+.navbar {
+  background-color: var(--bg-primary);
+  color: rgba(255, 255, 255, 0.85); /* Blanco suave */
+}
+
+.navbar a,
+.navbar i {
+  color: rgba(255, 255, 255, 0.85); /* Blanco suave */
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover,
+.navbar i:hover {
+  color: rgba(255, 255, 255, 1); /* Blanco más intenso al pasar el mouse */
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 768px) {
+  /* Hero más compacto */
+  .about-hero { padding:90px 18px 56px; }
+  .hero-title { font-size:36px; line-height:1.1; }
+  .hero-subtitle { font-size:18px; line-height:1.4; }
+
+  /* Secciones: menos padding */
+  .about-section { padding:60px 18px; }
+  .section-header { margin-bottom:42px; }
+  .section-header h2 { font-size:30px; }
+
+  /* Grid historia en una columna */
+  .content-grid { grid-template-columns:1fr; gap:34px; }
+  .content-text p { font-size:15px; line-height:1.65; }
+  .history-timeline { width:100%; padding:22px 22px 10px; border-radius:14px; }
+  .timeline-item { gap:14px; padding:12px 0; }
+  .timeline-item .year { font-size:18px; min-width:50px; }
+  .timeline-item .milestone { font-size:13px; line-height:1.35; }
+
+  /* Misión cards apiladas */
+  .mission-grid { grid-template-columns:1fr; gap:26px; }
+  .mission-card { padding:26px 22px 30px; border-radius:16px; }
+  .mission-icon { font-size:40px; margin-bottom:14px; }
+  .mission-card h3 { font-size:20px; margin-bottom:10px; }
+  .mission-card p { font-size:14px; line-height:1.55; }
+
+  /* Team stats en 2 columnas */
+  .team-intro { font-size:16px; line-height:1.55; margin-bottom:40px; padding:0 4px; }
+  .team-stats { grid-template-columns:repeat(2,1fr); gap:18px; }
+  .stat-item { padding:22px 14px 26px; border-radius:16px; }
+  .stat-number { font-size:30px; }
+  .stat-label { font-size:12px; letter-spacing:.8px; }
+
+  /* Valores una columna */
+  .values-grid { grid-template-columns:1fr; gap:18px; }
+  .value-item { padding:22px 20px 26px; border-radius:16px; }
+  .value-item h3 { font-size:16px; }
+  .value-item p { font-size:13px; line-height:1.5; }
+
+  /* Contacto compacto */
+  .contact-inner { padding:54px 34px 60px; border-radius:34px; }
+  .contact-head h2 { font-size:36px; margin-bottom:18px; }
+  .contact-text { font-size:16px; line-height:1.5; margin-bottom:30px; }
+  .contact-text .muted { font-size:12px; margin-top:8px; }
+  .contact-buttons { flex-direction:column; align-items:center; gap:14px; }
+  .contact-main-btn, .contact-secondary-btn { width:100%; padding:16px 28px; font-size:14px; }
+}
+
+@media (max-width: 480px) {
+  .about-hero { padding:84px 16px 50px; }
+  .hero-title { font-size:30px; letter-spacing:-.5px; }
+  .hero-subtitle { font-size:15px; }
+  .about-section { padding:44px 16px; }
+  .section-header { margin-bottom:34px; }
+  .section-header h2 { font-size:24px; }
+  .history-timeline { padding:18px 18px 6px; }
+  .timeline-item { padding:10px 0; gap:12px; }
+  .timeline-item .year { font-size:16px; }
+  .timeline-item .milestone { font-size:12px; }
+  .mission-card, .stat-item, .value-item { padding:22px 18px 24px; }
+  .mission-card h3 { font-size:19px; }
+  .mission-card p { font-size:13.5px; }
+  .team-stats { grid-template-columns:1fr; }
+  .stat-number { font-size:28px; }
+  .contact-inner { padding:48px 24px 54px; border-radius:30px; }
+  .contact-head h2 { font-size:30px; }
+  .contact-text { font-size:15px; margin-bottom:26px; }
+  .contact-main-btn, .contact-secondary-btn { padding:14px 24px; font-size:13.5px; }
+}
+
+/* Ultra pequeño */
+@media (max-width:380px){
+  .hero-title { font-size:26px; }
+  .hero-subtitle { font-size:14px; }
+  .section-header h2 { font-size:22px; }
+  .mission-card h3 { font-size:18px; }
+  .contact-head h2 { font-size:26px; }
+  .contact-text { font-size:14px; }
+  .contact-main-btn, .contact-secondary-btn { font-size:13px; padding:12px 20px; }
+}

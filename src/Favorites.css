@@ -1,0 +1,52 @@
+/* Nuevo diseño alineado a carrito */
+:root { --fav-accent:#1e5bb8; --fav-accent-rgb:30,91,184; --fav-accent-dark:#0a3d82; --fav-accent-grad:linear-gradient(135deg,#1e5bb8 0%,#0d4ca3 45%,#0a3d82 100%); --fav-border:#eceef0; --fav-bg:#f6f7f8; --fav-text:#222; --fav-text-soft:#666; }
+body { background:var(--fav-bg); }
+.favorites-shell { max-width:1240px; margin:0 auto; padding:46px 40px 70px; display:flex; flex-direction:column; gap:32px; }
+.fav-header.enhanced { display:flex; justify-content:space-between; align-items:flex-start; gap:26px; padding:0 0 18px; border-bottom:1px solid var(--fav-border); }
+.fav-title-block h2 { margin:0 0 6px; font-size:1.55rem; font-weight:600; letter-spacing:.35px; }
+.fav-title-block .fav-sub { font-size:.6rem; font-weight:600; letter-spacing:.65px; text-transform:uppercase; color:var(--fav-text-soft); }
+.action-cluster { display:inline-flex; background:#111; border:1px solid #000; padding:6px 8px; gap:6px; border-radius:18px; box-shadow:0 8px 24px -6px rgba(0,0,0,.45),0 2px 4px rgba(0,0,0,.4); }
+.action-cluster .cluster-btn { position:relative; display:inline-flex; align-items:center; justify-content:center; gap:6px; font-size:12px; letter-spacing:.5px; padding:10px 16px; border:none; background:transparent; color:#f5f5f5; cursor:pointer; font-weight:500; border-radius:14px; transition:background .18s,color .18s,filter .18s; }
+.action-cluster .cluster-btn:hover { background:#1f1f1f; }
+.action-cluster .cluster-btn.primary { background:var(--fav-accent-grad); color:#ffffff; font-weight:600; box-shadow:0 4px 14px -4px rgba(var(--fav-accent-rgb),.5); }
+.action-cluster .cluster-btn.primary:hover { filter:brightness(1.07); }
+.action-cluster .cluster-btn.ghost { background:rgba(255,255,255,.07); }
+.action-cluster .cluster-btn.ghost:hover { background:#222; }
+.fav-content { display:flex; flex-direction:column; gap:30px; }
+.favorites-list.modern { display:flex; flex-direction:column; gap:0; padding:4px 0 10px; }
+.favorite-row.modern { display:flex; gap:18px; padding:20px 0 22px; border-bottom:1px solid var(--fav-border); cursor:pointer; transition:.25s; }
+.favorite-row.modern:last-child { border-bottom:none; }
+.favorite-row.modern:hover { background:linear-gradient(90deg,rgba(var(--fav-accent-rgb),0.065),transparent 70%); }
+.fav-thumb { width:72px; height:72px; border-radius:18px; overflow:hidden; background:#f1f2f3; flex-shrink:0; box-shadow:0 2px 6px -2px rgba(0,0,0,.15); position:relative; display:flex; align-items:center; justify-content:center; }
+.fav-thumb img { width:100%; height:100%; object-fit:cover; }
+.fav-discount { position:absolute; bottom:6px; left:6px; background:linear-gradient(135deg,#111,#1e1e1e); color:#f5f5f5; font-size:.55rem; font-weight:600; letter-spacing:.8px; padding:4px 8px; border-radius:14px; box-shadow:0 4px 10px -4px rgba(0,0,0,.5); }
+.fav-info { display:flex; flex-direction:column; flex:1; min-width:0; }
+.fav-info h4 { margin:0 0 6px; font-size:.95rem; font-weight:600; letter-spacing:.3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fav-cat { margin:0 0 6px; font-size:.55rem; font-weight:600; letter-spacing:.6px; text-transform:uppercase; color:var(--fav-text-soft); }
+.fav-prices { display:flex; align-items:center; gap:8px; margin:0; }
+.fav-prices .price { margin:0; font-size:.85rem; font-weight:600; }
+.fav-prices .old { margin:0; font-size:.65rem; color:#777; text-decoration:line-through; font-weight:500; }
+.fav-actions { display:flex; flex-direction:column; gap:10px; align-items:flex-end; }
+.mini-btn { background:#fff; border:1px solid #d5d7db; height:36px; padding:0 14px; border-radius:12px; cursor:pointer; font-size:.6rem; font-weight:600; letter-spacing:.55px; text-transform:uppercase; display:inline-flex; align-items:center; justify-content:center; gap:6px; transition:.18s; }
+.mini-btn:hover { background:#111; color:#fff; border-color:#111; }
+.mini-btn.add { background:var(--fav-accent-grad); color:#ffffff; border:1px solid var(--fav-accent-dark); box-shadow:0 4px 14px -4px rgba(var(--fav-accent-rgb),.5); }
+.mini-btn.add:hover { filter:brightness(1.07); }
+.mini-btn.remove { width:36px; padding:0; }
+.mini-btn.remove svg { stroke:#444; }
+.mini-btn.remove:hover svg { stroke:#fff; }
+.fav-empty.modern-empty { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px 20px; text-align:center; }
+.fav-empty h3 { margin:34px 0 10px; font-size:1.45rem; font-weight:500; }
+.fav-empty .desc { margin:0 0 32px; font-size:.85rem; color:#555; max-width:320px; }
+.empty-visual { position:relative; width:160px; height:160px; }
+.empty-ring { position:absolute; inset:0; border-radius:50%; background:radial-gradient(circle at 70% 30%,rgba(var(--fav-accent-rgb),0.25),transparent 70%); filter:blur(2px); opacity:.55; }
+.empty-icon { position:relative; font-size:3.3rem; display:flex; align-items:center; justify-content:center; width:160px; height:160px; }
+.empty-actions.refined { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+.cluster-like { border:none; cursor:pointer; font-size:12px; font-weight:600; letter-spacing:.5px; padding:14px 20px; border-radius:18px; background:#111; color:#f4f4f4; box-shadow:0 6px 24px -8px rgba(0,0,0,.5); transition:.2s; }
+.cluster-like:hover { background:#1d1d1d; }
+.cluster-like.accent { background:var(--fav-accent-grad); color:#ffffff; }
+.cluster-like.accent:hover { filter:brightness(1.06); }
+.cluster-like.ghost { background:#fff; color:#222; border:1px solid #d0d4d8; }
+.cluster-like.ghost:hover { background:#f6f8f9; }
+@media (max-width:840px){ .favorites-shell { padding:42px 30px 68px; } .fav-header.enhanced { flex-direction:column; align-items:stretch; } .action-cluster { align-self:flex-start; } }
+@media (max-width:560px){ .favorites-shell { padding:34px 22px 60px; } .favorite-row.modern { gap:14px; } .fav-thumb { width:64px; height:64px; } .fav-title-block h2 { font-size:1.4rem; } }
+@media (max-width:420px){ .favorites-shell { padding:30px 18px 56px; } .fav-thumb { width:60px; height:60px; } .favorite-row.modern { padding:18px 0 20px; } .mini-btn { height:34px; padding:0 12px; } }

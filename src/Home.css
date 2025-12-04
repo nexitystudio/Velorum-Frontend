@@ -1,0 +1,1485 @@
+/* 🏠 **HOME.CSS** - PALETA SOFISTICADA COMPLETA */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Source+Sans+3:wght@200;300;400;500;600;700;800&display=swap');
+
+/* === THEME VARIABLES (Gold / Graphite) === */
+:root { --accent:#c9a646; --accent-dark:#b28b24; --accent-light:#e3ce8a; --accent-grad:linear-gradient(135deg,#e3ce8a 0%,#c9a646 55%,#b28b24 100%); --graphite:#0f172a; --graphite-alt:#334155; --surface:rgba(255,255,255,0.98); --radius-lg:20px; --shadow-soft:0 12px 32px -10px rgba(15,23,42,.15); --shadow-hover:0 24px 60px -12px rgba(15,23,42,.25);} 
+
+/* 🌐 RESET GLOBAL */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  background: 
+    linear-gradient(135deg, #ffffff 0%, #f8fafc 25%, #f1f5f9 50%, #e2e8f0 75%, #f8fafc 100%);
+  color: #0f172a;
+  line-height: 1.6;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* 🌟 FONDO GLOBAL CON PALETA SOFISTICADA - DESHABILITADO TEMPORALMENTE */
+body::before {
+  display: none; /* ELIMINADO PARA DEBUGGING */
+}
+
+/* 🌟 PARTÍCULAS MINIMALISTAS - DESHABILITADAS TEMPORALMENTE */
+body::after {
+  display: none; /* ELIMINADO PARA DEBUGGING */
+}
+
+@keyframes floatBackground {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    opacity: 0.7;
+  }
+  25% { 
+    transform: scale(1.02) rotate(1deg);
+    opacity: 0.9;
+  }
+  50% { 
+    transform: scale(1.05) rotate(0deg);
+    opacity: 0.8;
+  }
+  75% { 
+    transform: scale(1.02) rotate(-1deg);
+    opacity: 0.9;
+  }
+}
+
+@keyframes sparkleMove {
+  0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  100% { transform: translateY(-250px) translateX(120px) rotate(360deg); }
+}
+
+/* 🎨 HOME CONTAINER MINIMALISTA - MÁS CLARO */
+.home-minimal {
+  padding-top: 0;
+  width: 100%;
+  max-width: 100vw;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 250, 252, 0.97) 100%);
+  position: relative;
+  backdrop-filter: blur(3px); /* Reducido aún más para mayor claridad */
+  box-sizing: border-box;
+}
+
+/* Evita que algún contenedor cree scroll horizontal oculto */
+.home-minimal, .hero-minimal, .featured-minimal, .categories-section { 
+  overflow-x: hidden; 
+  width: 100%;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+/* 🎭 HERO SECTION MINIMALISTA - AJUSTADO */
+.hero-minimal {
+  min-height: 95vh;
+  display: flex;
+  align-items: center;
+  background: none;
+  padding: 60px 0 40px; /* Reducido de 80px a 60px arriba */
+  position: relative;
+  overflow: hidden;
+}
+
+/* 🎬 VIDEO DE FONDO MEJORADO - IGUAL A CUANDO ESTÁ LOGUEADO */
+.hero-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -3;
+  opacity: 0.8; /* Aumentado aún más para mayor claridad */
+  filter: brightness(1.3) contrast(1.1) saturate(1.1); /* Más brillo y saturación */
+}
+
+/* 🎨 OVERLAY SOFISTICADO - IGUAL A CUANDO ESTÁ LOGUEADO */
+.hero-minimal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #09101A; /* Cambiar el color del filtro sobre el video */
+  opacity: 0.9; /* Subir un poco la opacidad para mayor visibilidad */
+  z-index: -2;
+  pointer-events: none;
+}
+
+/* 📦 CONTENEDOR HERO - CENTRADO VERTICALMENTE */
+.hero-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  transform: translateY(-20px); /* Sube todo el contenido 20px */
+}
+
+/* 📝 TEXTO HERO - POSICIÓN AJUSTADA */
+.hero-text {
+  padding-right: 40px;
+  animation: slideInFromLeft 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translateY(-10px); /* Sube el texto específicamente 10px más */
+}
+
+.hero-subtitle {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  color: #64748b;
+  margin-bottom: 16px; /* Reducido de 20px a 16px */
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.2s forwards;
+  position: relative;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.hero-subtitle::after { content:''; position:absolute; bottom:-6px; left:0; width:64px; height:3px; background:var(--accent-grad); border-radius:2px; }
+
+/* TÍTULO PRINCIPAL ELEGANTE */
+.hero-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 68px; /* base desktop */
+  font-weight: 800;
+  line-height: 1.05;
+  margin-bottom: 24px; /* Reducido de 28px a 24px */
+  color: #D3D3CE; /* Cambiar el color de la tipografía en el hero */
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.4s forwards;
+  letter-spacing: -2px;
+}
+
+/* Escalado fluido del título entre móviles y desktop */
+@media (min-width:480px){
+  .hero-title { font-size: clamp(44px, 8vw, 68px); }
+}
+
+.accent-text { background: var(--accent-grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  font-weight: 800;
+  display: inline-block;
+}
+
+/* DESCRIPCIÓN SOFISTICADA */
+.hero-description {
+  font-size: 22px;
+  color: #D3D3CE; /* Cambiar el color de la tipografía en el hero */
+  margin-bottom: 32px; /* Reducido de 40px a 32px */
+  line-height: 1.6;
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.6s forwards;
+  max-width: 520px;
+  font-weight: 400;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+/* 🔘 BOTONES MINIMALISTAS SOFISTICADOS */
+.action-buttons {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeInUp 1.2s ease-out 1s forwards;
+  margin-top: 10px; /* Espacio adicional arriba de los botones */
+}
+
+/* Variante refinada sin bloque de bienvenida */
+.action-buttons.refined { gap:14px; }
+.action-buttons .pill { border-radius:40px; padding:16px 38px; font-size:15px; letter-spacing:.8px; }
+.btn-primary.pill { background:var(--accent-grad); color:#1a1200; font-weight:600; box-shadow:0 8px 26px -6px rgba(201,166,70,.45); }
+.btn-primary.pill:hover { filter:brightness(1.05); box-shadow:0 14px 38px -8px rgba(201,166,70,.55); }
+.btn-secondary.pill { background:#fff; border:1px solid #d9d9d9; color:#222; font-weight:500; box-shadow:0 4px 10px rgba(0,0,0,.05); }
+.btn-secondary.pill:hover { background:#111; color:#fff; border-color:#111; }
+
+/* Botón principal minimalista */
+.btn-primary { 
+  background: #0D4CA3 !important;
+  color: #D3D3CE;
+  padding: 22px 44px;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft), 0 0 0 1px rgba(255,255,255,.1), inset 0 1px 0 rgba(255,255,255,.15);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  backdrop-filter: blur(20px);
+}
+
+/* Botón secundario para usuario logueado */
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.98);
+  color: #0f172a;
+  padding: 22px 44px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 200px;
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.5px;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a, #334155);
+  transition: width 0.4s ease;
+  z-index: -1;
+}
+
+.btn-secondary:hover::before {
+    width: 100%; 
+}
+
+.btn-secondary:hover {
+    color: #fff; 
+    border-color: var(--graphite); 
+    transform: translateY(-4px) scale(1.02); 
+    box-shadow: var(--shadow-hover); 
+    background: var(--graphite); 
+}
+
+/* Welcome text sofisticado - MÁS PEQUEÑO */
+/* welcome-text removido */
+
+/* 🖼️ HERO VISUAL SOFISTICADO */
+.hero-visual {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideInFromRight 1.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+  transform: translateY(-15px); /* Sube la imagen del reloj 15px */
+}
+
+/* 🌟 SHOWCASE MINIMALISTA */
+.watch-showcase {
+  position: relative;
+  width: 400px;
+  height: 400px;
+  margin-top: -30px; /* Sube específicamente el showcase */
+}
+
+.watch-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 250, 252, 0.98) 100%);
+  box-shadow: 
+    0 40px 120px rgba(15, 23, 42, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 0.9),
+    inset 0 0 80px rgba(15, 23, 42, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: pulse 5s ease-in-out infinite;
+  backdrop-filter: blur(50px);
+  border: 4px solid rgba(255, 255, 255, 0.8);
+}
+
+.hero-watch-image {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  filter: none;
+  transition: none;
+}
+
+.watch-frame:hover .hero-watch-image {
+  filter: brightness(1.1) contrast(1.15) saturate(1);
+  transform: scale(1.03);
+}
+
+/* 🏷️ ELEMENTOS FLOTANTES MINIMALISTAS CON ANIMACIÓN SUAVE */
+.floating-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/* 📊 OVERRIDE STATS (Hombre / Mujer) - sin degradé y bien distribuidas */
+.collection-stats { padding:58px 20px 46px; background:var(--bg-secondary); }
+.collection-stats .stats-container { max-width:1180px; margin:0 auto; display:flex; flex-direction:column; gap:28px; }
+.collection-stats .stat-item { flex:1; display:flex; align-items:center; gap:14px; background:#ffffff; border:1px solid #e2e8f0; border-radius:22px; padding:24px 38px 26px; box-shadow:0 4px 18px -6px rgba(15,23,42,.10); position:relative; transition:box-shadow .25s, transform .25s; }
+.collection-stats .stat-item:before { display:none !important; } /* anula pseudo radial del estilo global */
+.collection-stats .stat-item:hover { transform:translateY(-2px); box-shadow:0 10px 28px -10px rgba(15,23,42,.22); }
+.collection-stats .stat-number { background:none !important; -webkit-text-fill-color:initial !important; color:#0f172a; font-size:34px; font-weight:600; letter-spacing:-1px; }
+.collection-stats .stat-label { color:#334155; font-size:12.5px; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+@media (min-width:760px){ .collection-stats .stats-container { flex-direction:row; } }
+@media (min-width:760px){ .collection-stats .stat-item { justify-content:center; } }
+@media (max-width:759px){ .collection-stats .stat-item { justify-content:flex-start; } }
+
+/* 🎛 PRODUCT CARD ACTION ICON BUTTONS (unified design) */
+.product-card .product-actions { display:flex; gap:14px; }
+.icon-btn { width:46px; height:46px; border-radius:14px; background:#ffffff; border:1px solid #e2e8f0; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer; color:#0f172a; box-shadow:0 6px 18px -6px rgba(15,23,42,.18),0 0 0 1px rgba(226,232,240,.6); transition:.28s background, .28s box-shadow, .28s transform, .28s color; }
+.icon-btn .icon { display:block; }
+.icon-btn:hover { background:#0f172a; color:#ffffff; box-shadow:0 20px 36px -14px rgba(15,23,42,.35),0 0 0 1px #0f172a; transform:translateY(-3px); }
+.wishlist-btn.active { background:#0f172a; color:var(--accent); border-color:#0f172a; }
+.wishlist-btn.active:hover { background:#0f172a; color:var(--accent); }
+.quick-view-btn:focus-visible, .wishlist-btn:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+.visually-hidden{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0; }
+
+.element {
+  position: absolute;
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 250, 252, 0.98) 100%);
+  padding: 16px 24px;
+  border-radius: 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  box-shadow: 
+    0 15px 50px rgba(15, 23, 42, 0.1),
+    0 0 0 1px rgba(226, 232, 240, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  animation: floatSimple 4s ease-in-out infinite;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.element:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.15);
+}
+
+.element-1 {
+  top: 6%;
+  right: -18%;
+  animation-delay: 0s;
+  background: linear-gradient(135deg, rgba(255, 77, 79, 0.08), rgba(255, 255, 255, 0.99));
+}
+
+.element-2 {
+  bottom: 7%;
+  left: -18%;
+  animation-delay: -1s;
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.08), rgba(255, 255, 255, 0.99));
+}
+
+.element-3 {
+  top: -1%;
+  left: -12%;
+  animation-delay: -2s;
+  background: linear-gradient(135deg, rgba(100, 116, 139, 0.08), rgba(255, 255, 255, 0.99));
+}
+
+.element-4 {
+  bottom: 3%;
+  right: -18%;
+  animation-delay: -3s;
+  background: linear-gradient(135deg, rgba(226, 232, 240, 0.3), rgba(255, 255, 255, 0.99));
+}
+
+/* 🎯 INDICADORES SOFISTICADOS CON ANIMACIÓN SUAVE */
+.image-indicators {
+  position: absolute;
+  bottom: 9.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 13px;
+  z-index: 10;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  position: relative;
+  animation: pulseSimple 2s ease-in-out infinite;
+  animation-delay: calc(var(--index) * 0.3s);
+}
+
+.indicator.active,
+.indicator:hover {
+  background: #303030;
+  transform: scale(1.4);
+  box-shadow: 
+    0 0 10px rgba(43, 43, 43, 0.6),
+    0 0 0 3px rgba(141, 141, 141, 0.2);
+}
+
+/* 🎬 ANIMACIONES SIMPLES Y SUAVES */
+
+/* Flotación simple de arriba hacia abajo para elementos */
+@keyframes floatSimple {
+  0%, 100% { 
+    transform: translateY(0px);
+  }
+  50% { 
+    transform: translateY(-12px);
+  }
+}
+
+/* Flotación suave para el contenedor de indicadores */
+@keyframes floatIndicators {
+  0%, 100% { 
+    transform: translateX(-50%) translateY(0px);
+  }
+  50% { 
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+/* Pulsación muy sutil para indicadores individuales */
+@keyframes pulseSimple {
+  0%, 100% { 
+    opacity: 0.8;
+  }
+  50% { 
+    opacity: 1;
+  }
+}
+
+/* 🎯 CONFIGURACIÓN DE VARIABLES CSS PARA INDICADORES */
+.indicator:nth-child(1) { --index: 0; }
+.indicator:nth-child(2) { --index: 1; }
+.indicator:nth-child(3) { --index: 2; }
+.indicator:nth-child(4) { --index: 3; }
+.indicator:nth-child(5) { --index: 4; }
+
+/* 📱 RESPONSIVE PARA ANIMACIONES SIMPLES */
+@media (max-width: 768px) {
+  .element {
+    animation-duration: 5s; /* Un poco más lento en móvil */
+  }
+  
+  .image-indicators {
+    animation-duration: 4s;
+  }
+  
+  .indicator {
+    animation-duration: 3s;
+  }
+}
+
+@media (max-width: 480px) {
+  @keyframes floatSimple {
+    0%, 100% { 
+      transform: translateY(0px);
+    }
+    50% { 
+      transform: translateY(-8px); /* Menos movimiento en móviles pequeños */
+    }
+  }
+  
+  @keyframes floatIndicators {
+    0%, 100% { 
+      transform: translateX(-50%) translateY(0px);
+    }
+    50% { 
+      transform: translateX(-50%) translateY(-4px);
+    }
+  }
+}
+
+/* 🎯 INDICADORES SOFISTICADOS */
+.image-indicators {
+  position: absolute;
+  bottom: 9.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 13px;
+  z-index: 10;
+}
+
+.indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  position: relative;
+}
+
+.indicator.active,
+.indicator:hover {
+  background: #303030;
+  transform: scale(1.4);
+  box-shadow: 
+    0 0 10px rgba(43, 43, 43, 0.6),
+    0 0 0 3px rgba(141, 141, 141, 0.2);
+}
+
+/* ⭐ PRODUCTOS DESTACADOS SOFISTICADOS */
+.featured-minimal {
+  padding: 140px 5% 120px;
+  background: 
+    linear-gradient(135deg, rgba(248, 250, 252, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width:768px){
+  .hero-minimal { min-height: 78vh; padding:40px 0 10px; }
+  .hero-container { gap:32px; }
+  .hero-title { margin-top:4px; }
+  .featured-minimal { padding:70px 5% 90px; }
+  .section-header { margin-bottom:34px; }
+}
+
+@media (max-width:520px){
+  .hero-minimal { min-height:72vh; padding:34px 0 6px; }
+  .featured-minimal { padding:60px 4% 80px; }
+}
+
+@media (max-width:420px){
+  .hero-minimal { min-height:66vh; padding:28px 0 4px; }
+  .featured-minimal { padding:54px 4% 70px; }
+  .hero-title { font-size:42px; }
+}
+
+.featured-minimal::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(15, 23, 42, 0.04) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 77, 79, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 10%, rgba(100, 116, 139, 0.03) 0%, transparent 40%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.featured-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* 📋 HEADER DE SECCIÓN SOFISTICADO */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 100px;
+  animation: fadeInUp 0.8s ease-out;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.section-header h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 52px;
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 16px;
+  position: relative;
+  letter-spacing: -1px;
+}
+
+.section-header h2::after { content:''; position:absolute; bottom:-16px; left:0; width:120px; height:4px; background:var(--accent-grad); border-radius:2px; }
+
+.section-subtitle {
+  font-size: 22px;
+  color: #64748b;
+  margin: 0;
+  font-weight: 400;
+  max-width: 550px;
+  line-height: 1.6;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+/* 🔘 BOTÓN VER TODO SOFISTICADO */
+.view-all-btn {
+  background: var(--graphite);
+  color: white;
+  border: none;
+  padding: 18px 36px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 32px rgba(15, 23, 42, 0.25);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.view-all-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 77, 79, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.view-all-btn:hover::before {
+  left: 100%;
+}
+
+.view-all-btn:hover { transform:translateY(-3px) scale(1.02); box-shadow:var(--shadow-hover); background:linear-gradient(135deg,#111,#1e293b); }
+
+/* Versión móvil más compacta del botón */
+@media (max-width:768px){
+  .view-all-btn { padding:12px 22px; font-size:13px; border-radius:10px; letter-spacing:.4px; box-shadow:0 6px 18px rgba(15,23,42,.18); }
+  .view-all-btn:hover { transform:translateY(-2px) scale(1.015); }
+}
+
+/* 🛍️ CARRUSEL DE PRODUCTOS SOFISTICADO */
+.products-carousel {
+  display: grid;
+  /* Force 4 columns on wide screens */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 50px;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+
+@media (max-width: 1200px){
+  /* 3 columns for medium-large screens */
+  .products-carousel { grid-template-columns: repeat(3, 1fr); gap:40px; }
+}
+@media (max-width: 900px){
+  /* 2 columns for tablets */
+  .products-carousel { grid-template-columns: repeat(2, 1fr); gap:36px; }
+}
+@media (max-width: 680px){
+  /* 1 column on small devices (will be converted to carousel under 480px) */
+  .products-carousel { grid-template-columns: 1fr; gap:30px; }
+}
+@media (max-width: 480px){
+  .products-carousel { grid-template-columns: 1fr; gap:26px; }
+}
+
+/* 📦 TARJETA DE PRODUCTO MINIMALISTA */
+.product-card-new {
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 250, 252, 0.98) 100%);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 
+    0 20px 70px rgba(15, 23, 42, 0.08),
+    0 0 0 1px rgba(226, 232, 240, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-card-new::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(15, 23, 42, 0.04), transparent);
+  transition: left 0.6s;
+  z-index: 1;
+}
+
+.product-card-new:hover::before {
+  left: 100%;
+}
+
+.product-card-new:hover {
+  transform: translateY(-20px) scale(1.02);
+  box-shadow: 
+    0 40px 120px rgba(15, 23, 42, 0.15),
+    0 0 0 1px rgba(255, 255, 255, 1),
+    inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+/* 🏷️ BADGES SOFISTICADOS */
+.product-badge {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.20);
+  border-radius: 40px; /* pill */
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .8px;
+  z-index: 5;
+  backdrop-filter: blur(12px);
+  font-family: 'Montserrat', sans-serif;
+  box-shadow: 0 4px 14px -4px rgba(0,0,0,.25);
+}
+
+.product-badge.bestseller {
+  background: linear-gradient(135deg, #0f172a, #334155);
+  color: white;
+  box-shadow: 0 6px 20px rgba(15, 23, 42, 0.3);
+}
+
+.product-badge.nuevo {
+  background: linear-gradient(135deg, #ff4d4f, #ff7875);
+  color: white;
+  box-shadow: 0 6px 20px rgba(255, 77, 79, 0.3);
+}
+
+.product-badge.premium {
+  background: linear-gradient(135deg, #64748b, #94a3b8);
+  color: white;
+  box-shadow: 0 6px 20px rgba(100, 116, 139, 0.3);
+}
+
+.product-badge.oferta {
+  background: linear-gradient(135deg, #ef4444, #f87171);
+  color: white;
+  box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Nuevos estilos para evitar que se vean "planos" (Elegante / Deportivo / Exclusivo) */
+.product-badge.elegante {
+  background: linear-gradient(135deg, #d4af37, #f1e4b3);
+  color: #1a1200;
+  box-shadow: 0 6px 18px rgba(212, 175, 55, 0.35);
+  text-shadow: 0 1px 0 rgba(255,255,255,.6);
+}
+
+.product-badge.deportivo {
+  background: linear-gradient(135deg, #0ea5e9, #0369a1);
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(14, 165, 233, 0.35);
+}
+
+.product-badge.exclusivo {
+  background: linear-gradient(135deg, #7e22ce, #a855f7);
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(126, 34, 206, 0.35);
+}
+
+/* 🖼️ IMAGEN DE PRODUCTO */
+.product-image-new {
+  width: 100%;
+  height: 240px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px 28px 0 0;
+  background: linear-gradient(145deg,#ffffff,#f1f5f9);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.product-image-new img {
+  width:100%;
+  height:100%;
+  object-fit:cover; /* desktop: recorte elegante */
+  transition: transform .5s ease, filter .5s ease;
+  filter: brightness(1.03) contrast(1.05) saturate(.96);
+}
+.product-card-new:hover .product-image-new img { transform:scale(1.06); filter:brightness(1.07) contrast(1.1) saturate(1); }
+@media (max-width:900px){ .product-image-new { height:300px; } }
+@media (max-width:680px){
+  .product-image-new { height:260px; padding:12px 10px; }
+  .product_image_new img { width:auto; height:100%; object-fit:contain; } /* móvil: mostrar reloj completo */
+}
+@media (max-width:480px){
+  .product-image-new { height:230px; }
+}
+
+/* ❤️ FAVORITE BUTTON SOLO (arriba derecha) */
+.product-card-new .product-actions { position:absolute; top:14px; right:14px; z-index:5; }
+.fav-btn { width:44px; height:44px; border:none; background:#ffffff; border-radius:14px; display:flex; align-items:center; justify-content:center; color:#0f172a; box-shadow:0 4px 14px -6px rgba(15,23,42,.25),0 0 0 1px rgba(15,23,42,.06); cursor:pointer; transition:background .15s ease, color .15s ease, transform .15s ease, box-shadow .15s ease, opacity .15s ease; opacity:.15; }
+.product-card-new:hover .fav-btn { opacity:1; }
+.fav-btn svg { width:24px; height:24px; }
+.fav-btn:hover { background:#0f172a; color:#c71f33; /* rojo */ }
+.fav-btn.active { background:#0f172a; color:var(--accent); }
+.fav-btn.active:hover { color:var(--accent); }
+@media (hover:none){ .fav-btn { opacity:1; } }
+
+/* CONTENIDO DE PRODUCTOS - AJUSTADO */
+.product-info-new {
+  padding: 24px;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.product-info-new h4 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px;
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+  min-height: 52px;
+}
+
+.product-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.stars {
+  color: #ff4d4f;
+  font-size: 16px;
+}
+
+.rating-text {
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+/* 💰 PRECIOS SOFISTICADOS */
+.product-pricing {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 18px;
+  margin-top: auto;
+}
+
+.product-price {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0f172a;
+  font-family: 'Montserrat', sans-serif;
+  letter-spacing: -1px;
+  margin: 0;
+}
+
+.original-price {
+  font-size: 22px;
+  color: #64748b; /* más contraste */
+  text-decoration: line-through;
+  font-weight: 600; /* un poco más grueso */
+  margin: 0;
+  letter-spacing: -.3px;
+}
+
+/* 🔘 BOTÓN AGREGAR AL CARRITO SOFISTICADO */
+.add-to-cart-new {
+  width: 100%;
+  background: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.add-to-cart-new::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 77, 79, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.add-to-cart-new:hover::before {
+  left: 100%;
+}
+
+.add-to-cart-new:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(15, 23, 42, 0.3);
+  background: linear-gradient(135deg, #1e293b 0%, #475569 100%);
+}
+
+.add-to-cart-new.in-cart {
+  background: linear-gradient(135deg,#e3ce8a,#c9a646 55%,#b28b24);
+  color:#1a1200;
+  box-shadow:0 10px 32px -6px rgba(201,166,70,.45);
+}
+.add-to-cart-new.in-cart:hover {
+  filter:brightness(1.07);
+  transform:translateY(-2px) scale(1.02);
+}
+
+/* OCULTAR ELEMENTOS QUE NO EXISTEN EN EL JSX */
+.product-overlay,
+.quick-view-btn,
+.wishlist-btn {
+  display: none;
+}
+
+/* 🏷️ CATEGORÍAS SECTION SOFISTICADA */
+.categories-section {
+  padding: 100px 5% 80px; /* Reducido de 140px 5% 120px */
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.categories-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(15, 23, 42, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(255, 77, 79, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(100, 116, 139, 0.02) 0%, transparent 50%);
+  z-index: 0;
+}
+
+.categories-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* 📋 INTRO DE CATEGORÍAS SOFISTICADA - ESPACIADO REDUCIDO */
+.section-intro {
+  text-align: center;
+  margin-bottom: 80px; /* Reducido de 120px a 80px */
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.categories-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 48px; /* Reducido de 58px a 48px */
+  font-weight: 800;
+  color: #0f172a;
+  margin-bottom: 20px; /* Reducido de 24px a 20px */
+  position: relative;
+  letter-spacing: -1.5px;
+}
+
+.categories-title::after {
+  content: '';
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 4px;
+  /* Thematic gold accent underline replacing legacy red */
+  background: var(--accent-grad);
+  border-radius: 2px;
+  animation: gradientShift 4s ease-in-out infinite;
+}
+
+.categories-subtitle {
+  font-size: 20px; /* Reducido de 24px a 20px */
+  color: #64748b;
+  max-width: 650px; /* Reducido de 750px a 650px */
+  margin: 0 auto;
+  line-height: 1.6;
+  font-weight: 400;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+/* 🏷️ GRID DE CATEGORÍAS SOFISTICADO - MÁS COMPACTO */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Reducido más para tablets */
+  gap: 40px; /* Reducido de 60px a 40px */
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+@media (max-width: 840px){
+  .categories-grid { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:34px; }
+}
+@media (max-width: 600px){
+  .categories-grid { grid-template-columns: 1fr; gap:30px; }
+}
+
+/* 📦 TARJETA DE CATEGORÍA SOFISTICADA - MÁS COMPACTA */
+.category-card {
+  background: 
+    linear-gradient(135deg, rgba(255, 255, 255, 0.99) 0%, rgba(248, 250, 252, 0.98) 100%);
+  border-radius: 16px; /* Reducido de 20px a 16px */
+  overflow: hidden;
+  box-shadow: 
+    0 20px 60px rgba(15, 23, 42, 0.08), /* Reducido sombra */
+    0 0 0 1px rgba(226, 232, 240, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  backdrop-filter: blur(40px);
+  border: 1px solid rgba(226, 232, 240, 0.3);
+  position: relative;
+  overflow: hidden;
+  min-height: 380px; /* Reducido de 450px a 380px */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Subtle accent glow layer */
+.category-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 85% 15%, rgba(227, 206, 138, 0.15), transparent 55%),
+              radial-gradient(circle at 15% 85%, rgba(201, 166, 70, 0.12), transparent 60%);
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.category-card:hover {
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 28px 70px -18px rgba(15,23,42,0.28), 0 0 0 1px rgba(201,166,70,0.35), inset 0 1px 0 rgba(255,255,255,0.9);
+  border-color: rgba(201,166,70,0.45);
+}
+
+/* 🖼️ IMAGEN DE CATEGORÍA - MÁS PEQUEÑA */
+.category-image {
+  height: 220px; /* Reducido de 280px a 220px */
+  overflow: hidden;
+  position: relative;
+}
+
+.category-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform .6s ease, filter .6s ease;
+  filter: brightness(0.9) saturate(1.05);
+}
+
+.category-card:hover .category-image img {
+  transform: scale(1.08);
+  filter: brightness(1) saturate(1.12);
+}
+
+/* Fallback background tones if image fails (class on parent) */
+.category-card.luxury .category-image { background: linear-gradient(135deg, #1f2933, #0f172a); }
+.category-card.sport .category-image { background: linear-gradient(135deg, #1d3b24, #0f172a); }
+.category-card.classic .category-image { background: linear-gradient(135deg, #2d2d30, #0f172a); }
+
+.category-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(15,23,42,0) 55%, rgba(15,23,42,0.35) 100%);
+  pointer-events: none;
+}
+
+/* 📝 CONTENIDO DE CATEGORÍA - MÁS COMPACTO */
+.category-content {
+  padding: 28px; /* Reducido de 36px a 28px */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+
+.category-content h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 26px; /* Reducido de 32px a 26px */
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 10px; /* Reducido de 12px a 10px */
+  line-height: 1.3;
+  letter-spacing: -0.5px;
+}
+
+.category-content p {
+  font-size: 18px; /* Reducido de 22px a 18px */
+  font-weight: 600;
+  /* Replace red with brand accent gradient */
+  color: var(--accent-dark);
+  background: var(--accent-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin-bottom: 6px; /* Reducido de 8px a 6px */
+  font-family: 'Montserrat', sans-serif;
+}
+
+.category-count {
+  font-size: 14px; /* Reducido de 16px a 14px */
+  color: #64748b;
+  margin-bottom: 24px; /* Reducido de 28px a 24px */
+  font-weight: 500;
+  font-family: 'Source Sans 3', sans-serif;
+}
+
+/* 🔘 BOTÓN DE CATEGORÍA SOFISTICADO - MÁS COMPACTO */
+.category-btn {
+  background: var(--accent-grad);
+  color: #0f172a;
+  border: none;
+  padding: 12px 24px; /* Reducido de 16px 32px a 12px 24px */
+  border-radius: 10px; /* Reducido de 12px a 10px */
+  font-size: 14px; /* Reducido de 16px a 14px */
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  overflow: hidden;
+  align-self: flex-start;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0.05) 55%, rgba(255,255,255,0) 70%);
+  mix-blend-mode: overlay;
+  opacity: 0.7;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+
+.category-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px -6px rgba(15,23,42,0.35), 0 0 0 1px rgba(201,166,70,0.55);
+  color: #0f172a;
+}
+
+.category-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 16px -4px rgba(15,23,42,0.4), 0 0 0 1px rgba(201,166,70,0.6);
+}
+
+.category-btn:focus-visible {
+  outline: 2px solid var(--accent-light);
+  outline-offset: 2px;
+}
+
+/* 📱 RESPONSIVE SOFISTICADO */
+@media (max-width: 768px) {
+  .hero-background-video {
+  object-position: center center;
+  opacity: 1; /* máximo para que se vea */
+  filter: brightness(1.05) contrast(1.05); /* ligera mejora sin lavar */
+  }
+  
+  .hero-container { grid-template-columns:1fr; gap:22px; text-align:center; padding:0 18px; transform:translateY(-4px); width:100%; }
+  .hero-minimal { background:transparent; }
+  .hero-minimal::after { /* mismo film que desktop para máxima legibilidad */
+    background:
+      radial-gradient(circle at 30% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+      radial-gradient(circle at 70% 80%, rgba(255, 77, 79, 0.01) 0%, transparent 50%),
+      linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.92) 100%);
+  }
+  /* Badge reducido SOLO móvil */
+  .product-badge {
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 28px;
+    font-size: 8px;
+    font-weight: 600;
+    letter-spacing: .6px;
+    box-shadow: 0 3px 8px -4px rgba(0,0,0,.25);
+    backdrop-filter: blur(8px);
+  }
+  /* Cuando se oculta el círculo permitir que el texto ocupe ancho óptimo */
+  .hero-text { max-width:640px; margin:0 auto; }
+  .hero-visual, .watch-showcase, .watch-frame { display:none !important; }
+  
+  .hero-minimal {
+    min-height: 90vh;
+  padding: 20px 0 10px; /* Más compacto en móvil */
+  }
+  
+  .hero-text {
+    padding-right: 0;
+    transform: translateY(-20px); /* Más subida en móvil */
+  }
+  
+  .hero-visual {
+    transform: translateY(-25px); /* Más subida en móvil */
+  }
+  
+  .watch-showcase {
+    width: 350px;
+    height: 350px;
+    margin-top: -40px; /* Más subida en móvil */
+  }
+  
+  .hero-watch-image {
+    width: 260px;
+    height: 260px;
+  }
+  
+  .hero-title {
+  font-size: 46px;
+  line-height:1.08;
+  margin-bottom: 14px;
+  letter-spacing:-1.5px;
+  }
+  
+  .hero-description {
+  font-size: 18px;
+  line-height:1.5;
+  text-align: center;
+  margin: 0 auto 20px;
+  max-width: 560px;
+  }
+  
+  .action-buttons {
+  justify-content: center;
+  gap: 12px;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0;
+  }
+  
+  .btn-primary,
+  .btn-secondary {
+  width: 100%;
+  max-width: 260px;
+  padding: 14px 24px;
+  font-size: 14px;
+  min-width: 0; /* evita forzar ancho en pantallas muy angostas */
+  }
+  
+  .welcome-text {
+    font-size: 16px;
+    padding: 16px 24px; /* Más compacto en móvil */
+    text-align: center;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width:680px){
+  .product-card-new { border-radius:18px; }
+  .product-image-new { height:260px; padding:0; }
+  .product_image_new img { width:100%; height:100%; object-fit:cover; }
+  .product-info_new h4 { font-size:21px; }
+  .product-price { font-size:27px; }
+  .original-price { font-size:17px; }
+  .add-to-cart-new { padding:14px 22px; font-size:13.5px; }
+}
+
+@media (max-width: 1200px) {
+  .categories-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+  }
+  
+  .category-card {
+    min-height: 350px;
+  }
+  
+  .category-image {
+    height: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .categories-section {
+    padding: 80px 4% 60px;
+  }
+  
+  .section-intro {
+    margin-bottom: 60px;
+  }
+  
+  .categories-title {
+    font-size: 36px;
+  }
+  
+  .categories-subtitle {
+    font-size: 18px;
+  }
+  
+  .categories-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .category-card {
+    min-height: 320px;
+  }
+  
+  .category-image {
+    height: 180px;
+  }
+  
+  .category-content {
+    padding: 24px;
+  }
+  
+  .category-content h3 {
+    font-size: 24px;
+  }
+  
+  .category-content p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .categories-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .category-card {
+    min-height: 300px;
+  }
+  
+  .category-image {
+    height: 160px;
+  }
+  
+  .category-content {
+    padding: 20px;
+  }
+  
+  .category-content h3 {
+    font-size: 22px;
+  }
+}
+
+/* Ultra pequeños (<=360px) */
+@media (max-width:360px){
+  .hero-title { font-size:36px; }
+  .hero-description { font-size:17px; }
+  .action-buttons .pill { padding:14px 22px; font-size:14px; }
+  .product-card-new { border-radius:16px; }
+}
+@media (max-width:680px){
+  .product-card-new { border-radius:18px; }
+  .product-image-new { height:260px; }
+  .product-info-new { padding:28px; }
+  .product-info-new h4 { font-size:22px; }
+  .product-price { font-size:28px; }
+  .original-price { font-size:18px; }
+  .add-to-cart-new { padding:16px 24px; font-size:14px; }
+}
+@media (max-width:480px){
+  /* Transform listado en carrusel táctil sencillo */
+  .products-carousel { display:flex; overflow-x:auto; scroll-snap-type:x mandatory; gap:18px; padding:4px 6px 6px; -webkit-overflow-scrolling:touch; }
+  .products-carousel .product-card-new { flex:0 0 82%; scroll-snap-align:start; }
+  .section-header { margin-bottom:54px; }
+  .section-header h2 { font-size:38px; margin-bottom:8px; }
+  .section-subtitle { font-size:18px; }
+}
+@media (max-width:380px){
+  .products-carousel .product-card-new { flex:0 0 88%; }
+  .hero-description { font-size:17.5px; }
+}
+
+/* 📱 OCULTAR IMAGEN DEL RELOJ EN MÓVIL */
+@media (max-width: 768px) {
+  .hero-watch-image {
+    display: none;
+  }
+  
+  .watch-showcase {
+    display: none;
+  }
+  
+  .hero-visual {
+    display: none;
+  }
+  
+  /* Centrar el texto del hero en móvil */
+  .hero-text {
+    text-align: center;
+    padding-right: 0;
+    max-width: 100%;
+  }
+  
+  /* Hero container en una columna */
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  /* Centrar botones */
+  .action-buttons {
+    justify-content: center;
+  }
+  
+  /* Mantener el mismo overlay/filtro del video que en PC */
+  .hero-minimal::after {
+    background: #09101A;
+    opacity: 0.9;
+  }
+}

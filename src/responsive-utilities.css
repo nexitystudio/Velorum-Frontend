@@ -1,0 +1,256 @@
+/* ========================================
+   🎨 UTILIDADES RESPONSIVE - VELORUM
+   Previene desorden de elementos con zoom y diferentes resoluciones
+   ======================================== */
+
+/* === CONTENEDORES PRINCIPALES === */
+.container-responsive {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.container-centered {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 4%;
+  box-sizing: border-box;
+}
+
+/* === GRIDS RESPONSIVE === */
+.grid-responsive {
+  display: grid;
+  gap: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.grid-auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+.grid-auto-fill {
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+}
+
+/* === FLEX RESPONSIVE === */
+.flex-responsive {
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-no-shrink {
+  flex-shrink: 0;
+}
+
+/* === PREVENCIÓN DE OVERFLOW === */
+.no-overflow {
+  overflow: hidden;
+}
+
+.no-overflow-x {
+  overflow-x: hidden;
+}
+
+.no-overflow-y {
+  overflow-y: hidden;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* === IMÁGENES RESPONSIVE === */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* === TEXTO RESPONSIVE === */
+.text-no-wrap {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-wrap {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* === ASPECT RATIOS === */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+  width: 100%;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+  width: 100%;
+}
+
+/* === ESPACIADO RESPONSIVE === */
+.spacing-responsive {
+  padding: clamp(1rem, 4vw, 3rem);
+}
+
+.gap-responsive {
+  gap: clamp(0.5rem, 2vw, 2rem);
+}
+
+/* === MEDIA QUERIES COMUNES === */
+
+/* Mobile First - Móviles pequeños */
+@media (max-width: 480px) {
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  .container-centered {
+    padding: 0 3%;
+  }
+  
+  .text-mobile-sm {
+    font-size: 14px;
+  }
+}
+
+/* Móviles grandes */
+@media (min-width: 481px) and (max-width: 767px) {
+  .hide-mobile-lg {
+    display: none !important;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hide-tablet {
+    display: none !important;
+  }
+  
+  .show-mobile {
+    display: none !important;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .hide-desktop {
+    display: none !important;
+  }
+  
+  .show-mobile,
+  .show-tablet {
+    display: none !important;
+  }
+}
+
+/* === UTILIDADES DE ANCHO === */
+.w-100 {
+  width: 100%;
+}
+
+.w-auto {
+  width: auto;
+}
+
+.min-w-0 {
+  min-width: 0;
+}
+
+.max-w-full {
+  max-width: 100%;
+}
+
+.max-w-screen {
+  max-width: 100vw;
+}
+
+/* === UTILIDADES DE ALTURA === */
+.h-100 {
+  height: 100%;
+}
+
+.h-auto {
+  height: auto;
+}
+
+.min-h-screen {
+  min-height: 100vh;
+}
+
+.max-h-screen {
+  max-height: 100vh;
+}
+
+/* === POSICIONAMIENTO SEGURO === */
+.position-relative {
+  position: relative;
+  max-width: 100%;
+}
+
+.position-absolute-safe {
+  position: absolute;
+  max-width: 100%;
+}
+
+.position-fixed-safe {
+  position: fixed;
+  max-width: 100vw;
+}
+
+/* === PREVENCIÓN DE ZOOM EN INPUTS (iOS) === */
+input,
+select,
+textarea {
+  font-size: 16px; /* Previene zoom automático en iOS */
+}
+
+/* === SMOOTH SCROLLING === */
+html {
+  scroll-behavior: smooth;
+}
+
+/* === BACKDROP FILTERS SAFE === */
+@supports (backdrop-filter: blur(10px)) {
+  .backdrop-blur {
+    backdrop-filter: blur(10px);
+  }
+}
+
+/* === PRINT STYLES === */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    overflow: visible !important;
+  }
+}

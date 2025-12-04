@@ -1,0 +1,1085 @@
+/* 🎨 **APP.CSS** - ESTILOS GLOBALES DE TODA LA APLICACIÓN */
+
+/* 📦 IMPORTACIÓN DE FUENTE GOOGLE */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* 🍔 Botón hamburguesa */
+.navbar-burger { 
+  display: none; 
+  position: relative; 
+  width: 44px; 
+  height: 44px; 
+  border-radius: 14px; 
+  border: 1px solid var(--border-color); 
+  background: var(--bg-primary); 
+  cursor: pointer; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 5px; 
+  flex-direction: column; 
+  padding: 8px; 
+  transition: .3s box-shadow, .3s background; 
+}
+
+.navbar-burger span { 
+  display: block; 
+  width: 22px; 
+  height: 2px; 
+  background: var(--text-primary); 
+  border-radius: 2px; 
+  transition: .35s; 
+}
+
+.navbar-burger.open span:nth-child(1) { 
+  transform: translateY(6px) rotate(45deg); 
+}
+
+.navbar-burger.open span:nth-child(2) { 
+  opacity: 0; 
+  transform: scaleX(0); 
+}
+
+.navbar-burger.open span:nth-child(3) { 
+  transform: translateY(-6px) rotate(-45deg); 
+}
+
+.navbar-burger:hover { 
+  background: rgb(245, 245, 245); 
+  box-shadow: 0 4px 14px -6px var(--shadow-medium); 
+}
+
+/* 🎨 VARIABLES CSS PARA MODO CLARO */
+/* 🌅 TEMA CLARO - Colores únicos */
+:root {
+  --bg-primary: #ffffff;        /* 🏠 Fondo principal - Blanco */
+  --bg-secondary: #ffffff;      /* 🏠 Fondo secundario - Blanco */
+  --bg-tertiary: #f8f9fa;       /* 🏠 Fondo terciario - Gris muy claro */
+  --text-primary: #333333;      /* 📝 Texto principal - Gris muy oscuro */
+  --text-secondary: #666666;    /* 📝 Texto secundario - Gris medio */
+  --text-accent: #333333;       /* 📝 Texto de énfasis - Gris oscuro */
+  --border-color: #e0e0e0;      /* 🔲 Color de bordes - Gris más claro */
+  --shadow-light: rgba(0, 0, 0, 0.08);   /* 🌫️ Sombra muy suave */
+  --shadow-medium: rgba(0, 0, 0, 0.12);  /* 🌫️ Sombra suave */
+  --card-bg: #ffffff;           /* 📱 Fondo de tarjetas - Blanco */
+  --input-bg: #ffffff;          /* 📝 Fondo de campos de texto - Blanco */
+}
+
+/* 🌐 ESTILOS GLOBALES BÁSICOS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+html {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+body {
+  background-color: #ffffff;
+  /* color: var(--text-primary); */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+#root {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100vw;
+}
+
+/* 🔙 Botón volver minimal en páginas de detalle */
+.back-btn-minimal {
+  position: fixed;
+  top: 78px; /* debajo navbar */
+  left: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  border: 1px solid #e2e5e8;
+  padding: 10px 16px 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: .4px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px -6px rgba(0,0,0,.18);
+  color: #111;
+  z-index: 900;
+  transition: background .18s, color .18s, border-color .18s;
+}
+.back-btn-minimal:hover { background:#111; color:#fff; border-color:#111; }
+
+/* 📱 Responsive para back button */
+@media (max-width: 768px) {
+  .back-btn-minimal {
+    top: 62px;
+    left: 12px;
+    padding: 8px 12px 8px 10px;
+    font-size: 12px;
+  }
+}
+
+/* ⬆️ Botón flotante scroll to top */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 34px;
+  right: 34px;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  border: 1px solid #d5d7db;
+  background: #0d4ca3;
+  color:#ffffff;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:20px;
+  font-weight:600;
+  box-shadow:0 10px 30px -8px rgba(0,0,0,.35),0 4px 10px -4px rgba(0,0,0,.25);
+  opacity:0;
+  transform:translateY(12px);
+  pointer-events:none;
+  transition:opacity .3s ease, transform .3s ease;
+  z-index:900;
+}
+.scroll-top-btn.visible { opacity:1; transform:translateY(0); pointer-events:auto; }
+.scroll-top-btn:hover { filter:brightness(1.06); }
+
+/* 📱 Responsive para scroll to top button */
+@media (max-width: 768px) {
+  .scroll-top-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    font-size: 18px;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style-type: none;
+}
+
+/* 🔘 BOTONES GLOBALES */
+.btn-primary {
+  background-color: var(--text-accent);
+  color: var(--bg-primary);
+  border: none;
+  padding: 12px 24px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.btn-primary:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--text-accent);
+  border: 1px solid var(--text-accent);
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+}
+
+.btn-secondary:hover {
+  background-color: var(--text-accent);
+  color: var(--bg-primary);
+}
+
+/* 🌙 BOTÓN DE CAMBIO DE TEMA */
+.theme-toggle {
+  background: none;
+  border: 2px solid var(--text-accent);
+  color: var(--text-accent);
+  padding: 8px 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.theme-toggle:hover {
+  background-color: var(--text-accent);
+  color: var(--bg-primary);
+}
+
+.theme-icon {
+  font-size: 16px;
+}
+
+/* 🧭 NAVBAR MODERNA - ESTILO MINIMALISTA */
+.modern-navbar {
+  background-color: #09101A; /* Cambiar el color de la navbar */
+  border-bottom: 1px solid var(--border-color);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 0;
+  color: #D99909; /* Cambiar color de la tipografía de la navbar */
+}
+
+/* Fuerza el color de la tipografía de todos los elementos dentro de la navbar */
+.modern-navbar * {
+  color: #D3D3CE !important; /* Actualizar el color de la tipografía de todos los elementos dentro de la navbar */
+}
+
+/* 🍔 Botón hamburguesa */
+.navbar-burger { 
+  display: none; 
+  position: relative; 
+  width: 44px; 
+  height: 44px; 
+  border-radius: 14px; 
+  border: 1px solid var(--border-color); 
+  background: var(--bg-primary); 
+  cursor: pointer; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 5px; 
+  flex-direction: column; 
+  padding: 8px; 
+  transition: .3s box-shadow, .3s background; 
+}
+
+.navbar-burger span { 
+  display: block; 
+  width: 22px; 
+  height: 2px; 
+  background: var(--text-primary); 
+  border-radius: 2px; 
+  transition: .35s; 
+}
+
+.navbar-burger.open span:nth-child(1) { 
+  transform: translateY(6px) rotate(45deg); 
+}
+
+.navbar-burger.open span:nth-child(2) { 
+  opacity: 0; 
+  transform: scaleX(0); 
+}
+
+.navbar-burger.open span:nth-child(3) { 
+  transform: translateY(-6px) rotate(-45deg); 
+}
+
+.navbar-burger:hover { 
+  background: #f5f5f5; 
+  box-shadow: 0 4px 14px -6px var(--shadow-medium); 
+}
+
+/* 📱 Overlay menú móvil */
+.mobile-menu-overlay { position:fixed; inset:0; background:rgba(15,23,42,.55); backdrop-filter:blur(10px) saturate(140%); z-index:1400; display:flex; align-items:flex-start; justify-content:flex-end; }
+.mobile-menu-panel { width:min(82%,380px); background:var(--bg-primary); height:100%; box-shadow:-6px 0 22px -8px rgba(0,0,0,.25); padding:26px 26px 40px; display:flex; flex-direction:column; overflow-y:auto; animation:slideInMenu .35s cubic-bezier(.4,0,.2,1); }
+/* Contenedor buscador en menú móvil */
+.mobile-search-wrapper { margin:0 0 18px; }
+.mobile-search-wrapper .search-bar { max-width:none; }
+@keyframes slideInMenu { from { transform:translateX(40px); opacity:0; } to { transform:translateX(0); opacity:1; } }
+.mobile-menu-nav { display:flex; flex-direction:column; gap:6px; }
+.mobile-link { text-align:left; padding:14px 16px 13px; background:none; border:1px solid transparent; border-radius:12px; font-size:14px; font-weight:600; letter-spacing:.6px; color:var(--text-primary); cursor:pointer; transition:.25s background,.25s color,.25s border-color; }
+.mobile-link:hover { background:#f5f5f5; }
+.mobile-link.danger { color:#dc3545; }
+.mobile-link.danger:hover { background:rgba(220,53,69,.1); }
+.mobile-separator { margin:8px 4px 4px; border:none; border-top:1px solid var(--border-color); }
+.mobile-quick-actions { margin-top:18px; display:grid; gap:10px; grid-template-columns:1fr 1fr; }
+.quick-action { padding:12px 10px; border:1px solid var(--border-color); border-radius:12px; background:linear-gradient(135deg,#f8fafc,#ffffff); font-size:12px; font-weight:600; letter-spacing:.5px; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:6px; box-shadow:0 4px 14px -6px rgba(0,0,0,.15); }
+.quick-action:hover { background:#111; color:#fff; border-color:#111; }
+
+
+/* 📦 CONTENEDOR DE LA NAVBAR - MÁS ESPACIO */
+.navbar-container {
+  display: grid;                        /* 📏 Cambio a CSS Grid para 3 columnas */
+  grid-template-columns: 1fr auto 1fr;  /* 📏 Izquierda flexible, centro fijo, derecha flexible */
+  align-items: center;
+  max-width: 100%;                      /* 📏 Ancho completo sin límite */
+  margin: 0 auto;
+  padding: 0 5%;                        /* 📏 Padding proporcional del 5% */
+  height: 60px;
+  gap: 20px;                            /* 📏 Espacio entre secciones */
+}
+
+/* 📍 SECCIÓN IZQUIERDA - PEGADA AL LATERAL */
+.navbar-left {
+  display: flex;
+  gap: 35px;
+  align-items: center;
+  justify-content: flex-start;          /* 📏 Alinear al inicio */
+  min-width: 0;                         /* 📏 Permitir encogerse */
+}
+
+/* 🔗 ELEMENTOS DE NAVEGACIÓN */
+.nav-item {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s ease, font-size 0.3s ease; /* 🔄 Transición suave del tamaño */
+  text-decoration: none;
+  white-space: nowrap;                  /* 📏 No dividir en líneas */
+}
+
+.nav-item:hover {
+  color: var(--text-secondary);
+}
+
+/* 🏷️ CENTRO - Logo CENTRADO EN LA GRILLA */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;              /* � Centrar en su columna */
+  min-width: 0;                         /* � Permitir encogerse */
+  grid-column: 2;                       /* 📏 Columna central del grid */
+}
+
+.navbar-center .logo-button {
+  white-space: nowrap;                  /* 📏 No dividir el logo */
+  overflow: hidden;                     /* 📏 Ocultar si es muy largo */
+  text-overflow: ellipsis;              /* 📏 Mostrar ... si se corta */
+  max-width: 100%;                      /* 📏 No exceder el contenedor */
+}
+
+/* 🔘 BOTÓN DEL LOGO - SIN ESTILOS DE BOTÓN */
+.logo-button {
+  background: none;                     /* ❌ Sin fondo */
+  border: none;                         /* ❌ Sin borde */
+  padding: 0;                          /* ❌ Sin padding */
+  margin: 0;                           /* ❌ Sin margen */
+  cursor: pointer;                     /* 👆 Cursor de mano */
+  font-size: clamp(14px, 1.8vw, 20px); /* � Tamaño fluido adaptable */
+  font-weight: 700;                    /* 📝 Mismo peso que antes */
+  color: var(--text-accent);          /* 📝 Mismo color que antes */
+  letter-spacing: clamp(1.5px, 0.25vw, 3px); /* � Espaciado fluido */
+  text-transform: uppercase;           /* 📝 Mismas mayúsculas que antes */
+  white-space: nowrap;                 /* 📏 No dividir el logo en líneas */
+  font-family: 'Poppins', sans-serif; /* 📝 Misma fuente que antes */
+  transition: all 0.3s ease;          /* 🔄 Transición suave */
+}
+
+/* 🎯 EFECTO HOVER EN EL LOGO */
+.logo-button:hover {
+  color: var(--text-secondary);       /* 📝 Color más claro al hover */
+  transform: scale(1.05);             /* 📏 Crecer ligeramente */
+}
+
+/* 🎯 EFECTO ACTIVE EN EL LOGO */
+.logo-button:active {
+  transform: scale(1.02);             /* 📏 Efecto de presión */
+}
+
+/* ⚙️ SECCIÓN DERECHA - PEGADA AL LATERAL */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-end;            /* 📏 Alinear al final */
+  min-width: 0;                         /* 📏 Permitir encogerse completamente */
+  grid-column: 3;                       /* 📏 Columna derecha del grid */
+}
+
+/* 🔍 Barra de búsqueda en navbar */
+.navbar-right .search-bar {
+  flex: 1 1 auto;                       /* 📏 Flexible dentro de navbar-right */
+  max-width: clamp(150px, 20vw, 350px); /* 📏 Ancho fluido responsive más conservador */
+  min-width: 120px;                     /* 📏 Mínimo 120px */
+}
+
+/* 🔘 BOTONES DE ICONOS - MANTENER ORDEN */
+.icon-btn-minimal {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  order: 1;                             /* 📏 Primeros elementos */
+  position: relative;                   /* 📍 Para el contador de favoritos */
+}
+
+.icon-btn-minimal:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+.icon-btn-minimal svg {
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.icon-btn-minimal:hover svg {
+  opacity: 1;
+}
+
+/* 💖 CONTADOR DE FAVORITOS */
+.favorites-count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  border: 2px solid var(--bg-primary);
+}
+
+/* 🛒 CONTADOR DEL CARRITO */
+.cart-count {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  background-color: #059669;
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  border: 2px solid var(--bg-primary);
+}
+
+/* 🔐 BOTÓN "INICIAR SESIÓN" - SOLO TEXTO SIN BORDE */
+.login-text-btn {
+  background: none;                     /* 🌫️ Sin fondo */
+  border: none;                         /* ❌ Sin borde (eliminado) */
+  color: var(--text-primary);          /* 📝 Color de texto principal */
+  font-size: 14px;                     /* 📝 Tamaño pequeño */
+  font-weight: 500;                     /* 📝 Peso medio */
+  letter-spacing: 0.5px;               /* 📝 Espaciado entre letras */
+  cursor: pointer;                      /* 👆 Cursor de mano */
+  padding: 8px 12px;                    /* 📏 Espaciado interno mínimo */
+  border-radius: 0;                     /* ❌ Sin esquinas redondeadas */
+  transition: all 0.3s ease;           /* 🔄 Transición suave */
+  font-family: 'Poppins', sans-serif;  /* 📝 Fuente consistente */
+  text-transform: none;                 /* 📝 Sin mayúsculas forzadas */
+  order: 999;                           /* 📏 Último elemento */
+  margin-left: 30px;                    /* 📏 Separación del resto */
+  text-decoration: none;                /* ❌ Sin subrayado por defecto */
+}
+
+.login-text-btn:hover {
+  background: none;                     /* 🌫️ Sin fondo al hover */
+  color: var(--text-secondary);        /* 📝 Color más claro al hover */
+  transform: translateY(-1px);         /* ⬆️ Movimiento sutil hacia arriba */
+  text-decoration: underline;           /* 📝 Subrayado solo al hover */
+}
+
+.login-text-btn:active {
+  transform: translateY(0);            /* 📏 Volver a posición al hacer clic */
+}
+
+/* 👤 Botón icono login móvil */
+.login-icon-btn { background:transparent; border:none; width:40px; height:40px; display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer; transition:.25s color,.25s transform; margin-left:8px; }
+.login-icon-btn:hover { color:#111; transform:translateY(-2px); }
+.login-icon-btn:active { transform:translateY(0); }
+.login-icon-btn svg { display:block; width:26px; height:26px; stroke-width:2.2; }
+/* 👤 BOTÓN DE USUARIO CON TRIÁNGULO - BIEN PEGADO A LA DERECHA */
+.user-text-btn {
+  background: none;
+  border: none;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-family: 'Poppins', sans-serif;
+  text-transform: none;
+  order: 999;
+  margin-left: 30px;
+  display: flex;                        /* 📐 Layout flexible */
+  align-items: center;                  /* 📐 Centrar verticalmente */
+  gap: 6px;                            /* 📏 Espacio entre nombre y triángulo */
+}
+
+.user-text-btn:hover {
+  background-color: #f5f5f5;
+  transform: translateY(-1px);
+}
+
+/* 📝 NOMBRE DEL USUARIO */
+.user-name {
+  white-space: nowrap;                  /* 📏 No dividir el nombre */
+}
+
+/* 📧 EMAIL DEL USUARIO - MÁS VISIBLE */
+.user-email {
+  font-size: 12px;
+  color: var(--text-secondary);        /* 📝 Texto secundario visible */
+  opacity: 0.9;                        /* 🌫️ Casi completamente opaco */
+  font-weight: 400;                    /* 📝 Peso normal */
+  font-style: italic;                  /* 📝 Cursiva para diferenciarlo */
+  max-width: 180px;                    /* 📏 Ancho máximo */
+  overflow: hidden;                    /* 📏 Ocultar desbordamiento */
+  text-overflow: ellipsis;             /* 📏 Puntos suspensivos si es muy largo */
+  white-space: nowrap;                 /* 📏 No dividir en líneas */
+}
+
+/* 🔽 TRIÁNGULO DESPLEGABLE */
+.dropdown-arrow {
+  transition: transform 0.3s ease;     /* 🔄 Rotación suave */
+  opacity: 0.7;                        /* 🌫️ Ligeramente transparente */
+  margin-left: 2px;                    /* 📏 Pequeña separación */
+}
+
+/* 🔽 TRIÁNGULO CUANDO ESTÁ ABIERTO (ROTADO) */
+.dropdown-arrow.open {
+  transform: rotate(180deg);           /* 🔄 Rotar 180 grados */
+  opacity: 1;                          /* 🌫️ Opacidad completa */
+}
+
+/* 🎯 TRIÁNGULO AL HACER HOVER EN EL BOTÓN */
+.user-text-btn:hover .dropdown-arrow {
+  opacity: 1;                          /* 🌫️ Opacidad completa al hover */
+}
+
+/* 👤 DROPDOWN DE USUARIO - BIEN PEGADO A LA DERECHA */
+.user-dropdown-container {
+  position: relative;
+  order: 999;                           /* 📏 Último elemento */
+  margin-left: 30px;                    /* 📏 Aún más separación */
+}
+
+/* 👤 DROPDOWN DE USUARIO - CON FONDO SÓLIDO */
+.user-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--bg-primary);        /* 🎨 Fondo sólido blanco/negro */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px var(--shadow-medium);
+  min-width: 200px;
+  z-index: 1001;
+  margin-top: 8px;
+  overflow: hidden;
+  animation: dropdownFadeIn 0.2s ease-out;
+  backdrop-filter: none;                /* ❌ Sin efecto blur */
+}
+
+/* 📋 CABECERA DEL DROPDOWN - SOLO NOMBRE */
+.user-dropdown-header {
+  padding: 16px;
+  background: #ffffff;      /* 🎨 Fondo blanco */
+  border-bottom: 1px solid var(--border-color);
+}
+
+.user-dropdown-header strong {
+  display: block;
+  font-size: 16px;
+  color: #000 !important;          /* Black for header text */
+  font-weight: 600;                     /* 📝 Más peso para mejor legibilidad */
+  text-align: center;                   /* 📍 Centrar el nombre */
+}
+
+/* 🔘 ELEMENTOS DEL DROPDOWN - FONDO SÓLIDO AL HOVER */
+.dropdown-item {
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: var(--bg-primary);       /* 🎨 Fondo sólido por defecto */
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #000 !important;          /* Black for dropdown items */
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.2s ease;           /* 🔄 Transición suave */
+  font-weight: 500;                     /* 📝 Más peso para mejor legibilidad */
+}
+
+.dropdown-item:hover {
+  background: #f5f5f5;     /* 🎨 Fondo gris claro al hover */
+  color: #333 !important; /* Dark gray on hover */
+}
+
+/* 🚪 ELEMENTO DE CERRAR SESIÓN - ROJO VISIBLE */
+.logout-item {
+  color: #000 !important;                      /* 📝 Rojo más fuerte */
+  font-weight: 600;                    /* 📝 Más peso para énfasis */
+}
+
+.logout-item:hover {
+  background: rgba(220, 53, 69, 0.1);  /* 🎨 Fondo rojo claro al hover */
+  color: #333 !important; /* Dark gray on hover */
+}
+
+/* ➖ LÍNEA DIVISORIA - MÁS VISIBLE */
+.dropdown-divider {
+  margin: 0;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  opacity: 0.5;                        /* 🌫️ Ligeramente visible */
+}
+
+/* 🎬 ANIMACIÓN DEL DROPDOWN MEJORADA */
+@keyframes dropdownFadeIn {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-10px) scale(0.95); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* 📱 RESPONSIVE - AJUSTAR PARA PANTALLAS MEDIANAS */
+@media (max-width: 1400px) {
+  .navbar-container {
+    padding: 0 4%;                      /* 📏 Menos padding */
+    gap: 15px;                          /* 📏 Menos gap */
+  }
+  
+  .navbar-left {
+    gap: 30px;                          /* 📏 Menos separación */
+  }
+  
+  .nav-item {
+    font-size: 13px;                    /* 📏 Textos más pequeños */
+    letter-spacing: 0.8px;
+  }
+  
+  .navbar-right {
+    gap: 16px;                          /* 📏 Menos separación */
+  }
+  
+  .navbar-right .search-bar {
+    max-width: clamp(130px, 18vw, 300px);
+    min-width: 110px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .navbar-container {
+    padding: 0 3%;                      /* 📏 Menos padding */
+    gap: 12px;
+  }
+  
+  .navbar-left {
+    gap: 25px;                          /* 📏 Menos separación */
+  }
+  
+  .nav-item {
+    font-size: 12px;                    /* 📏 Aún más pequeños */
+    letter-spacing: 0.6px;
+  }
+  
+  .navbar-right {
+    gap: 14px;                          /* 📏 Menos separación */
+  }
+  
+  .navbar-right .search-bar {
+    max-width: clamp(120px, 16vw, 260px);
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .nav-item {
+    font-size: 11.5px;                  /* 📏 Seguir reduciendo */
+    letter-spacing: 0.5px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .navbar-container {
+    gap: 10px;
+  }
+  
+  .navbar-left {
+    gap: 20px;                          /* 📏 Gaps más compactos */
+  }
+  
+  .nav-item {
+    font-size: 11px;                    /* 📏 Muy pequeños */
+    letter-spacing: 0.4px;
+  }
+  
+  .navbar-right {
+    gap: 12px;
+  }
+  
+  .navbar-right .search-bar {
+    max-width: clamp(100px, 14vw, 220px);
+    min-width: 90px;
+  }
+}
+
+@media (max-width: 900px) {
+  .navbar-container {
+    padding: 0 20px;                    /* 📏 Padding fijo */
+    gap: 8px;
+  }
+  
+  .navbar-left {
+    gap: 16px;                          /* 📏 Muy compacto */
+  }
+  
+  .nav-item {
+    font-size: 10px;                    /* 📏 Mínimo tamaño legible */
+    letter-spacing: 0.3px;
+    font-weight: 500;                   /* 📏 Más peso para compensar tamaño */
+  }
+  
+  .navbar-right {
+    gap: 10px;                          /* 📏 Menos espacio entre elementos */
+  }
+  
+  .navbar-right .search-bar {
+    max-width: clamp(90px, 12vw, 180px);
+    min-width: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar-left { display: none; }
+  
+  /* 🛒 ICONO DEL CARRITO EN MÓVIL - REDUCIDO */
+  .navbar-cart-mobile svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  
+  .navbar-cart-mobile span {
+    width: 16px !important;
+    height: 16px !important;
+    font-size: 10px !important;
+  }
+  
+  /* 👤 ICONO DEL USUARIO EN MÓVIL - REDUCIDO */
+  .user-text-btn img {
+    width: 18px !important;
+    height: 18px !important;
+  }
+  
+  .user-text-btn .user-name {
+    font-size: 12px !important;
+  }
+  
+  .user-text-btn .dropdown-arrow {
+    width: 10px !important;
+    height: 10px !important;
+  }
+  
+  /* 🍔 Menú hamburguesa visible en móvil - SOLO LAS RAYITAS */
+  .navbar-burger { 
+    display: flex; 
+    width: auto;                        /* 📏 Sin ancho fijo */
+    height: auto;                       /* 📏 Sin altura fija */
+    border: none;                       /* ❌ Sin borde */
+    background: transparent;            /* ❌ Sin fondo */
+    border-radius: 0;                   /* ❌ Sin border-radius */
+    padding: 4px;                       /* 📏 Padding mínimo */
+    flex-shrink: 0;                     /* 📏 No se encoge */
+  }
+  
+  .navbar-burger:hover {
+    background: transparent;            /* ❌ Sin fondo en hover */
+    box-shadow: none;                   /* ❌ Sin sombra */
+  }
+  
+  .navbar-burger span {
+    width: 20px;                        /* 📏 Rayitas más pequeñas */
+    height: 2px;
+  }
+  
+  /* 🚫 OCULTAR iconos de favoritos y carrito en móvil */
+  .navbar-right .icon-btn-minimal {
+    display: none !important;           /* ❌ Ocultar favoritos y carrito */
+  }
+  
+  /* 📏 Cambiar a flexbox en móvil para mejor control */
+  .navbar-container {
+    display: flex;                      /* 📏 Volver a flex en móvil */
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px; 
+    padding: 0 3%; 
+  }
+  
+  .navbar-center {
+    position: absolute;                 /* 📏 Posición absoluta para centrar */
+    left: 50%;
+    transform: translateX(-50%);
+    grid-column: auto;                  /* 📏 Resetear grid */
+    display: flex;
+    justify-content: center;
+  }
+  
+  .navbar-right {
+    grid-column: auto;                  /* 📏 Resetear grid */
+    gap: 8px;
+    flex: 0 0 auto;                     /* 📏 Tamaño fijo, no flexible */
+    flex-shrink: 0;                     /* 📏 No se encoge */
+  }
+  
+  /* � OCULTAR texto del nombre de usuario en móvil */
+  .user-text-btn .user-name {
+    display: none !important;           /* ❌ Ocultar nombre */
+  }
+  
+  .user-text-btn .dropdown-arrow {
+    display: none !important;           /* ❌ Ocultar flecha */
+  }
+  
+  /* 👤 Convertir botón usuario en SOLO ICONO */
+  .user-text-btn {
+    padding: 6px;                       /* 📏 Padding circular */
+    min-width: 32px;                    /* 📏 Tamaño fijo */
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;                 /* 📏 Circular */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 👤 Agregar icono de usuario con CSS (si no hay SVG) */
+  .user-text-btn::before {                      /* 📏 Icono de usuario */
+    font-size: 16px;
+    line-height: 1;
+  }
+  
+  /* � Botón login más pequeño */
+  .login-text-btn { 
+    white-space: nowrap; 
+    padding: 6px 10px;                  /* 📏 Más pequeño */
+    font-size: 12px;                    /* 📏 Texto más pequeño */
+  }
+  
+  .navbar-center .logo {
+    font-size: 16px;
+    letter-spacing: 1px;
+  }
+  
+  .logo-button {
+    font-size: 15px;                    /* 📏 Logo un poco más pequeño */
+    letter-spacing: 1.2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar-container {
+    padding: 0 2%;                      /* 📏 Menos padding en móviles pequeños */
+    gap: 6px;
+  }
+  
+  .navbar-burger span {
+    width: 18px;                        /* 📏 Rayitas aún más pequeñas */
+  }
+  
+  .logo-button {
+    font-size: 14px;                    /* 📏 Logo más pequeño */
+    letter-spacing: 1px;
+  }
+  
+  .login-text-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  
+  .user-text-btn {
+    padding: 5px 8px;
+    font-size: 11px;
+  }
+  
+  .user-name {
+    font-size: 11px;
+  }
+  
+  .dropdown-arrow {
+    width: 10px;
+    height: 10px;
+  }
+  
+  .mobile-menu-panel { 
+    width: 100%; 
+  }
+}
+
+/* ♿ Preferencia de reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .product-card-new:hover, .product-card:hover, .watch-frame, .hero-watch-image, .category-card:hover { transition:none !important; transform:none !important; }
+  .scroll-top-btn { transition:none; }
+  .mobile-menu-panel { animation:none; }
+}
+
+/* ⚠️ ESTILOS DE REACT POR DEFECTO */
+.App {
+  text-align: center;
+  padding-top: 78px; /* Compensar altura de la navbar fija */
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* 🦶 FOOTER - PIE DE PÁGINA */
+.footer {
+  background: #09101A; /* user requested background */
+  color: #d3d3ce; /* user requested typography color */
+  padding: 56px 5% 28px;
+  transition: background 0.25s ease;
+  border-top: 1px solid rgba(211,211,206,0.03);
+}
+
+.footer-content {
+  display: grid;
+  /* Use 3 columns now that Contact was removed */
+  grid-template-columns: 260px 1fr 1fr;
+  gap: 28px 40px;
+  align-items: start;
+  margin-bottom: 38px;
+  justify-items: center; /* center grid items horizontally */
+}
+@media (max-width:720px){ .footer { padding:42px 22px 18px; } .footer-content { grid-template-columns:1fr 1fr; gap:26px 30px; } }
+@media (max-width:480px){ .footer-content { grid-template-columns:1fr; gap:22px; } .footer { padding:38px 20px 16px; } .footer-section h3 { font-size:16px; } .footer-section ul li { margin-bottom:8px; } }
+@media (max-width:480px){ .footer-link { padding:4px 0; display:inline-block; } }
+
+/* 📱 Footer ultra-compacto y más limpio en móviles pequeños */
+@media (max-width:520px){
+  .footer { padding:30px 18px 14px; border-top:1px solid rgba(255,255,255,.08); }
+  .footer-content { gap:14px; }
+  .footer-section { position:relative; padding-bottom:6px; }
+  .footer-section:not(:last-child)::after { content:''; position:absolute; bottom:0; left:0; width:100%; height:1px; background:rgba(255,255,255,.08); }
+  .footer-section h3 { font-size:14px; margin-bottom:8px; letter-spacing:.4px; }
+  .footer-section.collapsible .footer-collapse-btn { padding:4px 0 2px; }
+  .footer-section ul li { margin-bottom:4px; }
+  .footer-link { font-size:12.5px; opacity:.9; }
+  .footer-bottom { padding-top:12px; font-size:10.5px; line-height:1.35; }
+}
+/* Estilos collapsible footer */
+@media (max-width:768px){
+  .footer-section.collapsible { padding-bottom:4px; }
+  .footer-collapse-btn { width:100%; background:none; border:none; color:inherit; font:inherit; font-weight:600; letter-spacing:.5px; display:flex; align-items:center; justify-content:space-between; padding:6px 0 4px; cursor:pointer; }
+  .footer-collapse-btn svg { transition:transform .3s ease; opacity:.7; }
+  .footer-collapse-btn svg.open { transform:rotate(180deg); opacity:1; }
+  .footer-section.collapsible ul { margin-top:4px; transition:max-height .35s ease; }
+}
+@media (max-width:380px){
+  .footer { padding:26px 16px 12px; }
+  .footer-section h3 { font-size:14px; }
+  .footer-link { font-size:12.5px; }
+  .footer-bottom { font-size:10.5px; }
+}
+
+.footer-section h3 {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-container { max-width: 1280px; margin: 0 auto; width: 100%; }
+.footer-logo { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 26px; letter-spacing: 6px; color: #d3d3ce; margin-bottom: 12px; }
+.footer-tag { color: rgba(211,211,206,0.9); font-size: 14px; max-width: 260px; line-height:1.5; margin-bottom: 14px; text-align: center; }
+.footer-social { display:flex; gap:10px; }
+.social-link { display:inline-flex; padding:8px 12px; align-items:center; justify-content:center; border-radius:8px; background:rgba(255,255,255,0.02); color:#d3d3ce; text-decoration:none; font-size:14px; font-weight:600; }
+
+.footer-section ul { padding:0; margin:0; list-style:none; }
+.footer-link { color:#d3d3ce; opacity:0.95; font-weight:600; }
+.footer-link:hover { text-decoration:underline; color:#ffffff; }
+
+.footer-section { text-align: center; }
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+/* Botones estilizados como enlaces en el footer */
+.footer-link { background:none; border:none; padding:0; margin:0; font:inherit; color:inherit; cursor:pointer; text-align:left; }
+.footer-link:hover { text-decoration:underline; }
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255,255,255,0.04);
+}
+
+/* Modal informativo del footer */
+.footer-info-overlay { background:rgba(15,23,42,.55); backdrop-filter:blur(10px) saturate(140%); display:flex; align-items:center; justify-content:center; padding:40px 20px; }
+.footer-info-modal { max-width:680px; width:100%; background:linear-gradient(135deg,#ffffff 0%,#f8fafc 100%); border-radius:28px; box-shadow:0 30px 80px -15px rgba(15,23,42,.35), 0 0 0 1px rgba(15,23,42,.08); padding:0; overflow:hidden; animation:popIn .4s cubic-bezier(.16,.8,.3,1); }
+.footer-info-header { display:flex; align-items:center; justify-content:space-between; padding:24px 30px 18px; background:linear-gradient(120deg,#0f172a,#1e293b); color:#fff; }
+.footer-info-header h2 { font-size:1.3rem; letter-spacing:.5px; color:#e9d28b; text-shadow:0 1px 2px rgba(0,0,0,.4); }
+.footer-info-close { background:rgba(255,255,255,.15); color:#fff; width:40px; height:40px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1rem; transition:.25s; }
+.footer-info-close:hover { background:rgba(255,255,255,.3); transform:rotate(90deg); }
+.footer-info-body { padding:28px 34px 36px; max-height:60vh; overflow-y:auto; font-size:.95rem; line-height:1.55; }
+.footer-info-body h2, .footer-info-body h3 { color:#0f172a; }
+.footer-info-body ul, .footer-info-body ol { margin:14px 0 18px 22px; }
+.footer-info-body a { color:#0f4dd8; font-weight:600; }
+.footer-info-body a:hover { text-decoration:underline; }
+@keyframes popIn { from { transform:translateY(30px) scale(.96); opacity:0; } to { transform:translateY(0) scale(1); opacity:1; } }

@@ -1,0 +1,365 @@
+/* 🔍 **SEARCHBAR.CSS** - ESTILOS DE LA BÚSQUEDA */
+
+/* 🔍 CONTENEDOR PRINCIPAL */
+.search-bar {
+  position: relative;
+  width: 100%;
+  max-width: clamp(180px, 25vw, 400px);  /* 📏 Ancho fluido: entre 180px y 400px, ajustado al viewport */
+  min-width: 150px;                      /* 📏 Ancho mínimo absoluto */
+  flex: 1 1 auto;                        /* 📏 Flexible y adaptable */
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* 📝 CONTENEDOR DEL INPUT */
+.search-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #0E2239; /* Cambiado a color solicitado */
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 6px 12px;
+  transition: all 0.3s ease;
+}
+
+.search-input-container:focus-within {
+  border-color: var(--text-accent);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* 🔍 ICONO DE BÚSQUEDA */
+.search-icon {
+  color: var(--text-secondary);
+  margin-right: 8px;
+  flex-shrink: 0;
+}
+
+/* 📝 INPUT */
+.search-input {
+  flex: 1;
+  border: none;
+  background: none;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-primary);
+  font-family: 'Poppins', sans-serif;
+  min-width: 0;                         /* 📏 Permitir que se encoja */
+}
+
+.search-input::placeholder {
+  color: var(--text-secondary);
+  transition: opacity 0.3s ease;        /* 🔄 Transición suave */
+}
+
+/* ✕ BOTÓN LIMPIAR */
+.search-clear-btn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+  margin-left: 8px;
+}
+
+.search-clear-btn:hover {
+  background-color: var(--bg-secondary);
+  color: var(--text-accent);
+}
+
+/* 📋 DROPDOWN DE RESULTADOS */
+.search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px var(--shadow-medium);
+  z-index: 1000;
+  margin-top: 8px;
+  max-height: 400px;
+  overflow: hidden;
+  animation: searchDropdownFadeIn 0.2s ease-out;
+}
+
+@keyframes searchDropdownFadeIn {
+  0% { 
+    opacity: 0; 
+    transform: translateY(-10px) scale(0.95); 
+  }
+  100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  }
+}
+
+/* ⏳ CARGANDO */
+.search-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px;
+  color: var(--text-secondary);
+}
+
+.loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color);
+  border-top: 2px solid var(--text-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* 📦 RESULTADOS */
+.search-results {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.search-result-item:hover {
+  background-color: var(--bg-secondary);
+}
+
+.search-result-item:last-child {
+  border-bottom: none;
+}
+
+/* 🖼️ IMAGEN DEL RESULTADO */
+.result-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+  overflow: hidden;
+  background-color: var(--bg-secondary);
+  flex-shrink: 0;
+}
+
+.result-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 📝 INFORMACIÓN DEL RESULTADO */
+.result-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.result-info h4 {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-accent);
+  margin-bottom: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.result-category {
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 2px;
+}
+
+.result-price {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-accent);
+}
+
+/* 👁️ PIE DEL DROPDOWN */
+.search-footer {
+  padding: 12px 16px;
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-secondary);
+}
+
+.view-all-btn {
+  width: 100%;
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-accent);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-all-btn:hover {
+  background-color: var(--text-accent);
+  color: var(--bg-primary);
+}
+
+/* 😢 SIN RESULTADOS */
+.search-no-results {
+  text-align: center;
+  padding: 30px 20px;
+  color: var(--text-secondary);
+}
+
+.no-results-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+  opacity: 0.6;
+}
+
+.search-no-results p {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.search-no-results span {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* 📱 RESPONSIVE */
+@media (max-width: 1400px) {
+  .search-bar {
+    max-width: clamp(160px, 22vw, 320px); /* 📏 Se achica progresivamente */
+    min-width: 140px;
+  }
+  
+  .search-input {
+    font-size: 13px;                    /* 📏 Texto más pequeño */
+  }
+}
+
+@media (max-width: 1200px) {
+  .search-bar {
+    max-width: clamp(140px, 20vw, 280px); /* 📏 Aún más estrecho */
+    min-width: 120px;
+  }
+  
+  .search-input {
+    font-size: 13px;
+  }
+  
+  .search-input::placeholder {
+    font-size: 12px;                    /* 📏 Placeholder más pequeño */
+  }
+}
+
+@media (max-width: 1100px) {
+  .search-input::placeholder {
+    content: "Buscar...";               /* 📏 Placeholder más corto */
+  }
+}
+
+@media (max-width: 1000px) {
+  .search-bar {
+    max-width: clamp(120px, 18vw, 240px); /* 📏 Sigue achicándose */
+    min-width: 100px;
+  }
+  
+  .search-input {
+    font-size: 12px;
+  }
+  
+  .search-input::placeholder {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 900px) {
+  .search-bar {
+    max-width: clamp(100px, 15vw, 200px); /* 📏 Muy compacto antes de móvil */
+    min-width: 80px;
+  }
+  
+  .search-input {
+    font-size: 12px;
+  }
+  
+  .search-input::placeholder {
+    opacity: 0.7;                       /* 📏 Placeholder más tenue */
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 850px) {
+  .search-input::placeholder {
+    content: "Buscar";                  /* 📏 Aún más corto */
+  }
+}
+
+@media (max-width: 768px) {
+  .search-bar {
+    max-width: none;                    /* 📏 Sin límite en móvil */
+    flex: 1;                            /* 📏 Ocupar todo el espacio disponible */
+    min-width: auto;
+  }
+  
+  .search-dropdown {
+    left: -20px;
+    right: -20px;
+  }
+  
+  .search-result-item {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+  
+  .result-image {
+    width: 35px;
+    height: 35px;
+  }
+  
+  .result-info h4 {
+    font-size: 13px;
+  }
+  
+  .result-category {
+    font-size: 11px;
+  }
+  
+  .result-price {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .search-input-container {
+    padding: 6px 12px;
+  }
+  .search-bar { 
+    max-width: none; 
+    flex: 1;
+  }
+  
+  .search-input {
+    font-size: 13px;
+  }
+  
+  .search-dropdown {
+    border-radius: 8px;
+  }
+}
