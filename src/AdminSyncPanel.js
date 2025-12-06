@@ -110,7 +110,7 @@ function AdminSyncPanel() {
                 <div className="stat-card">
                     <div className="stat-icon"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgMjQgMjQiPjxwYXRoIGZpbGw9IiMwMDAwMDAiIGQ9Ik00IDIwdi0yaDIuNzVsLS40LS4zNXEtMS4yMjUtMS4yMjUtMS43ODctMi42NjJUNCAxMi4wNXEwLTIuNzc1IDEuNjYzLTQuOTM3VDEwIDQuMjV2Mi4xUTguMiA3IDcuMSA4LjU2M1Q2IDEyLjA1cTAgMS4xMjUuNDI1IDIuMTg4VDcuNzUgMTYuMmwuMjUuMjVWMTRoMnY2em0xMC0uMjV2LTIuMXExLjgtLjY1IDIuOS0yLjIxMlQxOCAxMS45NXEwLTEuMTI1LS40MjUtMi4xODdUMTYuMjUgNy44TDE2IDcuNTVWMTBoLTJWNGg2djJoLTIuNzVsLjQuMzVxMS4yMjUgMS4yMjUgMS43ODggMi42NjNUMjAgMTEuOTVxMCAyLjc3NS0xLjY2MiA0LjkzOFQxNCAxOS43NSIvPjwvc3ZnPg==" alt="" style={{width: '32px', height: '32px'}} /></div>
                     <div className="stat-content">
-                        <div className="stat-value">1 hora</div>
+                        <div className="stat-value">30 min</div>
                         <div className="stat-label">Frecuencia Automática</div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ function AdminSyncPanel() {
             <div className="sync-info">
                 <h3>ℹ️ Información</h3>
                 <ul>
-                    <li>La sincronización automática se ejecuta cada 1 hora</li>
+                    <li>La sincronización automática se ejecuta cada 30 minutos</li>
                     <li>Los productos se actualizan con el precio del proveedor × 2</li>
                     <li>Los productos que desaparecen del proveedor se desactivan automáticamente</li>
                     <li>El stock se actualiza en tiempo real</li>

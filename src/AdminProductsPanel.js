@@ -101,10 +101,28 @@ function AdminProductsPanel() {
         }
     };
 
+    const handleToggleVisibility = async (productoId, desactivado) => {
+        const accion = desactivado ? 'mostrar' : 'ocultar';
+        if (!window.confirm(`¿Seguro que quieres ${accion} este producto?`)) return;
+
+        try {
+            await apiRequest(`/market/model/products/${productoId}/toggle_visibility/`, {
+                method: 'POST'
+            });
+            cargarProductos();
+            await refreshProducts();
+            alert(`✅ Producto ${desactivado ? 'visible' : 'oculto'} correctamente`);
+        } catch (error) {
+            alert('Error al cambiar visibilidad: ' + error.message);
+        }
+    };
+
     const productosFiltrados = productos.filter(p => {
         // Filtro por disponibilidad
         if (filtro === 'disponibles' && !p.stock_ilimitado && p.stock_proveedor <= 0) return false;
         if (filtro === 'sin-stock' && (p.stock_ilimitado || p.stock_proveedor > 0)) return false;
+        if (filtro === 'ocultos' && !p.desactivado) return false;
+        if (filtro === 'visibles' && p.desactivado) return false;
 
         // Búsqueda por nombre
         if (busqueda && !p.nombre.toLowerCase().includes(busqueda.toLowerCase())) return false;
@@ -147,11 +165,14 @@ function AdminProductsPanel() {
                     <option value="todos">Todos los productos</option>
                     <option value="disponibles">Solo disponibles</option>
                     <option value="sin-stock">Sin stock</option>
+                    <option value="visibles">Solo visibles</option>
+                    <option value="ocultos">Solo ocultos</option>
                 </select>
                 
                 <span className="stat">Total: {productos.length}</span>
                 <span className="stat">Disponibles: {productos.filter(p => p.stock_ilimitado || p.stock_proveedor > 0).length}</span>
                 <span className="stat">Sin stock: {productos.filter(p => !p.stock_ilimitado && p.stock_proveedor === 0).length}</span>
+                <span className="stat">Ocultos: {productos.filter(p => p.desactivado).length}</span>
             </div>
 
             <div className="products-table-container">
@@ -172,8 +193,11 @@ function AdminProductsPanel() {
                     </thead>
                     <tbody>
                         {productosPaginados.map(producto => (
-                            <tr key={producto.id}>
-                                <td className="product-name">{producto.nombre}</td>
+                            <tr key={producto.id} className={producto.desactivado ? 'producto-oculto' : ''}>
+                                <td className="product-name">
+                                    {producto.nombre}
+                                    {producto.desactivado && <span className="badge-oculto">OCULTO</span>}
+                                </td>
                                 <td className="category-cell">{typeof producto.categoria === 'object' ? producto.categoria.nombre : producto.categoria}</td>
                                 <td className="subcategory-cell">
                                     {producto.subcategoria ? (typeof producto.subcategoria === 'object' ? producto.subcategoria.nombre : producto.subcategoria) : '-'}
@@ -270,6 +294,23 @@ function AdminProductsPanel() {
                                                     <path d="M8 12h8"/>
                                                     <path d="M12 8v8"/>
                                                 </svg>
+                                            </button>
+                                            <button 
+                                                onClick={() => handleToggleVisibility(producto.id, producto.desactivado)}
+                                                className={producto.desactivado ? "btn-show" : "btn-hide"}
+                                                title={producto.desactivado ? "Mostrar producto" : "Ocultar producto"}
+                                            >
+                                                {producto.desactivado ? (
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                                        <circle cx="12" cy="12" r="3"/>
+                                                    </svg>
+                                                ) : (
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/>
+                                                        <line x1="1" y1="1" x2="23" y2="23"/>
+                                                    </svg>
+                                                )}
                                             </button>
                                         </>
                                     )}

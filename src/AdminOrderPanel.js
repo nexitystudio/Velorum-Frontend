@@ -494,16 +494,16 @@ const AdminOrderPanel = () => {
                         <div className="modal-body">
                             <div className="seccion">
                                 <h3>Información del Cliente</h3>
-                                <p><strong>Nombre:</strong> {selectedOrder.nombre} {selectedOrder.apellido}</p>
-                                <p><strong>Email:</strong> {selectedOrder.email}</p>
-                                <p><strong>Teléfono:</strong> {selectedOrder.telefono_contacto}</p>
+                                <p><strong>Nombre:</strong> {selectedOrder.nombre_invitado || selectedOrder.usuario_detalle?.username || 'N/A'}</p>
+                                <p><strong>Email:</strong> {selectedOrder.email_invitado || selectedOrder.usuario_detalle?.email || 'N/A'}</p>
+                                <p><strong>Teléfono:</strong> {selectedOrder.telefono_invitado || selectedOrder.usuario_detalle?.phone || 'N/A'}</p>
                             </div>
 
                             <div className="seccion">
                                 <h3>Dirección de Envío</h3>
-                                <p><strong>Dirección:</strong> {selectedOrder.direccion_completa}</p>
-                                <p><strong>Código Postal:</strong> {selectedOrder.codigo_postal}</p>
-                                <p><strong>Zona de Envío:</strong> {selectedOrder.zona_envio}</p>
+                                <p><strong>Dirección:</strong> {selectedOrder.direccion_envio || 'N/A'}</p>
+                                <p><strong>Código Postal:</strong> {selectedOrder.codigo_postal || 'N/A'}</p>
+                                <p><strong>Zona de Envío:</strong> {selectedOrder.zona_envio || 'N/A'}</p>
                             </div>
 
                             <div className="productos-seccion">

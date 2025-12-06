@@ -9,7 +9,7 @@ const WHATSAPP_NUMBER = '5491122334455'; // Reemplazar por número real (sin +, 
 
 const Checkout = () => {
     const navigate = useNavigate();
-    const { cartItems, getTotalPrice, clearCart, getUnlockedPromotions } = useCart();
+    const { cartItems, getTotalPrice, clearCart, getUnlockedPromotions, descuentoAplicado } = useCart();
     const promotions = getUnlockedPromotions();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -38,10 +38,6 @@ const Checkout = () => {
     });
 
     const [costoEnvio, setCostoEnvio] = useState(800); // base
-    const [codigoDescuento, setCodigoDescuento] = useState('');
-    const [descuentoAplicado, setDescuentoAplicado] = useState(null);
-    const [errorCodigo, setErrorCodigo] = useState('');
-    const [validandoCodigo, setValidandoCodigo] = useState(false);
 
     // Tabla base por provincia (envío desde Lomas del Mirador, Buenos Aires)
     // Basado en tarifas de Correo Argentino para paquetes pequeños (hasta 1kg)
@@ -329,49 +325,6 @@ const Checkout = () => {
         return descuentoTotal;
     };
 
-    const validarCodigoDescuento = async () => {
-        if (!codigoDescuento.trim()) {
-            setErrorCodigo('Ingresa un código de descuento');
-            return;
-        }
-
-        setValidandoCodigo(true);
-        setErrorCodigo('');
-
-        try {
-            const response = await fetchWithAuth(`${API_BASE_URL}/market/validar-codigo-descuento/`, {
-                method: 'POST',
-                body: JSON.stringify({ codigo: codigoDescuento.trim().toUpperCase() })
-            });
-
-            const result = await response.json();
-
-            if (response.ok && result.valido) {
-                setDescuentoAplicado({
-                    codigo: result.codigo,
-                    porcentaje: result.porcentaje,
-                    descripcion: result.descripcion
-                });
-                setErrorCodigo('');
-            } else {
-                setErrorCodigo(result.mensaje || 'Código de descuento inválido');
-                setDescuentoAplicado(null);
-            }
-        } catch (error) {
-            console.error('Error validando código:', error);
-            setErrorCodigo('Error al validar el código. Intenta nuevamente.');
-            setDescuentoAplicado(null);
-        } finally {
-            setValidandoCodigo(false);
-        }
-    };
-
-    const eliminarDescuento = () => {
-        setDescuentoAplicado(null);
-        setCodigoDescuento('');
-        setErrorCodigo('');
-    };
-
     // Render del paso actual
     const renderStep = () => {
         switch (currentStep) {
@@ -552,7 +505,13 @@ const Checkout = () => {
                                     </div>
                                     <div className="shipping-detail">
                                         <span className="detail-label">Costo:</span>
-                    <span className="detail-value cost">${costoEnvio}</span>
+                                        <span className="detail-value cost">
+                                            {promotions.hasFreeShipping ? (
+                                                <span style={{ color: '#10b981', fontWeight: '600' }}>GRATIS ✅</span>
+                                            ) : (
+                                                `$${costoEnvio}`
+                                            )}
+                                        </span>
                                     </div>
                                     <div className="shipping-detail">
                                         <span className="detail-label">Tiempo estimado:</span>
@@ -686,80 +645,6 @@ const Checkout = () => {
                                     `$${costoEnvio.toFixed(2)}`
                                 )}
                             </span>
-                        </div>
-                        
-                        {/* Código de descuento */}
-                        <div className="discount-section" style={{ marginTop: '15px', marginBottom: '15px' }}>
-                            {!descuentoAplicado ? (
-                                <div className="discount-input-group">
-                                    <input
-                                        type="text"
-                                        placeholder="Código de descuento"
-                                        value={codigoDescuento}
-                                        onChange={(e) => setCodigoDescuento(e.target.value.toUpperCase())}
-                                        onKeyPress={(e) => e.key === 'Enter' && validarCodigoDescuento()}
-                                        style={{
-                                            padding: '10px',
-                                            border: '1px solid #e2e8f0',
-                                            borderRadius: '8px',
-                                            fontSize: '14px',
-                                            flex: 1
-                                        }}
-                                    />
-                                    <button
-                                        onClick={validarCodigoDescuento}
-                                        disabled={validandoCodigo}
-                                        style={{
-                                            padding: '10px 16px',
-                                            background: '#0f172a',
-                                            color: 'white',
-                                            border: 'none',
-                                            borderRadius: '8px',
-                                            cursor: 'pointer',
-                                            fontSize: '14px',
-                                            fontWeight: '600'
-                                        }}
-                                    >
-                                        {validandoCodigo ? 'Validando...' : 'Aplicar'}
-                                    </button>
-                                </div>
-                            ) : (
-                                <div className="discount-applied" style={{
-                                    background: '#d4edda',
-                                    border: '1px solid #c3e6cb',
-                                    borderRadius: '8px',
-                                    padding: '12px',
-                                    display: 'flex',
-                                    justifyContent: 'space-between',
-                                    alignItems: 'center'
-                                }}>
-                                    <div>
-                                        <div style={{ fontWeight: '600', color: '#155724' }}>
-                                            {descuentoAplicado.codigo} aplicado
-                                        </div>
-                                        <div style={{ fontSize: '12px', color: '#155724' }}>
-                                            {descuentoAplicado.porcentaje}% de descuento
-                                        </div>
-                                    </div>
-                                    <button
-                                        onClick={eliminarDescuento}
-                                        style={{
-                                            background: 'transparent',
-                                            border: 'none',
-                                            color: '#155724',
-                                            cursor: 'pointer',
-                                            fontSize: '18px'
-                                        }}
-                                    >
-                                        ✕
-                                    </button>
-                                </div>
-                            )}
-                            {errorCodigo && (
-                                <div style={{ color: '#dc3545', fontSize: '12px', marginTop: '5px' }}>
-                                    {errorCodigo}
-                                </div>
-                            )}
                         </div>
 
                         {descuentoAplicado && (

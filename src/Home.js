@@ -131,10 +131,10 @@ function Home({ user, isLoggedIn }) {
         <div className="hero-container">
           <div className="hero-text">
             <h1 className="hero-title" style={{ color: '#D3D3CE', textTransform: 'uppercase' }}>
-              PREMIUM<br />WATCHES
+              RELOJES<br />PREMIUM
             </h1>
-            <p className="hero-description" style={{ color: '#D3D3CE' }}>Discover Modern Luxury</p>
-            <button className="btn-primary" style={{ color: '#D3D3CE' }} onClick={() => navigate('/products')}>Shop Now</button>
+            <p className="hero-description" style={{ color: '#D3D3CE' }}>Descubre el lujo moderno</p>
+            <button className="btn-primary" style={{ color: '#D3D3CE' }} onClick={() => navigate('/products')}>Descubrir más</button>
           </div>
           <img
             src="/relojdelhero.png"

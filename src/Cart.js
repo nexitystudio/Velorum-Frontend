@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from 'react';
 import { useCart } from './CartContext';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL, fetchWithAuth } from './services';
 import './Cart.css';
 
 function Cart() {
@@ -13,11 +14,16 @@ function Cart() {
     clearCart,
     getTotalItems,
     getTotalPrice,
-    setIsCartOpen
+    setIsCartOpen,
+    descuentoAplicado,
+    setDescuentoAplicado
   } = useCart();
 
   const navigate = useNavigate();
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [codigoDescuento, setCodigoDescuento] = useState('');
+  const [errorCodigo, setErrorCodigo] = useState('');
+  const [validandoCodigo, setValidandoCodigo] = useState(false);
 
   // CONFIGURACIÓN DE NIVELES DE PROMOCIONES
   const PROMO_LEVELS = [
@@ -89,6 +95,49 @@ function Cart() {
   const handleContinueShopping = () => {
     setIsCartOpen(false);
     navigate('/products');
+  };
+
+  const validarCodigoDescuento = async () => {
+    if (!codigoDescuento.trim()) {
+      setErrorCodigo('Ingresa un código de descuento');
+      return;
+    }
+
+    setValidandoCodigo(true);
+    setErrorCodigo('');
+
+    try {
+      const response = await fetchWithAuth(`${API_BASE_URL}/market/validar-codigo-descuento/`, {
+        method: 'POST',
+        body: JSON.stringify({ codigo: codigoDescuento.trim().toUpperCase() })
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.valido) {
+        setDescuentoAplicado({
+          codigo: result.codigo,
+          porcentaje: result.porcentaje,
+          descripcion: result.descripcion
+        });
+        setErrorCodigo('');
+      } else {
+        setErrorCodigo(result.mensaje || 'Código de descuento inválido');
+        setDescuentoAplicado(null);
+      }
+    } catch (error) {
+      console.error('Error validando código:', error);
+      setErrorCodigo('Error al validar el código. Intenta nuevamente.');
+      setDescuentoAplicado(null);
+    } finally {
+      setValidandoCodigo(false);
+    }
+  };
+
+  const eliminarDescuento = () => {
+    setDescuentoAplicado(null);
+    setCodigoDescuento('');
+    setErrorCodigo('');
   };
 
   return (
@@ -234,8 +283,89 @@ function Cart() {
               </div>
               <div className="cart-summary modern">
                 <div className="summary-totals">
-                  <div className="row"><span className="lbl">Artículos</span><span className="val">{getTotalItems()}</span></div>
-                  <div className="row"><span className="lbl">Subtotal</span><span className="val">${getTotalPrice().toFixed(2)}</span></div>
+                  {/* Código de descuento */}
+                  <div className="discount-section" style={{ margin: '0 0 15px 0', padding: '0 0 15px 0', borderBottom: '1px solid #e2e8f0' }}>
+                    {!descuentoAplicado ? (
+                      <div className="discount-input-group" style={{ display: 'flex', gap: '8px' }}>
+                        <input
+                          type="text"
+                          placeholder="Código de descuento"
+                          value={codigoDescuento}
+                          onChange={(e) => setCodigoDescuento(e.target.value.toUpperCase())}
+                          onKeyPress={(e) => e.key === 'Enter' && validarCodigoDescuento()}
+                          style={{
+                            padding: '10px',
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '8px',
+                            fontSize: '13px',
+                            flex: 1
+                          }}
+                        />
+                        <button
+                          onClick={validarCodigoDescuento}
+                          disabled={validandoCodigo}
+                          style={{
+                            padding: '10px 16px',
+                            background: '#0f172a',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '8px',
+                            cursor: validandoCodigo ? 'not-allowed' : 'pointer',
+                            fontSize: '13px',
+                            fontWeight: '600',
+                            opacity: validandoCodigo ? 0.6 : 1
+                          }}
+                        >
+                          {validandoCodigo ? '...' : 'Aplicar'}
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="discount-applied" style={{
+                        background: '#d4edda',
+                        border: '1px solid #c3e6cb',
+                        borderRadius: '8px',
+                        padding: '10px 12px',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        alignItems: 'center'
+                      }}>
+                        <div>
+                          <div style={{ fontWeight: '600', color: '#155724', fontSize: '13px' }}>
+                            {descuentoAplicado.codigo} aplicado
+                          </div>
+                          <div style={{ fontSize: '11px', color: '#155724' }}>
+                            {descuentoAplicado.porcentaje}% de descuento
+                          </div>
+                        </div>
+                        <button
+                          onClick={eliminarDescuento}
+                          style={{
+                            background: 'transparent',
+                            border: 'none',
+                            color: '#155724',
+                            cursor: 'pointer',
+                            fontSize: '18px',
+                            lineHeight: '1'
+                          }}
+                        >
+                          ✕
+                        </button>
+                      </div>
+                    )}
+                    {errorCodigo && (
+                      <div style={{ color: '#dc3545', fontSize: '11px', marginTop: '5px' }}>
+                        {errorCodigo}
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Mostrar descuento por código si está aplicado */}
+                  {descuentoAplicado && (
+                    <div className="row discount">
+                      <span className="lbl">Descuento ({descuentoAplicado.porcentaje}%)</span>
+                      <span className="val">-${(getTotalPrice() * descuentoAplicado.porcentaje / 100).toFixed(2)}</span>
+                    </div>
+                  )}
                   
                   {/* Mostrar descuento si está desbloqueado */}
                   {promoStatus.unlockedRewards.find(r => r.type === 'discount') && (
@@ -260,6 +390,13 @@ function Cart() {
                     <span className="val">
                       ${(() => {
                         let finalTotal = getTotalPrice();
+                        
+                        // Aplicar descuento por código primero
+                        if (descuentoAplicado) {
+                          finalTotal = finalTotal * (1 - descuentoAplicado.porcentaje / 100);
+                        }
+                        
+                        // Aplicar descuento de promoción
                         const discountReward = promoStatus.unlockedRewards.find(r => r.type === 'discount');
                         if (discountReward) {
                           finalTotal = finalTotal * (1 - discountReward.value / 100);

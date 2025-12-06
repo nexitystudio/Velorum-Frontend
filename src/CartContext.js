@@ -14,6 +14,7 @@ export const useCart = () => {
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [descuentoAplicado, setDescuentoAplicado] = useState(null);
 
   // 📊 FUNCIÓN PARA OBTENER LA CLAVE DE USUARIO
   const getUserCartKey = () => {
@@ -231,7 +232,9 @@ export const CartProvider = ({ children }) => {
     getItemQuantity,
     toggleCart,
     setIsCartOpen,
-    getUnlockedPromotions
+    getUnlockedPromotions,
+    descuentoAplicado,
+    setDescuentoAplicado
   };
 
   return (

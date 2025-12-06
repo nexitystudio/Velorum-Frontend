@@ -2,11 +2,13 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFavorites } from './FavoritesContext';
+import { useCart } from './CartContext';
 import './Favorites.css';
 
 function Favorites() {
   const navigate = useNavigate();
   const { favorites, removeFavorite, clearFavorites } = useFavorites();
+  const { addToCart, setIsCartOpen } = useCart();
 
   // 📦 TODOS LOS PRODUCTOS DISPONIBLES (combinando todas las colecciones)
   const allProducts = [
@@ -214,7 +216,11 @@ function Favorites() {
                     </div>
                   </div>
                   <div className="fav-actions">
-                    <button className="mini-btn add" onClick={(e)=>{e.stopPropagation(); alert(`${item.name} agregado al carrito`);}}>Agregar</button>
+                    <button className="mini-btn add" onClick={(e)=>{
+                      e.stopPropagation(); 
+                      addToCart(item);
+                      setIsCartOpen(true);
+                    }}>Agregar</button>
                     <button className="mini-btn remove" onClick={(e)=>{e.stopPropagation(); removeFavorite(item.id);}} aria-label="Quitar">
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                     </button>

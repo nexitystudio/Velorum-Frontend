@@ -147,11 +147,17 @@ function AppContent() {
       checkAuth();
     };
     
+    const handleUserChanged = () => {
+      checkAuth();
+    };
+    
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('userChanged', handleUserChanged);
     
     // 🧹 LIMPIAR EL LISTENER AL DESMONTAR
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('userChanged', handleUserChanged);
     };
   }, []);
 

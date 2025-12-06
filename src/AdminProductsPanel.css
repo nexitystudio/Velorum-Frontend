@@ -200,16 +200,38 @@
 
 .btn-edit,
 .btn-reset,
-.btn-reset-price {
+.btn-reset-price,
+.btn-show,
+.btn-hide {
     background: #fff;
     color: #333;
 }
 
 .btn-edit:hover,
 .btn-reset:hover,
-.btn-reset-price:hover {
+.btn-reset-price:hover,
+.btn-show:hover,
+.btn-hide:hover {
     background: #f6f8fa;
     border-color: #d0d4d8;
+}
+
+.btn-show {
+    color: #28a745;
+}
+
+.btn-show:hover {
+    background: #e6f9ea;
+    border-color: #28a745;
+}
+
+.btn-hide {
+    color: #dc3545;
+}
+
+.btn-hide:hover {
+    background: #fce8ea;
+    border-color: #dc3545;
 }
 
 .btn-save {
@@ -380,5 +402,23 @@
 .btn-danger:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+}
+
+/* Estilos para productos ocultos */
+.producto-oculto {
+    opacity: 0.6;
+    background: #f8f9fa;
+}
+
+.badge-oculto {
+    display: inline-block;
+    margin-left: 8px;
+    padding: 2px 8px;
+    background: #dc3545;
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 4px;
+    text-transform: uppercase;
 }
 

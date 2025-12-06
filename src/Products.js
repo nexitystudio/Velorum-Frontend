@@ -8,7 +8,7 @@ import './Products.css';
 function Products() {
   const navigate = useNavigate();
   const { toggleFavorite, isFavorite } = useFavorites();
-  const { addToCart } = useCart();
+  const { addToCart, setIsCartOpen } = useCart();
   const { products: allProducts, loading, error } = useProducts();
   
   const [categoriaFiltro, setCategoriaFiltro] = useState('Todos');
@@ -308,6 +308,7 @@ function Products() {
                     onClick={(e) => {
                       e.stopPropagation();
                       addToCart(product);
+                      setIsCartOpen(true);
                     }}
                     disabled={product.stock === 0}
                   >
