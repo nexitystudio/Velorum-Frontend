@@ -37,7 +37,7 @@ export const CartProvider = ({ children }) => {
       try {
         const guestItems = JSON.parse(guestCart);
         if (guestItems.length > 0) {
-          console.log('🛒 Migrando carrito guest a usuario autenticado:', guestItems);
+    
           
           const userCartKey = getUserCartKey();
           const existingUserCart = localStorage.getItem(userCartKey);
@@ -68,7 +68,6 @@ export const CartProvider = ({ children }) => {
           
           // Limpiar carrito guest después de migrar
           localStorage.removeItem('cart_guest');
-          console.log('✅ Carrito migrado exitosamente');
         }
       } catch (error) {
         console.error('Error al migrar carrito:', error);
@@ -83,7 +82,6 @@ export const CartProvider = ({ children }) => {
     if (savedCart) {
       try {
         setCartItems(JSON.parse(savedCart));
-        console.log('🛒 Carrito cargado:', cartKey);
       } catch (error) {
         console.error('Error al cargar carrito:', error);
         setCartItems([]);
@@ -94,7 +92,6 @@ export const CartProvider = ({ children }) => {
   // 🔄 ESCUCHAR CAMBIOS DE USUARIO (LOGIN/LOGOUT)
   useEffect(() => {
     const handleUserLoggedIn = () => {
-      console.log('👤 Usuario inició sesión, migrando carrito...');
       // Migrar carrito de guest a usuario
       migrateGuestCartToUser();
     };
@@ -112,7 +109,6 @@ export const CartProvider = ({ children }) => {
     };
 
     const handleUserLoggedOut = () => {
-      console.log('👋 Usuario cerró sesión, limpiando carrito...');
       // Al cerrar sesión, volver al carrito guest vacío
       setCartItems([]);
       setIsCartOpen(false);

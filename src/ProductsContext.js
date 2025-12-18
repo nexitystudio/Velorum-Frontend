@@ -27,7 +27,6 @@ export const ProductsProvider = ({ children }) => {
     setError(null);
 
     try {
-      console.log('🔍 Cargando productos desde:', `${API_BASE_URL}/market/model/products/`);
       
       const response = await fetch(`${API_BASE_URL}/market/model/products/`);
       
@@ -40,19 +39,11 @@ export const ProductsProvider = ({ children }) => {
       
       const mappedProducts = list.map((p, index) => {
         if (index === 0) {
-          console.log('📦 Primer producto completo:', p);
-          console.log('  - imagenes field:', p.imagenes);
-          console.log('  - es array?', Array.isArray(p.imagenes));
-          console.log('  - length:', p.imagenes?.length);
         }
         
         let imagen = '/logo192.png';
         if (p.imagenes && Array.isArray(p.imagenes) && p.imagenes.length > 0) {
-          imagen = p.imagenes[0];
-          if (index === 0) console.log('  ✅ Imagen asignada:', imagen);
-        } else {
-          if (index === 0) console.log('  ⚠️ Usando imagen por defecto');
-        }
+          imagen = p.imagenes[0];}
         
         // Determinar género basado en el nombre de la categoría o del producto
         let genero = 'Unisex';
@@ -86,7 +77,6 @@ export const ProductsProvider = ({ children }) => {
 
       setProducts(mappedProducts);
       setLastFetch(new Date());
-      console.log('✅ Productos cargados en context:', mappedProducts.length);
       
       return mappedProducts;
     } catch (err) {
@@ -107,7 +97,6 @@ export const ProductsProvider = ({ children }) => {
   }, []);
 
   const refreshProducts = useCallback(() => {
-    console.log('🔄 Refrescando productos...');
     return fetchProducts(true);
   }, [fetchProducts]);
 

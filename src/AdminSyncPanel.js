@@ -20,19 +20,14 @@ function AdminSyncPanel() {
 
     const cargarEstadisticas = async () => {
         try {
-            console.log('📊 Cargando estadísticas...');
             const data = await apiRequest('/market/model/products/');
-            console.log('📦 Data recibida:', data);
             
             // Asegurar que sea un array
             const productos = Array.isArray(data) ? data : (data.results || []);
-            console.log('✅ Productos:', productos.length);
             const conSync = productos.filter(p => p.last_sync);
-            console.log('🔄 Con sync:', conSync.length);
             
             if (conSync.length > 0) {
                 const ultimaFecha = new Date(Math.max(...conSync.map(p => new Date(p.last_sync))));
-                console.log('📅 Última fecha:', ultimaFecha);
             }
             
             setStats({
@@ -47,7 +42,6 @@ function AdminSyncPanel() {
                     })
                     : 'Nunca'
             });
-            console.log('✅ Stats actualizadas:', stats);
         } catch (err) {
             console.error('Error cargando estadísticas:', err);
         }
@@ -66,7 +60,6 @@ function AdminSyncPanel() {
             setResultado(data);
             
             // Refrescar productos en el context
-            console.log('🔄 Refrescando productos en context...');
             await refreshProducts();
             
             // Esperar un poco y recargar estadísticas

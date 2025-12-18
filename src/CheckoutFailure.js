@@ -18,7 +18,6 @@ function CheckoutFailure() {
 
             // Si no hay parámetros de MP, es acceso directo no autorizado
             if (!paymentId && !preferenceId) {
-                console.log('❌ No MP parameters - unauthorized access');
                 navigate('/');
                 return;
             }
@@ -32,7 +31,6 @@ function CheckoutFailure() {
                 if (data.valid) {
                     setIsValid(true);
                 } else {
-                    console.log('❌ Invalid access:', data.error);
                     navigate('/');
                 }
             } catch (error) {

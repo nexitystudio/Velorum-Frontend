@@ -139,19 +139,13 @@ export const authService = {
 export const userService = {
   getAll: async () => {
     const token = localStorage.getItem("access_token");
-    console.log('🔍 Token disponible:', !!token); // 🔍 Debug
-    console.log('🔑 Token value:', token ? token.substring(0, 20) + '...' : 'null'); // 🔍 Debug
     
     const response = await fetch(`${API_BASE_URL}/users/`, {
       headers: getAuthHeaders()
     });
-    console.log('🔍 Making request to:', `${API_BASE_URL}/users/`); // 🔍 Debug
-    console.log('🔑 Headers:', getAuthHeaders()); // 🔍 Debug
-    console.log('📊 Response status:', response.status); // 🔍 Debug
     
     if (response.ok) {
       const data = await response.json();
-      console.log('✅ Users data received:', data); // 🔍 Debug
       return data.results || data.users || data;
     } else {
       // Intentar leer el mensaje de error del backend
@@ -588,7 +582,6 @@ export const adminService = {
     const response = await fetch(`${API_BASE_URL}/admin/dashboard/`, {
       headers: getAuthHeaders()
     });
-    console.log('🔍 Making request to:', `${API_BASE_URL}/admin/dashboard/`); // 🔍 Debug
     
     if (response.ok) {
       return response.json();

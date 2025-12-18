@@ -11,14 +11,6 @@ const AdminPanel = () => {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState('users'); // users, orders, products, sync
     // 🔍 Debug: Verificar autenticación al cargar el componente
-    useEffect(() => {
-        console.log('🔍 AdminPanel mounted - checking authentication...');
-        console.log('🔑 token:', localStorage.getItem("token") ? 'EXISTS' : 'MISSING');
-        console.log('🔑 refresh_token:', localStorage.getItem("refresh_token") ? 'EXISTS' : 'MISSING');
-        console.log('👤 user_role:', localStorage.getItem("user_role"));
-        console.log('📊 user_data:', localStorage.getItem("user_data"));
-    }, []);
-
     // 📦 Cargar datos al montar el componente
     useEffect(() => {
         fetchUsers();
@@ -83,9 +75,7 @@ const AdminPanel = () => {
     // Obtener dashboard estadístico
     const fetchDashboard = async () => {
         try {
-            console.log('Fetching dashboard...'); // Debug
             const data = await adminService.getDashboard();
-            console.log('Dashboard data received:', data); // Debug
             setDashboard(data);
         } catch (error) {
             console.error('Error fetching dashboard:', error);
@@ -98,9 +88,7 @@ const AdminPanel = () => {
     const fetchUsers = async () => {
         setLoading(true);
         try {
-            console.log('🔄 Fetching users...'); // Debug
             const data = await userService.getAll();
-            console.log('✅ Users data received:', data); // Debug
             setUsers(data.users || data);
             setError('');
         } catch (error) {

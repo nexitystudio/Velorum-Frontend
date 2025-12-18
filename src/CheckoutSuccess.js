@@ -20,9 +20,6 @@ function CheckoutSuccess() {
     const [registerLoading, setRegisterLoading] = useState(false);
 
     useEffect(() => {
-        console.log('🔍 URL COMPLETA:', window.location.href);
-        console.log('🔍 SEARCH PARAMS:', window.location.search);
-        console.log('🔍 HASH:', window.location.hash);
         
         // Verificar si el usuario está logueado
         const token = localStorage.getItem('token');
@@ -32,7 +29,6 @@ function CheckoutSuccess() {
         
         // Ver TODOS los parámetros que llegaron
         for (let [key, value] of searchParams.entries()) {
-            console.log(`   ${key}: ${value}`);
         }
         
         const validateCheckoutAccess = async () => {
@@ -43,7 +39,6 @@ function CheckoutSuccess() {
 
             // Si no hay parámetros de MP, es acceso directo no autorizado
             if (!paymentId && !preferenceId) {
-                console.log('❌ No MP parameters - unauthorized access');
                 navigate('/');
                 return;
             }
@@ -64,7 +59,6 @@ function CheckoutSuccess() {
                     // Disparar evento para que el CartContext se actualice
                     window.dispatchEvent(new Event('storage'));
                 } else {
-                    console.log('❌ Invalid access:', data.error);
                     navigate('/');
                 }
             } catch (error) {
@@ -109,7 +103,6 @@ function CheckoutSuccess() {
                 order_id: orderData.id
             };
             
-            console.log('📤 Creando usuario:', registerBody);
             
             const response = await fetch(`${API_BASE_URL}/create-user/`, {
                 method: 'POST',
@@ -119,9 +112,7 @@ function CheckoutSuccess() {
                 body: JSON.stringify(registerBody)
             });
             
-            console.log('📝 Response status:', response.status);
-            const data = await response.json();
-            console.log('📝 Response data:', data);
+            const data = await response.json();;
             
             if (response.ok) {
                 // Guardar tokens y usuario
@@ -131,8 +122,6 @@ function CheckoutSuccess() {
                 
                 // Disparar evento para que App.js actualice el estado de autenticación
                 window.dispatchEvent(new Event('userChanged'));
-                
-                console.log('✅ Usuario creado y logueado:', data.user);
                 
                 // Paso 2: Actualizar perfil con datos del checkout (si existen)
                 if (orderData.nombre_invitado || orderData.apellido_invitado || orderData.telefono_invitado) {
@@ -153,10 +142,7 @@ function CheckoutSuccess() {
                             body: JSON.stringify(profileUpdate)
                         });
                         
-                        console.log('✅ Perfil actualizado con datos del checkout');
-                    } catch (err) {
-                        console.log('⚠️ No se pudo actualizar perfil, pero usuario creado correctamente');
-                    }
+                    } catch (err) {}
                 }
                 
                 setIsLoggedIn(true);

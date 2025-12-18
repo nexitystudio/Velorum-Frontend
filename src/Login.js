@@ -147,8 +147,6 @@ function Login() {
               role: profileData.role || 'client', // 🎭 ROL DEL USUARIO (¡IMPORTANTE!)
             };
             
-            console.log('💾 Guardando información del usuario:', userInfo); // 🔍 Debug
-            console.log('🎭 Rol del usuario:', userInfo.role); // 🔍 Debug adicional
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
           } else {
             console.error('❌ Error al obtener perfil del usuario');

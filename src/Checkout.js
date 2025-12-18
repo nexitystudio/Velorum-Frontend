@@ -236,7 +236,6 @@ const Checkout = () => {
                 notas_promocion: promotions.hasGiftBox ? '⚠️ INCLUIR CAJA PARA RELOJ - Promoción desbloqueada' : null
             };
 
-            console.log('Enviando datos a MP:', requestData);
 
             // Llamar al endpoint que crea la orden y preferencia de MP
             // Si hay token, usar fetchWithAuth, si no, fetch normal
@@ -255,10 +254,6 @@ const Checkout = () => {
             });
 
             const result = await response.json();
-            console.log('Respuesta de MP:', result);
-            console.log('Response status:', response.status);
-            console.log('Response ok:', response.ok);
-
             if (!response.ok) {
                 console.error('Error del servidor:', result);
                 const errorMsg = typeof result.error === 'string' 
