@@ -1,6 +1,6 @@
 // 💖 **FAVORITES.JS** - PÁGINA DE PRODUCTOS FAVORITOS
 import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFavorites } from './FavoritesContext';
 import { useCart } from './CartContext';
 import './Favorites.css';
@@ -200,7 +200,7 @@ function Favorites() {
           <>
             <div className="favorites-list modern">
               {favoriteProducts.map(item => (
-                <div key={item.id} className="favorite-row modern" onClick={()=>handleProductClick(item.id)}>
+                <Link key={item.id} to={`/product/${item.id}`} className="favorite-row modern">
                   <div className="fav-thumb">
                     <img
                       src={item.image}
@@ -225,7 +225,7 @@ function Favorites() {
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
                     </button>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </>

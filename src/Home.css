@@ -977,11 +977,76 @@ body::after {
   transform:translateY(-2px) scale(1.02);
 }
 
-/* OCULTAR ELEMENTOS QUE NO EXISTEN EN EL JSX */
-.product-overlay,
-.quick-view-btn,
+/* PRODUCT OVERLAY AND BUTTONS */
+.product-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product-card-new:hover .product-overlay {
+  opacity: 1;
+}
+
+.quick-view-btn {
+  padding: 12px 24px;
+  background: #ffffff;
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quick-view-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
 .wishlist-btn {
-  display: none;
+  width: 44px;
+  height: 44px;
+  background: #ffffff;
+  color: #0f172a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.wishlist-btn:hover {
+  background: var(--accent);
+  transform: scale(1.1);
+}
+
+.wishlist-btn.active {
+  color: #c71f33;
+}
+
+/* Make product-image-new a link */
+.product-image-new {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 /* 🏷️ CATEGORÍAS SECTION SOFISTICADA */

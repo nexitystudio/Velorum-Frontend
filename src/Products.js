@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useFavorites } from './FavoritesContext';
 import { useCart } from './CartContext';
 import { useProducts } from './ProductsContext';
@@ -264,7 +264,7 @@ function Products() {
                 {product.badge}
               </div>
               
-              <div className="product-image" onClick={() => navigate(`/product/${product.id}`)}>
+              <Link to={`/product/${product.id}`} className="product-image">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -273,12 +273,13 @@ function Products() {
                   }}
                 />
                 <div className="product-actions">
-                  <button className="quick-view-btn" onClick={() => navigate(`/product/${product.id}`)}>
+                  <span className="quick-view-btn">
                     👁️
-                  </button>
+                  </span>
                   <button 
                     className={`wishlist-btn ${isFavorite(product.id) ? 'active' : ''}`}
                     onClick={(e) => {
+                      e.preventDefault();
                       e.stopPropagation();
                       // Enviamos el objeto completo del producto para que el contexto tenga toda la info
                       toggleFavorite(product);
@@ -287,7 +288,7 @@ function Products() {
                     {isFavorite(product.id) ? '❤️' : '♡'}
                   </button>
                 </div>
-              </div>
+              </Link>
               
               <div className="product-info">
                 <h3>{product.name}</h3>
@@ -322,12 +323,12 @@ function Products() {
                       </>
                     ) : 'No hay stock'}
                   </button>
-                  <button 
+                  <Link 
+                    to={`/product/${product.id}`}
                     className="view-details-btn"
-                    onClick={() => navigate(`/product/${product.id}`)}
                   >
                     Ver detalles
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
