@@ -561,13 +561,21 @@
 .product-actions { position:absolute; bottom:14px; right:14px; opacity:.55; transition:opacity .18s ease, filter .25s; }
 .product-actions.show { opacity:.9; }
 .product-card:hover .product-actions { opacity:1; filter:drop-shadow(0 6px 14px rgba(15,23,42,.35)); }
+.wishlist-btn,
 .fav-btn { width:46px; height:46px; border:none; background:#ffffff; border-radius:14px; display:flex; align-items:center; justify-content:center; color:#0f172a; box-shadow:0 4px 14px -6px rgba(15,23,42,.25),0 0 0 1px rgba(15,23,42,.06); cursor:pointer; transition:background .18s ease, color .18s ease, transform .18s ease, box-shadow .18s ease; position:relative; }
+.wishlist-btn:before,
 .fav-btn:before { content:""; position:absolute; inset:-4px; border-radius:18px; background:radial-gradient(circle at 70% 30%, rgba(201,166,70,.35), transparent 70%); opacity:0; transition:.35s; }
+.wishlist-btn svg,
 .fav-btn svg { width:24px; height:24px; }
+.wishlist-btn:hover,
 .fav-btn:hover { background:#0f172a; color:#c71f33; transform:translateY(-3px) scale(1.06); box-shadow:0 14px 26px -10px rgba(15,23,42,.45),0 0 0 1px #0f172a; }
+.wishlist-btn:hover:before,
 .fav-btn:hover:before { opacity:1; }
+.wishlist-btn.active,
 .fav-btn.active { background:#0d4ca3; color:white; box-shadow:0 12px 28px -10px rgba(13,76,163,0.5),0 0 0 1px #0d4ca3; }
+.wishlist-btn.active:before,
 .fav-btn.active:before { opacity:1; filter:blur(2px); }
+.wishlist-btn.active:hover,
 .fav-btn.active:hover { color:white; }
 
 /* 📋 INFORMACIÓN DEL PRODUCTO */
@@ -642,7 +650,7 @@
   text-overflow: ellipsis;
 }
 
-product-pricing {
+.product-pricing {
   display: flex;
   align-items: center;
   gap: 16px;
@@ -721,12 +729,29 @@ product-pricing {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .view-details-btn:hover {
   color: #0f172a;
   border-color: #cbd5e1;
   background: #f8fafc;
+}
+
+/* Estilos para el link de la imagen del producto */
+.product-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+  display: block;
 }
 
 /* 📄 PAGINACIÓN */
