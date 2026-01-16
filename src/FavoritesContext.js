@@ -40,7 +40,6 @@ export const FavoritesProvider = ({ children }) => {
           setFavorites(Array.isArray(parsed) ? parsed : []);
         }
       } catch (error) {
-        console.error('Error al cargar favoritos:', error);
         setFavorites([]);
       }
     }
@@ -98,7 +97,6 @@ export const FavoritesProvider = ({ children }) => {
           return prev.filter(p => p.id !== productOrId);
         }
         // Si no existe y solo tenemos el ID, no podemos agregarlo sin más datos
-        console.warn('toggleFavorite: Se recibió solo un ID para agregar, se necesita el objeto completo del producto');
         return prev;
       });
       return;

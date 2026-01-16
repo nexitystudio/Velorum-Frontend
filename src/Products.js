@@ -1,104 +1,156 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useFavorites } from './FavoritesContext';
 import { useCart } from './CartContext';
 import { useProducts } from './ProductsContext';
 import './Products.css';
 
+// Mapeo de ordenamiento UI → backend
+const ordenMap = {
+  'precio-asc': 'precio_asc',
+  'precio-desc': 'precio_desc',
+  'nombre-asc': 'az',
+  'nombre-desc': 'za',
+  'destacados': 'destacado',
+};
+
 function Products() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { addToCart, setIsCartOpen } = useCart();
-  const { products: allProducts, loading, error } = useProducts();
+  const { products: allProducts, loading, error, count, page: currentPage, pageSize, fetchProducts } = useProducts();
   
-  const [categoriaFiltro, setCategoriaFiltro] = useState('Todos');
-  const [precioMin, setPrecioMin] = useState(0);
-  const [precioMax, setPrecioMax] = useState(1000000);
-  const [precioMinInput, setPrecioMinInput] = useState(0);
-  const [precioMaxInput, setPrecioMaxInput] = useState(1000000);
+  // Leer valores iniciales de la URL
+  const [categoriaFiltro, setCategoriaFiltro] = useState(searchParams.get('categoria') || 'Todos');
+  const [precioMaxDinamico, setPrecioMaxDinamico] = useState(1000000); // Calculado dinámicamente
+  const [precioMinInput, setPrecioMinInput] = useState(Number(searchParams.get('precio_min')) || 0);
+  const [precioMaxInput, setPrecioMaxInput] = useState(Number(searchParams.get('precio_max')) || 1000000);
+  const [precioMinAplicado, setPrecioMinAplicado] = useState(Number(searchParams.get('precio_min')) || 0);
+  const [precioMaxAplicado, setPrecioMaxAplicado] = useState(Number(searchParams.get('precio_max')) || 1000000);
   const priceTrackRef = useRef(null);
-  const [busqueda, setBusqueda] = useState('');
-  const [ordenamiento, setOrdenamiento] = useState('destacados');
-  const [paginaActual, setPaginaActual] = useState(1);
+  const [busquedaInput, setBusquedaInput] = useState(searchParams.get('q') || ''); // Input temporal
+  const [busqueda, setBusqueda] = useState(searchParams.get('q') || ''); // Búsqueda aplicada
+  const [ordenamiento, setOrdenamiento] = useState(searchParams.get('orden') || 'destacados');
   const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
   const PRODUCTOS_POR_PAGINA = 12;
 
-  // Calcular rango de precios cuando cambien los productos
+  // Calcular precio máximo dinámico cuando cambian los productos
   useEffect(() => {
     if (allProducts.length > 0) {
-      const precios = allProducts.map(p => p.price);
-      const min = Math.floor(Math.min(...precios));
-      const max = Math.ceil(Math.max(...precios));
-      setPrecioMin(min);
-      setPrecioMax(max);
-      setPrecioMinInput(min);
-      setPrecioMaxInput(max);
+      const precios = allProducts.map(p => p.price).filter(p => p > 0);
+      if (precios.length > 0) {
+        const maxPrecio = Math.ceil(Math.max(...precios));
+        setPrecioMaxDinamico(maxPrecio);
+        // Solo actualizar el input si aún está en el valor por defecto
+        if (precioMaxInput === 1000000) {
+          setPrecioMaxInput(maxPrecio);
+        }
+        if (precioMaxAplicado === 1000000) {
+          setPrecioMaxAplicado(maxPrecio);
+        }
+      }
     }
-  }, [allProducts]);
+  }, [allProducts, precioMaxInput, precioMaxAplicado]);
+
+  // Cargar productos desde URL al montar
+  useEffect(() => {
+    const page = Number(searchParams.get('page')) || 1;
+    const categoria = searchParams.get('categoria') || 'Todos';
+    const params = {
+      q: searchParams.get('q') || undefined,
+      precio_min: Number(searchParams.get('precio_min')) || undefined,
+      precio_max: Number(searchParams.get('precio_max')) || undefined,
+      orden: searchParams.get('orden') || undefined,
+      categoria: categoria !== 'Todos' ? categoria.toLowerCase() : undefined,
+    };
+    
+    fetchProducts({ page, page_size: 12, params });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); // Solo al montar
 
   // Actualiza el fondo del track del slider cuando cambian los valores de precio
   useEffect(() => {
-    if (!priceTrackRef.current || precioMax <= precioMin) return;
-    const range = precioMax - precioMin || 1;
-    const minPct = ((precioMinInput - precioMin) / range) * 100;
-    const maxPct = ((precioMaxInput - precioMin) / range) * 100;
-    // color azul para el rango seleccionado con gradiente suave
+    if (!priceTrackRef.current || precioMaxDinamico === 0) return;
+    const range = precioMaxDinamico;
+    const minPct = (precioMinInput / range) * 100;
+    const maxPct = (precioMaxInput / range) * 100;
     priceTrackRef.current.style.background = `linear-gradient(90deg, #e2e8f0 0%, #e2e8f0 ${minPct}%, #0d4ca3 ${minPct}%, #1e5bb8 ${maxPct}%, #e2e8f0 ${maxPct}%, #e2e8f0 100%)`;
-  }, [precioMinInput, precioMaxInput, precioMin, precioMax]);
+  }, [precioMinInput, precioMaxInput, precioMaxDinamico]);
 
-  // Filtrar productos
-  let productosFiltrados = allProducts.filter(p => {
-    // Filtro por stock - solo mostrar productos con stock disponible
-    const hasStock = p.stock_ilimitado || (p.stock_disponible && p.stock_disponible > 0) || (p.stock && p.stock > 0);
-    if (!hasStock) return false;
+  // Aplicar filtros cuando cambian
+  useEffect(() => {
+    const params = {
+      q: busqueda || undefined,
+      precio_min: precioMinAplicado > 0 ? precioMinAplicado : undefined,
+      precio_max: precioMaxAplicado < precioMaxDinamico ? precioMaxAplicado : undefined,
+      orden: ordenMap[ordenamiento] || undefined,
+      categoria: categoriaFiltro !== 'Todos' ? categoriaFiltro.toLowerCase() : undefined,
+    };
 
-    // Filtro por categoría
-    if (categoriaFiltro !== 'Todos' && p.category !== categoriaFiltro) return false;
+    // Actualizar URL
+    const newSearchParams = new URLSearchParams();
+    newSearchParams.set('page', '1'); // Reset a página 1 cuando cambian filtros
+    
+    if (busqueda) newSearchParams.set('q', busqueda);
+    if (precioMinAplicado > 0) newSearchParams.set('precio_min', String(precioMinAplicado));
+    if (precioMaxAplicado < precioMaxDinamico) newSearchParams.set('precio_max', String(precioMaxAplicado));
+    if (ordenamiento !== 'destacados') newSearchParams.set('orden', ordenamiento);
+    if (categoriaFiltro !== 'Todos') newSearchParams.set('categoria', categoriaFiltro);
+    
+    setSearchParams(newSearchParams);
+    
+    fetchProducts({ page: 1, page_size: 12, params });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [busqueda, precioMinAplicado, precioMaxAplicado, ordenamiento, categoriaFiltro]);
 
-    // Filtro por precio
-    if (p.price < precioMinInput || p.price > precioMaxInput) return false;
+  // Los productos ya vienen filtrados y paginados del servidor
+  const productosMostrados = allProducts;
 
-    // Filtro por búsqueda
-    if (busqueda && !p.name.toLowerCase().includes(busqueda.toLowerCase())) return false;
+  // Calcular paginación con count del servidor
+  const totalPaginas = Math.ceil(count / PRODUCTOS_POR_PAGINA);
 
-    return true;
-  });
-
-  // Ordenar productos
-  switch (ordenamiento) {
-    case 'precio-asc':
-      productosFiltrados = [...productosFiltrados].sort((a, b) => a.price - b.price);
-      break;
-    case 'precio-desc':
-      productosFiltrados = [...productosFiltrados].sort((a, b) => b.price - a.price);
-      break;
-    case 'nombre-asc':
-      productosFiltrados = [...productosFiltrados].sort((a, b) => a.name.localeCompare(b.name));
-      break;
-    case 'nombre-desc':
-      productosFiltrados = [...productosFiltrados].sort((a, b) => b.name.localeCompare(a.name));
-      break;
-    default:
-      // destacados (sin ordenar)
-      break;
-  }
-
-  // Calcular paginación
-  const totalPaginas = Math.ceil(productosFiltrados.length / PRODUCTOS_POR_PAGINA);
-  const indiceInicio = (paginaActual - 1) * PRODUCTOS_POR_PAGINA;
-  const indiceFin = indiceInicio + PRODUCTOS_POR_PAGINA;
-  const productosPaginados = productosFiltrados.slice(indiceInicio, indiceFin);
-
-    const categorias = ['Todos', ...Array.from(new Set(allProducts.map(p => p.category).filter(c => c && c.toLowerCase() !== 'relojes')) )];
+  // Categorías fijas (alineadas con el backend)
+  const categorias = ['Todos', 'Relojes', 'Premium'];
 
   // Limpiar todos los filtros
   const limpiarFiltros = () => {
     setCategoriaFiltro('Todos');
-    setPrecioMinInput(precioMin);
-    setPrecioMaxInput(precioMax);
+    setPrecioMinInput(0);
+    setPrecioMaxInput(precioMaxDinamico);
+    setPrecioMinAplicado(0);
+    setPrecioMaxAplicado(precioMaxDinamico);
+    setBusquedaInput('');
     setBusqueda('');
     setOrdenamiento('destacados');
-    setPaginaActual(1);
+    // Limpiar URL
+    setSearchParams({});
+    // Recargar sin filtros
+    fetchProducts({ page: 1, page_size: 12, params: {} });
+  };
+
+  // Función para cambiar de página (mantiene filtros actuales)
+  const irPagina = (nuevaPagina) => {
+    const params = {
+      q: busqueda || undefined,
+      precio_min: precioMinAplicado > 0 ? precioMinAplicado : undefined,
+      precio_max: precioMaxAplicado < precioMaxDinamico ? precioMaxAplicado : undefined,
+      orden: ordenMap[ordenamiento] || undefined,
+      categoria: categoriaFiltro !== 'Todos' ? categoriaFiltro.toLowerCase() : undefined,
+    };
+
+    // Actualizar URL con la nueva página
+    const newSearchParams = new URLSearchParams();
+    newSearchParams.set('page', String(nuevaPagina));
+    if (busqueda) newSearchParams.set('q', busqueda);
+    if (precioMinAplicado > 0) newSearchParams.set('precio_min', String(precioMinAplicado));
+    if (precioMaxAplicado < precioMaxDinamico) newSearchParams.set('precio_max', String(precioMaxAplicado));
+    if (ordenamiento !== 'destacados') newSearchParams.set('orden', ordenamiento);
+    if (categoriaFiltro !== 'Todos') newSearchParams.set('categoria', categoriaFiltro);
+    
+    setSearchParams(newSearchParams);
+    
+    fetchProducts({ page: nuevaPagina, page_size: 12, params });
   };
 
   if (loading) {
@@ -130,7 +182,7 @@ function Products() {
           <h1>Catálogo de Productos</h1>
           <p>Descubre nuestra colección completa de relojes</p>
           <div className="products-stats">
-            {productosFiltrados.length} {productosFiltrados.length === 1 ? 'producto' : 'productos'} encontrados
+            {count} {count === 1 ? 'producto' : 'productos'} encontrados
           </div>
         </div>
       </div>
@@ -156,7 +208,7 @@ function Products() {
           <div className="filters-content">
             <div className="filters-header">
               <h3>Filtros</h3>
-              {(categoriaFiltro !== 'Todos' || precioMinInput !== precioMin || precioMaxInput !== precioMax || busqueda) && (
+              {(categoriaFiltro !== 'Todos' || precioMinAplicado > 0 || precioMaxAplicado < precioMaxDinamico || busqueda || ordenamiento !== 'destacados') && (
                 <button className="clear-filters-btn" onClick={limpiarFiltros}>
                   Limpiar
                 </button>
@@ -169,11 +221,15 @@ function Products() {
                 <input
                   type="text"
                   className="search-filter-input"
-                  placeholder="Nombre del producto..."
-                  value={busqueda}
+                  placeholder="Presiona Enter para buscar..."
+                  value={busquedaInput}
                   onChange={(e) => {
-                    setBusqueda(e.target.value);
-                    setPaginaActual(1);
+                    setBusquedaInput(e.target.value);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      setBusqueda(busquedaInput);
+                    }
                   }}
                 />
               </div>
@@ -190,7 +246,6 @@ function Products() {
                         checked={categoriaFiltro === cat}
                         onChange={() => {
                           setCategoriaFiltro(cat);
-                          setPaginaActual(1);
                         }}
                       />
                       <span>{cat}</span>
@@ -209,27 +264,29 @@ function Products() {
                 <div className="price-slider-container" ref={priceTrackRef}>
                   <input
                     type="range"
-                    min={precioMin}
-                    max={precioMax}
+                    min={0}
+                    max={precioMaxDinamico}
                     value={precioMinInput}
                     className="price-slider price-slider-min"
                     onChange={(e) => {
-                      const value = Math.min(Number(e.target.value), precioMaxInput - 1);
+                      const value = Math.min(Number(e.target.value), precioMaxInput - 1000);
                       setPrecioMinInput(value);
-                      setPaginaActual(1);
                     }}
+                    onMouseUp={(e) => setPrecioMinAplicado(Number(e.target.value))}
+                    onTouchEnd={(e) => setPrecioMinAplicado(Number(e.target.value))}
                   />
                   <input
                     type="range"
-                    min={precioMin}
-                    max={precioMax}
+                    min={0}
+                    max={precioMaxDinamico}
                     value={precioMaxInput}
                     className="price-slider price-slider-max"
                     onChange={(e) => {
-                      const value = Math.max(Number(e.target.value), precioMinInput + 1);
+                      const value = Math.max(Number(e.target.value), precioMinInput + 1000);
                       setPrecioMaxInput(value);
-                      setPaginaActual(1);
                     }}
+                    onMouseUp={(e) => setPrecioMaxAplicado(Number(e.target.value))}
+                    onTouchEnd={(e) => setPrecioMaxAplicado(Number(e.target.value))}
                   />
                 </div>
               </div>
@@ -242,7 +299,6 @@ function Products() {
                   value={ordenamiento}
                   onChange={(e) => {
                     setOrdenamiento(e.target.value);
-                    setPaginaActual(1);
                   }}
                 >
                   <option value="destacados">Destacados</option>
@@ -257,14 +313,25 @@ function Products() {
 
         {/* GRID DE PRODUCTOS */}
         <div className="products-grid-container">
-          <div className="products-grid">
-          {productosPaginados.map(product => (
+          {productosMostrados.length === 0 && !loading ? (
+            <div style={{ 
+              gridColumn: '1 / -1', 
+              textAlign: 'center', 
+              padding: '3rem',
+              color: '#666'
+            }}>
+              <h3>No se encontraron productos</h3>
+              <p>Intenta ajustar los filtros o buscar algo diferente</p>
+            </div>
+          ) : (
+            <div className="products-grid">
+            {productosMostrados.map(product => (
             <div key={product.id} className="product-card">
               <div className={`product-badge ${product.badge.toLowerCase()}`}>
                 {product.badge}
               </div>
               
-              <div className="product-image" onClick={() => navigate(`/product/${product.id}`)}>
+              <Link to={`/product/${product.id}`} className="product-image">
                 <img
                   src={product.image}
                   alt={product.name}
@@ -273,12 +340,13 @@ function Products() {
                   }}
                 />
                 <div className="product-actions">
-                  <button className="quick-view-btn" onClick={() => navigate(`/product/${product.id}`)}>
+                  <span className="quick-view-btn">
                     👁️
-                  </button>
+                  </span>
                   <button 
                     className={`wishlist-btn ${isFavorite(product.id) ? 'active' : ''}`}
                     onClick={(e) => {
+                      e.preventDefault();
                       e.stopPropagation();
                       // Enviamos el objeto completo del producto para que el contexto tenga toda la info
                       toggleFavorite(product);
@@ -287,7 +355,7 @@ function Products() {
                     {isFavorite(product.id) ? '❤️' : '♡'}
                   </button>
                 </div>
-              </div>
+              </Link>
               
               <div className="product-info">
                 <h3>{product.name}</h3>
@@ -322,27 +390,28 @@ function Products() {
                       </>
                     ) : 'No hay stock'}
                   </button>
-                  <button 
+                  <Link 
+                    to={`/product/${product.id}`}
                     className="view-details-btn"
-                    onClick={() => navigate(`/product/${product.id}`)}
                   >
                     Ver detalles
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
           </div>
+          )}
 
           {/* PAGINACIÓN */}
           {totalPaginas > 1 && (
             <div className="pagination">
               <button
                 onClick={() => {
-                  setPaginaActual(p => Math.max(1, p - 1));
+                  irPagina(currentPage - 1);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                disabled={paginaActual === 1}
+                disabled={currentPage === 1 || loading}
                 className="pagination-btn"
               >
                 ← Anterior
@@ -350,7 +419,7 @@ function Products() {
               
               {(() => {
                 const maxVisible = 8;
-                let startPage = Math.max(1, paginaActual - Math.floor(maxVisible / 2));
+                let startPage = Math.max(1, currentPage - Math.floor(maxVisible / 2));
                 let endPage = Math.min(totalPaginas, startPage + maxVisible - 1);
                 
                 if (endPage - startPage + 1 < maxVisible) {
@@ -363,10 +432,11 @@ function Products() {
                     <button
                       key={i}
                       onClick={() => {
-                        setPaginaActual(i);
+                        irPagina(i);
                         window.scrollTo({ top: 0, behavior: 'smooth' });
                       }}
-                      className={`pagination-btn ${paginaActual === i ? 'active' : ''}`}
+                      className={`pagination-btn ${currentPage === i ? 'active' : ''}`}
+                      disabled={loading}
                     >
                       {i}
                     </button>
@@ -377,10 +447,10 @@ function Products() {
               
               <button
                 onClick={() => {
-                  setPaginaActual(p => Math.min(totalPaginas, p + 1));
+                  irPagina(currentPage + 1);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                disabled={paginaActual === totalPaginas}
+                disabled={currentPage === totalPaginas || loading}
                 className="pagination-btn"
               >
                 Siguiente →

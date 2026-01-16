@@ -26,7 +26,6 @@ function ProductDetail() {
         const data = await productService.getById(id);
         setProduct(data);
       } catch (error) {
-        console.error('Error al cargar el producto:', error);
       } finally {
         setLoading(false);
       }

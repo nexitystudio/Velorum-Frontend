@@ -62,7 +62,6 @@ function CheckoutSuccess() {
                     navigate('/');
                 }
             } catch (error) {
-                console.error('❌ Error validating checkout:', error);
                 navigate('/');
             } finally {
                 setIsLoading(false);
@@ -151,11 +150,9 @@ function CheckoutSuccess() {
                 // Mostrar username creado
                 alert(`¡Cuenta creada exitosamente!\n\nTu usuario es: ${data.user.username}\nYa podés seguir tu pedido.`);
             } else {
-                console.error('❌ Error en respuesta:', data);
                 setRegisterError(data.error || data.message || 'Error al crear la cuenta');
             }
         } catch (error) {
-            console.error('❌ Error al registrar:', error);
             setRegisterError('Error al crear la cuenta. Por favor intentá de nuevo.');
         } finally {
             setRegisterLoading(false);

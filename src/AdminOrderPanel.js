@@ -70,7 +70,7 @@ const AdminOrderPanel = () => {
                 return;
             }
 
-            const response = await fetch(`${API_BASE_URL}/market/model/orders/`, {
+            const response = await fetch(`${API_BASE_URL}/market/model/orders/?page_size=10000`, {
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -88,10 +88,10 @@ const AdminOrderPanel = () => {
             }
 
             const data = await response.json();
-            setOrders(data);
-            calcularEstadisticas(data);
+            const ordersArray = data.results || data || [];
+            setOrders(ordersArray);
+            calcularEstadisticas(ordersArray);
         } catch (error) {
-            console.error('Error al cargar pedidos:', error);
             setError('Error al cargar pedidos: ' + error.message);
         } finally {
             setLoading(false);
@@ -118,7 +118,6 @@ const AdminOrderPanel = () => {
             obtenerPedidos();
             
         } catch (error) {
-            console.error('Error al eliminar pedido:', error);
             setError('Error al eliminar pedido: ' + error.message);
         }
     };
@@ -204,7 +203,6 @@ const AdminOrderPanel = () => {
             obtenerPedidos();
             
         } catch (error) {
-            console.error('Error al gestionar pago:', error);
             setError('Error al gestionar pago: ' + error.message);
         }
     };
@@ -231,11 +229,14 @@ const AdminOrderPanel = () => {
         }
 
         if (filters.buscar) {
-            pedidosFiltrados = pedidosFiltrados.filter(order => 
-                order.id.toString().includes(filters.buscar) ||
-                order.email.toLowerCase().includes(filters.buscar.toLowerCase()) ||
-                (order.nombre + ' ' + order.apellido).toLowerCase().includes(filters.buscar.toLowerCase())
-            );
+            pedidosFiltrados = pedidosFiltrados.filter(order => {
+                const nombre = getClientNombre(order).toLowerCase();
+                const email = getClientEmail(order).toLowerCase();
+                const buscar = filters.buscar.toLowerCase();
+                return order.id.toString().includes(buscar) ||
+                       email.includes(buscar) ||
+                       nombre.includes(buscar);
+            });
         }
 
         // Filtro por rango de fechas (interpretar como fechas locales completas)
@@ -518,6 +519,7 @@ const AdminOrderPanel = () => {
                                 <p><strong>Nombre:</strong> {getClientNombre(selectedOrder)}</p>
                                 <p><strong>Email:</strong> {getClientEmail(selectedOrder)}</p>
                                 <p><strong>Teléfono:</strong> {getClientPhone(selectedOrder)}</p>
+                                <p><strong>DNI:</strong> {selectedOrder.dni_invitado || selectedOrder.usuario_detalle?.dni || 'N/A'}</p>
                             </div>
 
                             <div className="seccion">
@@ -561,6 +563,11 @@ const AdminOrderPanel = () => {
                                 <p><strong>Subtotal:</strong> ${selectedOrder.total}</p>
                                 <p><strong>Costo de Envío:</strong> ${selectedOrder.costo_envio || 0}</p>
                                 <p><strong>Total Final:</strong> ${selectedOrder.total_con_envio || selectedOrder.total}</p>
+                                {selectedOrder.codigo_descuento_usado ? (
+                                    <p><strong>Código de Descuento:</strong> {selectedOrder.codigo_descuento_usado}</p>
+                                ) : (
+                                    <p><strong>Código de Descuento:</strong> <span style={{color: '#999'}}>Sin código</span></p>
+                                )}
                                 {selectedOrder.numero_seguimiento && (
                                     <p><strong>Seguimiento:</strong> {selectedOrder.numero_seguimiento}</p>
                                 )}

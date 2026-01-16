@@ -1,6 +1,17 @@
 // Configuración base (revertida a localhost fijo a pedido del usuario)
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:8000/api';
 
+// Helper para construir query strings
+const buildQuery = (params = {}) => {
+  const qs = new URLSearchParams();
+  Object.entries(params).forEach(([k, v]) => {
+    if (v === undefined || v === null || v === '') return;
+    qs.set(k, String(v));
+  });
+  const s = qs.toString();
+  return s ? `?${s}` : '';
+};
+
 // Función para obtener headers de autenticación
 export const getAuthHeaders = () => {
   // Preferimos access_token; mantenemos compatibilidad con keys antiguas
@@ -34,7 +45,6 @@ export const apiRequest = async (endpoint, options = {}) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error(`❌ Error en ${endpoint}:`, error);
     throw error;
   }
 };
@@ -90,7 +100,6 @@ export const authService = {
         });
       }
     } catch (error) {
-      console.error('Error during logout:', error);
     } finally {
       handleTokenExpiration();
     }
@@ -148,14 +157,6 @@ export const userService = {
       const data = await response.json();
       return data.results || data.users || data;
     } else {
-      // Intentar leer el mensaje de error del backend
-      try {
-        const errorData = await response.json();
-        console.error('❌ Error response data:', errorData); // 🔍 Debug
-      } catch (e) {
-        console.error('❌ Could not parse error response'); // 🔍 Debug
-      }
-      console.error('❌ Response not ok:', response.status, response.statusText); // 🔍 Debug
       throw new Error(`Error loading users: ${response.status}`);
     }
   },
@@ -270,8 +271,9 @@ export const userService = {
 // SERVICIO DE PRODUCTOS
 // =============================================================================
 export const productService = {
-  getAll: async () => {
-    const response = await fetch(`${API_BASE_URL}/market/model/products/`, {
+  getAll: async (params = {}) => {
+    const query = buildQuery(params);
+    const response = await fetch(`${API_BASE_URL}/market/model/products/${query}`, {
       headers: {
         'Content-Type': 'application/json'
       }
@@ -306,7 +308,7 @@ export const productService = {
   },
 
   search: async (query) => {
-    const response = await fetch(`${API_BASE_URL}/market/model/products/?search=${encodeURIComponent(query)}`, {
+    const response = await fetch(`${API_BASE_URL}/market/model/products/?q=${encodeURIComponent(query)}`, {
       headers: getAuthHeaders()
     });
     return response.json();
@@ -586,7 +588,6 @@ export const adminService = {
     if (response.ok) {
       return response.json();
     }
-    console.error('❌ Dashboard response not ok:', response.status, response.statusText); // 🔍 Debug
     throw new Error(`Error loading dashboard: ${response.status}`);
   },
 

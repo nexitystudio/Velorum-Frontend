@@ -90,7 +90,7 @@ function Orders() {
         return;
       }
 
-  const response = await fetch(`${API_BASE_URL}/market/model/orders/`, {
+  const response = await fetch(`${API_BASE_URL}/market/model/orders/my-orders/`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -119,13 +119,15 @@ function Orders() {
             quantity: d.cantidad,
             price: parseFloat(d.subtotal || 0) / (d.cantidad || 1)
           }))
-        }));
+        }))
+        .sort((a, b) => new Date(a.created_at) - new Date(b.created_at)) // Ordenar del más antiguo al más nuevo
+        .map((order, index) => ({ ...order, orderNumber: index + 1 })); // Asignar número incremental
+        
         setOrders(mapped);
       } else {
   setError(`Error ${response.status}: ${await response.text() || 'al cargar los pedidos'}`);
       }
     } catch (error) {
-      console.error('Error:', error);
       setError('Error de red al cargar pedidos');
     } finally {
       setLoading(false);
@@ -307,7 +309,7 @@ function Orders() {
             return (
               <div key={order.id} className="order-card modern">
                 <div className="order-headline">
-                  <div className="main-id">Pedido #{order.id || '001'}</div>
+                  <div className="main-id">Pedido #{order.orderNumber || '001'}</div>
                   <div className="meta-line">
                     <span className="date">{formatDateTimeDMY(order.created_at)}</span>
                     <span className="dot" />
@@ -366,7 +368,7 @@ function Orders() {
         <div className="order-modal-overlay" onClick={(e)=>{ if(e.target.classList.contains('order-modal-overlay')) setSelectedOrder(null); }}>
           <div className="order-modal">
             <div className="modal-head">
-              <h3>Pedido #{selectedOrder.id}</h3>
+              <h3>Pedido #{selectedOrder.orderNumber}</h3>
               <button className="close-btn" onClick={()=>setSelectedOrder(null)} aria-label="Cerrar">×</button>
             </div>
             <div className="modal-section">
@@ -405,7 +407,7 @@ function Orders() {
       {confirming && (
         <div className="confirm-cancel-overlay" onClick={(e)=>{ if(e.target.classList.contains('confirm-cancel-overlay')) setConfirming(null); }}>
           <div className="confirm-cancel-box" role="dialog" aria-modal="true" aria-labelledby="cc-title">
-            <h4 id="cc-title">Cancelar pedido #{confirming.id}</h4>
+            <h4 id="cc-title">Cancelar pedido #{confirming.orderNumber}</h4>
             <p className="cc-text">¿Seguro que querés cancelarlo? Esta acción no se puede deshacer.</p>
             <div className="cc-actions">
               <button className="o-btn danger" onClick={()=>cancelOrder(confirming)}>Sí, cancelar</button>

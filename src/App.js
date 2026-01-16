@@ -131,7 +131,6 @@ function AppContent() {
           setUser(parsedUser);
           setIsLoggedIn(true);
         } catch (error) {
-          console.error('Error al parsear usuario:', error);
           // Si hay error, limpiar datos
           localStorage.removeItem('userInfo');
           localStorage.removeItem('accessToken');
@@ -321,8 +320,8 @@ function AppContent() {
                     <button className="dropdown-item" onClick={() => {navigate('/orders'); setShowUserDropdown(false);}}>
                       Mis Pedidos
                     </button>
-                    {/* 🔧 MOSTRAR PANEL ADMIN SOLO SI EL USUARIO ES ADMIN */}
-                    {user?.role === 'admin' && (
+                    {/* 🔧 MOSTRAR PANEL ADMIN SI EL USUARIO ES ADMIN U OPERADOR */}
+                    {(user?.role === 'admin' || user?.role === 'operator') && (
                       <>
                         <hr className="dropdown-divider" />
                         <button className="dropdown-item admin-item" onClick={() => {navigate('/admin'); setShowUserDropdown(false);}}>
@@ -399,7 +398,7 @@ function AppContent() {
                   <hr className="mobile-separator" />
                   <button className="mobile-link" onClick={() => navigateAndClose('/profile')}>MI PERFIL</button>
                   <button className="mobile-link" onClick={() => navigateAndClose('/orders')}>MIS PEDIDOS</button>
-                  {user?.role === 'admin' && (
+                  {(user?.role === 'admin' || user?.role === 'operator') && (
                     <button className="mobile-link" onClick={() => navigateAndClose('/admin')}>ADMINISTRACIÓN</button>
                   )}
                   <button className="mobile-link danger" onClick={() => { handleLogout(); setMobileMenuOpen(false); }}>CERRAR SESIÓN</button>
@@ -450,11 +449,11 @@ function AppContent() {
         <Route path="/checkout/pending" element={<CheckoutPending />} />
         <Route path="/checkout/failure" element={<CheckoutFailure />} />
         
-        {/* 🛠️ PANEL DE ADMINISTRACIÓN - SOLO PARA ADMINS */}
+        {/* 🛠️ PANEL DE ADMINISTRACIÓN - PARA ADMINS Y OPERADORES */}
         <Route 
           path="/admin" 
           element={
-            user?.role === 'admin' ? (
+            (user?.role === 'admin' || user?.role === 'operator') ? (
               <AdminPanel />
             ) : (
               <div style={{ 

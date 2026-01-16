@@ -34,7 +34,6 @@ function CheckoutFailure() {
                     navigate('/');
                 }
             } catch (error) {
-                console.error('❌ Error validating checkout:', error);
                 navigate('/');
             } finally {
                 setIsLoading(false);

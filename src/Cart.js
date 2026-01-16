@@ -28,20 +28,20 @@ function Cart() {
   // CONFIGURACIÓN DE NIVELES DE PROMOCIONES
   const PROMO_LEVELS = [
     { 
-      threshold: 50000, 
+      threshold: 70000, 
       reward: 'Envío Gratis', 
       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="1" y="3" width="15" height="13"/><path d="M16 8h5l3 3v5h-2m-4 0H2"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>,
       type: 'shipping' 
     },
     { 
-      threshold: 100000, 
+      threshold: 120000, 
       reward: '10% Descuento', 
       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2"/><circle cx="16" cy="16" r="6"/><path d="M12 16h8"/></svg>,
       type: 'discount', 
       value: 10 
     },
     { 
-      threshold: 150000, 
+      threshold: 170000, 
       reward: 'Caja para Reloj', 
       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>,
       type: 'gift' 
@@ -126,7 +126,6 @@ function Cart() {
         setDescuentoAplicado(null);
       }
     } catch (error) {
-      console.error('Error validando código:', error);
       setErrorCodigo('Error al validar el código. Intenta nuevamente.');
       setDescuentoAplicado(null);
     } finally {
@@ -213,8 +212,14 @@ function Cart() {
               <h3>Tu carrito está vacío</h3>
               <p className="desc">Agrega productos para continuar con la compra.</p>
               <div className="empty-actions refined">
-                <button className="cluster-like accent" onClick={handleContinueShopping}>Explorar</button>
-                <button className="cluster-like ghost" onClick={() => { setIsCartOpen(false); navigate('/'); }}>Inicio</button>
+                <button className="cluster-like accent" onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey) { window.open('/products', '_blank'); return; }
+                  handleContinueShopping();
+                }} onAuxClick={() => { window.open('/products', '_blank'); }}>Explorar</button>
+                <button className="cluster-like ghost" onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey) { window.open('/', '_blank'); return; }
+                  setIsCartOpen(false); navigate('/');
+                }} onAuxClick={() => { window.open('/', '_blank'); }}>Inicio</button>
               </div>
             </div>
           ) : (
@@ -298,7 +303,8 @@ function Cart() {
                             border: '1px solid #e2e8f0',
                             borderRadius: '8px',
                             fontSize: '13px',
-                            flex: 1
+                            flex: 1,
+                            color: '#000000'
                           }}
                         />
                         <button
@@ -407,8 +413,14 @@ function Cart() {
                   </div>
                 </div>
                 <div className="summary-actions">
-                  <button className="summary-btn ghost" onClick={handleContinueShopping}>Seguir Comprando</button>
-                  <button className="summary-btn accent" onClick={handleCheckout}>Finalizar</button>
+                  <button className="summary-btn ghost" onClick={(e) => {
+                    if (e.metaKey || e.ctrlKey) { window.open('/products', '_blank'); return; }
+                    handleContinueShopping();
+                  }} onAuxClick={() => { window.open('/products', '_blank'); }}>Seguir Comprando</button>
+                    <button className="summary-btn accent" onClick={(e) => {
+                      if (e.metaKey || e.ctrlKey) { window.open('/checkout', '_blank'); return; }
+                      handleCheckout();
+                    }} onAuxClick={() => { window.open('/checkout', '_blank'); }}>Finalizar</button>
                 </div>
               </div>
             </>
@@ -432,7 +444,10 @@ function Cart() {
               <h3>Inicia Sesión para Continuar</h3>
               <p>Para finalizar tu compra necesitas tener una cuenta. Tu carrito se mantendrá guardado.</p>
               <div className="modal-actions">
-                <button className="modal-btn primary" onClick={handleLoginRedirect}>
+                <button className="modal-btn primary" onClick={(e) => {
+                  if (e.metaKey || e.ctrlKey) { window.open('/login', '_blank'); return; }
+                  handleLoginRedirect();
+                }} onAuxClick={() => { window.open('/login', '_blank'); }}>
                   Ir a Iniciar Sesión
                 </button>
                 <button className="modal-btn secondary" onClick={() => setShowLoginModal(false)}>

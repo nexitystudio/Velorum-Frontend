@@ -32,7 +32,6 @@ const AdminDiscountPanel = () => {
             const data = await response.json();
             setCodigos(Array.isArray(data) ? data : (data.results || []));
         } catch (err) {
-            console.error('Error al cargar códigos:', err);
             setError('Error al cargar códigos de descuento');
         } finally {
             setLoading(false);
@@ -84,11 +83,9 @@ const AdminDiscountPanel = () => {
                 fetchCodigos();
             } else {
                 const errorData = await response.json();
-                console.error('Error del servidor:', errorData);
                 alert('Error: ' + JSON.stringify(errorData));
             }
         } catch (err) {
-            console.error('Error:', err);
             alert('Error al guardar el código: ' + err.message);
         }
     };
@@ -108,7 +105,6 @@ const AdminDiscountPanel = () => {
                 alert('Error al eliminar el código');
             }
         } catch (err) {
-            console.error('Error:', err);
             alert('Error al eliminar el código');
         }
     };

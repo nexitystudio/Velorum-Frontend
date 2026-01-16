@@ -22,7 +22,10 @@ function AdminSyncPanel() {
         try {
             const data = await apiRequest('/market/model/products/');
             
-            // Asegurar que sea un array
+            // Obtener total de productos (con paginación usa data.count)
+            const totalProductos = data.count || (Array.isArray(data) ? data.length : (data.results || []).length);
+            
+            // Asegurar que sea un array para calcular última sync
             const productos = Array.isArray(data) ? data : (data.results || []);
             const conSync = productos.filter(p => p.last_sync);
             
@@ -31,7 +34,7 @@ function AdminSyncPanel() {
             }
             
             setStats({
-                totalProductos: productos.length,
+                totalProductos: totalProductos,
                 ultimaSync: conSync.length > 0 
                     ? new Date(Math.max(...conSync.map(p => new Date(p.last_sync)))).toLocaleString('es-AR', {
                         day: '2-digit',
@@ -43,7 +46,6 @@ function AdminSyncPanel() {
                     : 'Nunca'
             });
         } catch (err) {
-            console.error('Error cargando estadísticas:', err);
         }
     };
 

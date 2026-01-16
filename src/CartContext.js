@@ -24,7 +24,7 @@ export const CartProvider = ({ children }) => {
         const user = JSON.parse(userInfo);
         return `cart_${user.id || user.username}`;
       } catch (error) {
-        console.error('Error parsing userInfo:', error);
+        // Error parsing userInfo
       }
     }
     return 'cart_guest'; // Para usuarios no logueados
@@ -70,7 +70,7 @@ export const CartProvider = ({ children }) => {
           localStorage.removeItem('cart_guest');
         }
       } catch (error) {
-        console.error('Error al migrar carrito:', error);
+        // Error al migrar carrito
       }
     }
   };
@@ -83,7 +83,7 @@ export const CartProvider = ({ children }) => {
       try {
         setCartItems(JSON.parse(savedCart));
       } catch (error) {
-        console.error('Error al cargar carrito:', error);
+        // Error al cargar carrito
         setCartItems([]);
       }
     }
@@ -207,10 +207,10 @@ export const CartProvider = ({ children }) => {
   const getUnlockedPromotions = () => {
     const total = getTotalPrice();
     const promotions = {
-      hasDiscount: total >= 100000,
-      hasFreeShipping: total >= 50000,
-      hasGiftBox: total >= 150000,
-      discountPercentage: total >= 100000 ? 10 : 0
+      hasDiscount: total >= 120000,
+      hasFreeShipping: total >= 70000,
+      hasGiftBox: total >= 170000,
+      discountPercentage: total >= 120000 ? 10 : 0
     };
     return promotions;
   };

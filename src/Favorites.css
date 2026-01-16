@@ -14,7 +14,7 @@ body { background:var(--fav-bg); }
 .action-cluster .cluster-btn.ghost:hover { background:#222; }
 .fav-content { display:flex; flex-direction:column; gap:30px; }
 .favorites-list.modern { display:flex; flex-direction:column; gap:0; padding:4px 0 10px; }
-.favorite-row.modern { display:flex; gap:18px; padding:20px 0 22px; border-bottom:1px solid var(--fav-border); cursor:pointer; transition:.25s; }
+.favorite-row.modern { display:flex; gap:18px; padding:20px 0 22px; border-bottom:1px solid var(--fav-border); cursor:pointer; transition:.25s; text-decoration:none; color:inherit; }
 .favorite-row.modern:last-child { border-bottom:none; }
 .favorite-row.modern:hover { background:linear-gradient(90deg,rgba(var(--fav-accent-rgb),0.065),transparent 70%); }
 .fav-thumb { width:72px; height:72px; border-radius:18px; overflow:hidden; background:#f1f2f3; flex-shrink:0; box-shadow:0 2px 6px -2px rgba(0,0,0,.15); position:relative; display:flex; align-items:center; justify-content:center; }

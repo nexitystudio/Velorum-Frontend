@@ -28,7 +28,6 @@ function AdminProductsPanel() {
             const productosArray = Array.isArray(data) ? data : (data.results || []);
             setProductos(productosArray);
         } catch (error) {
-            console.error('Error cargando productos:', error);
             setProductos([]); // En caso de error, array vacío
         } finally {
             setLoading(false);

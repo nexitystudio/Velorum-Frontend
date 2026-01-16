@@ -38,7 +38,6 @@ function Profile() {
     try {
   const token = localStorage.getItem('token') || localStorage.getItem('accessToken');
       if (!token) {
-        console.error('No hay token de usuario');
         setLoading(false);
         return;
       }
@@ -57,7 +56,6 @@ function Profile() {
           try {
             profileData = JSON.parse(savedProfile);
           } catch (error) {
-            console.error('Error al cargar perfil guardado:', error);
           }
         }
         
@@ -87,7 +85,6 @@ function Profile() {
               localStorage.setItem(userKey, JSON.stringify(mergedProfile));
             }
           } catch (e) {
-            console.warn('No se pudo actualizar datos desde API perfil', e);
           }
         }
         setUser(fullUser);
@@ -123,7 +120,6 @@ function Profile() {
       });
 
     } catch (error) {
-      console.error('Error:', error);
       // 🔄 Crear usuario básico en caso de error
       const basicUser = {
         username: 'Usuario',
@@ -208,7 +204,6 @@ function Profile() {
       }
       */
     } catch (error) {
-      console.error('Error:', error);
       alert('Error al actualizar el perfil');
     }
   };

@@ -721,12 +721,29 @@ product-pricing {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .view-details-btn:hover {
   color: #0f172a;
   border-color: #cbd5e1;
   background: #f8fafc;
+}
+
+/* Estilos para el link de la imagen del producto */
+.product-image {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+  display: block;
 }
 
 /* 📄 PAGINACIÓN */

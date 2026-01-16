@@ -149,10 +149,8 @@ function Login() {
             
             localStorage.setItem('userInfo', JSON.stringify(userInfo));
           } else {
-            console.error('❌ Error al obtener perfil del usuario');
           }
         } catch (profileError) {
-          console.error('❌ Error al cargar perfil:', profileError);
         }
         
         // 📢 NOTIFICAR A OTROS COMPONENTES QUE EL USUARIO SE LOGUEÓ

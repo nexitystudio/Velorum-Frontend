@@ -2,7 +2,7 @@
 
 // 📦 IMPORTACIONES NECESARIAS
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useCart } from './CartContext';
 import { useFavorites } from './FavoritesContext';
 import { productService } from './services';
@@ -65,7 +65,6 @@ function Home({ user, isLoggedIn }) {
         
         setFeaturedProducts(featured);
       } catch (error) {
-        console.error('Error cargando productos destacados:', error);
         setFeaturedProducts([]);
       } finally {
         setLoadingProducts(false);
@@ -173,16 +172,16 @@ function Home({ user, isLoggedIn }) {
                 <div className={`product-badge ${String(categoryName).toLowerCase()}`}>
                   {categoryName}
                 </div>
-                <div className="product-image-new" onClick={() => navigate(`/product/${product.id}`)} style={{ cursor: 'pointer' }}>
+                <Link to={`/product/${product.id}`} className="product-image-new">
                   <img 
                     src={(product.imagenes && product.imagenes[0]) || product.imagen_url || product.image || '/logo192.png'} 
                     alt={product.nombre || product.name}
                     onError={(e) => { e.currentTarget.src = '/logo192.png'; }}
                   />
                   <div className="product-overlay">
-                    <button className="quick-view-btn" onClick={() => navigate(`/product/${product.id}`)}>
+                    <Link to={`/product/${product.id}`} className="quick-view-btn">
                       Vista rápida
-                    </button>
+                    </Link>
                     <button 
                       className={`wishlist-btn ${isFavorite && isFavorite(product.id) ? 'active' : ''}`}
                       onClick={(e) => { e.stopPropagation(); toggleFavorite && toggleFavorite(product); }}
@@ -191,7 +190,7 @@ function Home({ user, isLoggedIn }) {
                       {isFavorite && isFavorite(product.id) ? '❤️' : '♡'}
                     </button>
                   </div>
-                </div>
+                </Link>
                 <div className="product-info-new">
                   <h4>{product.nombre || product.name}</h4>
                   <div className="product-pricing">
