@@ -29,7 +29,8 @@ function Home({ user, isLoggedIn }) {
     const loadFeaturedProducts = async () => {
       try {
         setLoadingProducts(true);
-        const products = await productService.getAll();
+        const response = await productService.getAll({ page_size: 1000 }); // Traer todos los productos
+        const products = response.results || response; // Manejar respuesta paginada
         
         // Filtrar productos con stock disponible
         const productsWithStock = products.filter(p => 
