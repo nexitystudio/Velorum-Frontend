@@ -293,20 +293,6 @@ export const productService = {
     throw new Error(`Error loading product: ${response.status}`);
   },
 
-  getMenWatches: async () => {
-    const response = await fetch(`${API_BASE_URL}/market/model/products/?gender=men`, {
-      headers: getAuthHeaders()
-    });
-    return response.json();
-  },
-
-  getWomenWatches: async () => {
-    const response = await fetch(`${API_BASE_URL}/market/model/products/?gender=women`, {
-      headers: getAuthHeaders()
-    });
-    return response.json();
-  },
-
   search: async (query) => {
     const response = await fetch(`${API_BASE_URL}/market/model/products/?q=${encodeURIComponent(query)}`, {
       headers: getAuthHeaders()

@@ -162,9 +162,9 @@ function ProductDetail() {
 
           {/* 💰 PRECIO */}
           <div className="price-section">
-            <div className="current-price">${product.precio_final?.toLocaleString()}</div>
+            <div className="current-price">${(product.precio*1)?.toLocaleString()}</div>
             {product.en_oferta && product.precio_oferta_proveedor && (
-              <div className="original-price">${(product.precio_oferta_proveedor * 2).toLocaleString()}</div>
+              <div className="original-price">${(product.precio_oferta_proveedor * 2.5).toLocaleString()}</div>
             )}
           </div>
 
@@ -236,7 +236,7 @@ function ProductDetail() {
                 className={`add-to-cart-btn ${!product.disponible ? 'disabled' : ''}`}
                 disabled={!product.disponible}
               >
-                {isInCart(product.id) ? 'Actualizar carrito' : 'Agregar al carrito'} · ${(product.precio_final * quantity).toLocaleString()}
+                {isInCart(product.id) ? 'Actualizar carrito' : 'Agregar al carrito'} · ${(product.precio * quantity).toLocaleString()}
               </button>
               <button 
                 onClick={handleToggleFavorite}

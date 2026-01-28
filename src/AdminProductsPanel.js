@@ -23,7 +23,7 @@ function AdminProductsPanel() {
 
     const cargarProductos = async () => {
         try {
-            const data = await apiRequest('/market/model/products/');
+            const data = await apiRequest('/market/model/products/?page_size=9999');
             // Asegurar que siempre sea un array
             const productosArray = Array.isArray(data) ? data : (data.results || []);
             setProductos(productosArray);
@@ -92,7 +92,7 @@ function AdminProductsPanel() {
             await cargarProductos();
             await refreshProducts();
             
-            alert(`✅ Precio reseteado: $${response.precio_proveedor} × 2 = $${response.precio_nuevo}`);
+            alert(`✅ Precio reseteado: $${response.precio_proveedor} × 2.20 = $${response.precio_nuevo}`);
         } catch (error) {
             alert('❌ Error: ' + error.message);
         } finally {
@@ -271,7 +271,7 @@ function AdminProductsPanel() {
                                                 onClick={() => handleResetearPrecioIndividual(producto.id)}
                                                 className="btn-reset-price"
                                                 disabled={resetIndividualLoading[producto.id] || !producto.precio_proveedor}
-                                                title={producto.precio_proveedor ? `Resetear a $${producto.precio_proveedor} × 2` : 'Sin precio de proveedor'}
+                                                title={producto.precio_proveedor ? `Resetear a $${producto.precio_proveedor} × 2.20` : 'Sin precio de proveedor'}
                                             >
                                                 {resetIndividualLoading[producto.id] ? (
                                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">

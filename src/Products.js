@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, Link, useSearchParams } from 'react-router-dom';
 import { useFavorites } from './FavoritesContext';
 import { useCart } from './CartContext';
@@ -19,11 +19,11 @@ function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { toggleFavorite, isFavorite } = useFavorites();
   const { addToCart, setIsCartOpen } = useCart();
-  const { products: allProducts, loading, error, count, page: currentPage, pageSize, fetchProducts } = useProducts();
+  const { products: allProducts, loading, error, count, page: currentPage, pageSize, priceRange, fetchProducts } = useProducts();
   
   // Leer valores iniciales de la URL
   const [categoriaFiltro, setCategoriaFiltro] = useState(searchParams.get('categoria') || 'Todos');
-  const [precioMaxDinamico, setPrecioMaxDinamico] = useState(1000000); // Calculado dinámicamente
+  const precioMaxDinamico = 1000000; // Máximo fijo en 1 millón
   const [precioMinInput, setPrecioMinInput] = useState(Number(searchParams.get('precio_min')) || 0);
   const [precioMaxInput, setPrecioMaxInput] = useState(Number(searchParams.get('precio_max')) || 1000000);
   const [precioMinAplicado, setPrecioMinAplicado] = useState(Number(searchParams.get('precio_min')) || 0);
@@ -35,39 +35,39 @@ function Products() {
   const [filtrosAbiertos, setFiltrosAbiertos] = useState(false);
   const PRODUCTOS_POR_PAGINA = 12;
 
-  // Calcular precio máximo dinámico cuando cambian los productos
-  useEffect(() => {
-    if (allProducts.length > 0) {
-      const precios = allProducts.map(p => p.price).filter(p => p > 0);
-      if (precios.length > 0) {
-        const maxPrecio = Math.ceil(Math.max(...precios));
-        setPrecioMaxDinamico(maxPrecio);
-        // Solo actualizar el input si aún está en el valor por defecto
-        if (precioMaxInput === 1000000) {
-          setPrecioMaxInput(maxPrecio);
-        }
-        if (precioMaxAplicado === 1000000) {
-          setPrecioMaxAplicado(maxPrecio);
-        }
-      }
-    }
-  }, [allProducts, precioMaxInput, precioMaxAplicado]);
-
-  // Cargar productos desde URL al montar
+  // Cargar productos desde URL cuando cambian los searchParams
   useEffect(() => {
     const page = Number(searchParams.get('page')) || 1;
     const categoria = searchParams.get('categoria') || 'Todos';
+    const q = searchParams.get('q') || '';
+    const orden = searchParams.get('orden') || 'destacados';
+    const precioMin = Number(searchParams.get('precio_min')) || 0;
+    const precioMax = Number(searchParams.get('precio_max')) || 0;
+    
     const params = {
-      q: searchParams.get('q') || undefined,
-      precio_min: Number(searchParams.get('precio_min')) || undefined,
-      precio_max: Number(searchParams.get('precio_max')) || undefined,
-      orden: searchParams.get('orden') || undefined,
+      q: q || undefined,
+      precio_min: precioMin || undefined,
+      precio_max: precioMax || undefined,
+      orden: orden || undefined,
       categoria: categoria !== 'Todos' ? categoria.toLowerCase() : undefined,
     };
     
+    // Sincronizar estado local con la URL
+    setCategoriaFiltro(categoria);
+    setBusqueda(q);
+    setBusquedaInput(q);
+    setOrdenamiento(orden);
+    
+    // Sincronizar precios desde la URL (o usar valores por defecto)
+    setPrecioMinInput(precioMin || 0);
+    setPrecioMaxInput(precioMax || 1000000);
+    setPrecioMinAplicado(precioMin || 0);
+    setPrecioMaxAplicado(precioMax || 1000000);
+    
+    // Cargar productos con los parámetros de la URL
     fetchProducts({ page, page_size: 12, params });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Solo al montar
+  }, [searchParams]); // Ejecutar cuando cambian los parámetros de la URL
 
   // Actualiza el fondo del track del slider cuando cambian los valores de precio
   useEffect(() => {
@@ -78,31 +78,31 @@ function Products() {
     priceTrackRef.current.style.background = `linear-gradient(90deg, #e2e8f0 0%, #e2e8f0 ${minPct}%, #0d4ca3 ${minPct}%, #1e5bb8 ${maxPct}%, #e2e8f0 ${maxPct}%, #e2e8f0 100%)`;
   }, [precioMinInput, precioMaxInput, precioMaxDinamico]);
 
-  // Aplicar filtros cuando cambian
-  useEffect(() => {
-    const params = {
-      q: busqueda || undefined,
-      precio_min: precioMinAplicado > 0 ? precioMinAplicado : undefined,
-      precio_max: precioMaxAplicado < precioMaxDinamico ? precioMaxAplicado : undefined,
-      orden: ordenMap[ordenamiento] || undefined,
-      categoria: categoriaFiltro !== 'Todos' ? categoriaFiltro.toLowerCase() : undefined,
-    };
-
-    // Actualizar URL
+  // Función para aplicar filtros (actualiza la URL)
+  const aplicarFiltrosAURL = useCallback((nuevosFiltros = {}) => {
     const newSearchParams = new URLSearchParams();
     newSearchParams.set('page', '1'); // Reset a página 1 cuando cambian filtros
     
-    if (busqueda) newSearchParams.set('q', busqueda);
-    if (precioMinAplicado > 0) newSearchParams.set('precio_min', String(precioMinAplicado));
-    if (precioMaxAplicado < precioMaxDinamico) newSearchParams.set('precio_max', String(precioMaxAplicado));
-    if (ordenamiento !== 'destacados') newSearchParams.set('orden', ordenamiento);
-    if (categoriaFiltro !== 'Todos') newSearchParams.set('categoria', categoriaFiltro);
+    const filtros = {
+      q: nuevosFiltros.q !== undefined ? nuevosFiltros.q : busqueda,
+      categoria: nuevosFiltros.categoria !== undefined ? nuevosFiltros.categoria : categoriaFiltro,
+      orden: nuevosFiltros.orden !== undefined ? nuevosFiltros.orden : ordenamiento,
+      precio_min: nuevosFiltros.precio_min !== undefined ? nuevosFiltros.precio_min : precioMinAplicado,
+      precio_max: nuevosFiltros.precio_max !== undefined ? nuevosFiltros.precio_max : precioMaxAplicado,
+    };
+    
+    if (filtros.q) newSearchParams.set('q', filtros.q);
+    // Solo agregar precio_min si es mayor a 0
+    if (filtros.precio_min > 0) newSearchParams.set('precio_min', String(filtros.precio_min));
+    // Solo agregar precio_max si es menor a 1 millón (hay filtro aplicado)
+    if (filtros.precio_max > 0 && filtros.precio_max < 1000000) {
+      newSearchParams.set('precio_max', String(filtros.precio_max));
+    }
+    if (filtros.orden && filtros.orden !== 'destacados') newSearchParams.set('orden', filtros.orden);
+    if (filtros.categoria && filtros.categoria !== 'Todos') newSearchParams.set('categoria', filtros.categoria);
     
     setSearchParams(newSearchParams);
-    
-    fetchProducts({ page: 1, page_size: 12, params });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [busqueda, precioMinAplicado, precioMaxAplicado, ordenamiento, categoriaFiltro]);
+  }, [busqueda, categoriaFiltro, ordenamiento, precioMinAplicado, precioMaxAplicado, precioMaxDinamico, setSearchParams]);
 
   // Los productos ya vienen filtrados y paginados del servidor
   const productosMostrados = allProducts;
@@ -110,8 +110,19 @@ function Products() {
   // Calcular paginación con count del servidor
   const totalPaginas = Math.ceil(count / PRODUCTOS_POR_PAGINA);
 
-  // Categorías fijas (alineadas con el backend)
-  const categorias = ['Todos', 'Relojes', 'Premium'];
+  // Marcas principales (las más populares)
+  const marcasPrincipales = ['Todos', 'ROLEX', 'CASIO', 'G-SHOCK'];
+  
+  // Otras marcas disponibles (para el desplegable)
+  const otrasMarcas = [
+    'PATEK PHILIPPE',
+    'RICHARD MILLE',
+    'HUBLOT',
+    'TAG HEUER',
+    'AUDEMARS PIGUET',
+    'TOMI',
+    'CHENXI'
+  ].sort();
 
   // Limpiar todos los filtros
   const limpiarFiltros = () => {
@@ -228,29 +239,57 @@ function Products() {
                   }}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                      setBusqueda(busquedaInput);
+                      aplicarFiltrosAURL({ q: busquedaInput });
                     }
                   }}
                 />
               </div>
 
-              {/* Categoría */}
+              {/* Marca */}
               <div className="filter-group">
-                <h4>Categoría</h4>
+                <h4>Marca</h4>
                 <div className="filter-options-list">
-                  {categorias.map(cat => (
-                    <label key={cat} className="filter-checkbox-label">
+                  {marcasPrincipales.map(marca => (
+                    <label key={marca} className="filter-checkbox-label">
                       <input
                         type="radio"
-                        name="categoria"
-                        checked={categoriaFiltro === cat}
+                        name="marca"
+                        checked={categoriaFiltro === marca}
                         onChange={() => {
-                          setCategoriaFiltro(cat);
+                          aplicarFiltrosAURL({ categoria: marca });
                         }}
                       />
-                      <span>{cat}</span>
+                      <span>{marca}</span>
                     </label>
                   ))}
+                  
+                  {/* Desplegable de otras marcas */}
+                  <details style={{ marginTop: '10px' }}>
+                    <summary style={{ 
+                      cursor: 'pointer', 
+                      padding: '8px',
+                      background: '#f0f0f0',
+                      borderRadius: '4px',
+                      fontWeight: '500'
+                    }}>
+                      Otras Marcas
+                    </summary>
+                    <div style={{ marginTop: '8px', paddingLeft: '8px' }}>
+                      {otrasMarcas.map(marca => (
+                        <label key={marca} className="filter-checkbox-label">
+                          <input
+                            type="radio"
+                            name="marca"
+                            checked={categoriaFiltro === marca}
+                            onChange={() => {
+                              aplicarFiltrosAURL({ categoria: marca });
+                            }}
+                          />
+                          <span>{marca}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </details>
                 </div>
               </div>
 
@@ -272,8 +311,12 @@ function Products() {
                       const value = Math.min(Number(e.target.value), precioMaxInput - 1000);
                       setPrecioMinInput(value);
                     }}
-                    onMouseUp={(e) => setPrecioMinAplicado(Number(e.target.value))}
-                    onTouchEnd={(e) => setPrecioMinAplicado(Number(e.target.value))}
+                    onMouseUp={(e) => {
+                      aplicarFiltrosAURL({ precio_min: Number(e.target.value) });
+                    }}
+                    onTouchEnd={(e) => {
+                      aplicarFiltrosAURL({ precio_min: Number(e.target.value) });
+                    }}
                   />
                   <input
                     type="range"
@@ -285,8 +328,12 @@ function Products() {
                       const value = Math.max(Number(e.target.value), precioMinInput + 1000);
                       setPrecioMaxInput(value);
                     }}
-                    onMouseUp={(e) => setPrecioMaxAplicado(Number(e.target.value))}
-                    onTouchEnd={(e) => setPrecioMaxAplicado(Number(e.target.value))}
+                    onMouseUp={(e) => {
+                      aplicarFiltrosAURL({ precio_max: Number(e.target.value) });
+                    }}
+                    onTouchEnd={(e) => {
+                      aplicarFiltrosAURL({ precio_max: Number(e.target.value) });
+                    }}
                   />
                 </div>
               </div>
@@ -298,7 +345,7 @@ function Products() {
                   className="sort-select-filter"
                   value={ordenamiento}
                   onChange={(e) => {
-                    setOrdenamiento(e.target.value);
+                    aplicarFiltrosAURL({ orden: e.target.value });
                   }}
                 >
                   <option value="destacados">Destacados</option>
@@ -340,9 +387,6 @@ function Products() {
                   }}
                 />
                 <div className="product-actions">
-                  <span className="quick-view-btn">
-                    👁️
-                  </span>
                   <button 
                     className={`wishlist-btn ${isFavorite(product.id) ? 'active' : ''}`}
                     onClick={(e) => {

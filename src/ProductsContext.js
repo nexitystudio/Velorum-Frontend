@@ -21,6 +21,41 @@ export const ProductsProvider = ({ children }) => {
   const [previous, setPrevious] = useState(null);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(12);
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 1000000 });
+
+  // Obtener rango de precios global (todos los productos con stock)
+  const fetchPriceRange = useCallback(async () => {
+    try {
+      // Obtener todas las categorías para asegurar que incluimos todos los productos
+      const url = `${API_BASE_URL}/market/model/products/?page_size=9999&categoria=todos`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      const data = await response.json();
+      const list = Array.isArray(data) ? data : (data.results || []);
+      
+      console.log(`fetchPriceRange: ${list.length} productos encontrados`);
+      
+      if (list.length > 0) {
+        const precios = list.map(p => Number(p.precio) || 0).filter(p => p > 0);
+        if (precios.length > 0) {
+          const min = Math.floor(Math.min(...precios));
+          const max = Math.ceil(Math.max(...precios));
+          console.log(`Rango de precios calculado: $${min} - $${max}`);
+          setPriceRange({ min, max });
+          return { min, max };
+        }
+      }
+      console.warn('No se encontraron productos con precio válido');
+      return { min: 0, max: 1000000 };
+    } catch (err) {
+      console.error('Error al obtener rango de precios:', err);
+      return { min: 0, max: 1000000 };
+    }
+  }, []);
 
   const fetchProducts = useCallback(async ({ page: requestedPage = 1, page_size = 12, params = {} } = {}) => {
     setLoading(true);
@@ -78,7 +113,7 @@ export const ProductsProvider = ({ children }) => {
           watch_id: p.id,
           id_backend: p.id,
           name: p.nombre || 'Producto',
-          price: Number(p.precio) || 0,
+          price: Number(p.precio_final || p.precio) || 0,
           image: imagen,
           category: p.categoria?.nombre || 'Relojes',
           genero: genero,
@@ -107,11 +142,10 @@ export const ProductsProvider = ({ children }) => {
     }
   }, []);
 
-  // Cargar productos al montar el contexto
+  // Cargar solo el rango de precios al montar el contexto
+  // Los productos se cargarán desde Products.js según los parámetros de la URL
   useEffect(() => {
-    if (products.length === 0) {
-      fetchProducts({ page: 1, page_size: 12 });
-    }
+    fetchPriceRange();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -134,6 +168,7 @@ export const ProductsProvider = ({ children }) => {
     previous,
     page,
     pageSize,
+    priceRange,
     fetchProducts,
     refreshProducts,
     clearProducts
